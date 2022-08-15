@@ -1,0 +1,95 @@
+label {
+  color: map-get($colors, "accent-text");
+  opacity: 0.9;
+}
+
+@define-color accent_color #{"" + scale-color(map-get($colors, 'blue'), $lightness: -10%)};
+@define-color accent_bg_color #{"" + map-get($colors, 'blue')};
+@define-color accent_fg_color #{"" + map-get($colors, 'neutral-text')};
+
+@define-color destructive_color #{"" + scale-color(map-get($colors, 'red'), $lightness: -10%)};
+@define-color destructive_bg_color #{"" + map-get($colors, 'red')};
+@define-color destructive_fg_color #{"" + map-get($colors, 'neutral-text')};
+
+@define-color success_color #{"" + scale-color(map-get($colors, 'green'), $lightness: -10%)};
+@define-color success_bg_color #{"" + map-get($colors, 'green')};
+@define-color success_fg_color #{"" + map-get($colors, 'neutral-text')};
+
+@define-color warning_color #{"" + scale-color(map-get($colors, 'orange'), $lightness: -10%)};
+@define-color warning_bg_color #{"" + map-get($colors, 'yellow')};
+@define-color warning_fg_color #{"" + map-get($colors, 'neutral-text')};
+
+@define-color error_color #{"" + scale-color(map-get($colors, 'red'), $lightness: -10%)};
+@define-color error_bg_color #{"" + map-get($colors, 'red')};
+@define-color error_fg_color #{"" + map-get($colors, 'neutral-text')};
+
+@define-color window_bg_color #{"" + map-get($colors, 'background')};
+@define-color window_fg_color #{"" + map-get($colors, 'accent-text')};
+
+@define-color view_bg_color #{"" + map-get($colors, 'background')};
+@define-color view_fg_color #{"" + map-get($colors, 'accent-text')};
+
+@define-color headerbar_bg_color #{"" + map-get($colors, 'secondary-background')};
+@define-color headerbar_fg_color #{"" + map-get($colors, 'secondary-text')};
+@define-color headerbar_border_color #{"" + map-get($colors, 'secondary-background-border')};
+@define-color headerbar_backdrop_color #{"" + map-get($colors, 'secondary-background')};
+@define-color headerbar_shade_color #{"" + map-get($colors, 'secondary-background-border')};
+
+@define-color card_bg_color #{"" + mix(map-get($colors, 'background'), map-get($colors, 'secondary-background'), 50%)};
+@define-color card_fg_color #{"" + map-get($colors, 'text')};
+@define-color card_shade_color #{"" + mix(map-get($colors, 'background-border'), map-get($colors, 'secondary-background-border'), 50%)};
+
+@define-color popover_bg_color #{"" + map-get($colors, 'secondary-background')};
+@define-color popover_fg_color #{"" + map-get($colors, 'secondary-text')};
+
+@define-color shade_color #{"" + map-get($colors, 'background')};
+@define-color scrollbar_outline_color #{"" + map-get($colors, 'background-border')};
+@define-color borders #{"" + map-get($colors, 'background-border')};
+
+@define-color blue_1 #{"" + map-get($colors, 'blue-light')};
+@define-color blue_2 #{"" + map-get($colors, 'blue-sky')};
+@define-color blue_3 #{"" + mix(map-get($colors, 'blue'), map-get($colors, 'blue-dark'), 33%)};
+@define-color blue_4 #{"" + mix(map-get($colors, 'blue'), map-get($colors, 'blue-dark'), 66%)};
+@define-color blue_5 #{"" + map-get($colors, 'blue-dark')};
+
+@define-color green_1 #{"" + map-get($colors, 'green')};
+@define-color green_2 #{"" + mix(map-get($colors, 'green'), map-get($colors, 'green-dark'), 25%)};
+@define-color green_3 #{"" + mix(map-get($colors, 'green'), map-get($colors, 'green-dark'), 50%)};
+@define-color green_4 #{"" + mix(map-get($colors, 'green'), map-get($colors, 'green-dark'), 75%)};
+@define-color green_5 #{"" + map-get($colors, 'green-dark')};
+
+@define-color yellow_1 #{"" + map-get($colors, 'yellow')};
+@define-color yellow_2 #{"" + scale-color(map-get($colors, 'yellow'), $lightness: -5%)};
+@define-color yellow_3 #{"" + scale-color(map-get($colors, 'yellow'), $lightness: -10%)};
+@define-color yellow_4 #{"" + scale-color(map-get($colors, 'yellow'), $lightness: -15%)};
+@define-color yellow_5 #{"" + scale-color(map-get($colors, 'yellow'), $lightness: -20%)};
+
+@define-color orange_1 #{"" + map-get($colors, 'orange')};
+@define-color orange_2 #{"" + scale-color(map-get($colors, 'orange'), $lightness: -5%)};
+@define-color orange_3 #{"" + scale-color(map-get($colors, 'orange'), $lightness: -10%)};
+@define-color orange_4 #{"" + scale-color(map-get($colors, 'orange'), $lightness: -15%)};
+@define-color orange_5 #{"" + scale-color(map-get($colors, 'orange'), $lightness: -20%)};
+
+@define-color red_1 #{"" + map-get($colors, 'red')};
+@define-color red_2 #{"" + scale-color(map-get($colors, 'red'), $lightness: -5%)};
+@define-color red_3 #{"" + scale-color(map-get($colors, 'red'), $lightness: -10%)};
+@define-color red_4 #{"" + scale-color(map-get($colors, 'red'), $lightness: -15%)};
+@define-color red_5 #{"" + scale-color(map-get($colors, 'red'), $lightness: -20%)};
+
+@define-color purple_1 #{"" + map-get($colors, 'purple')};
+@define-color purple_2 #{"" + scale-color(map-get($colors, 'purple'), $lightness: -5%)};
+@define-color purple_3 #{"" + scale-color(map-get($colors, 'purple'), $lightness: -10%)};
+@define-color purple_4 #{"" + scale-color(map-get($colors, 'purple'), $lightness: -15%)};
+@define-color purple_5 #{"" + scale-color(map-get($colors, 'purple'), $lightness: -20%)};
+
+@define-color brown_1 #{"" + map-get($colors, 'brown')};
+@define-color brown_2 #{"" + scale-color(map-get($colors, 'brown'), $lightness: -5%)};
+@define-color brown_3 #{"" + scale-color(map-get($colors, 'brown'), $lightness: -10%)};
+@define-color brown_4 #{"" + scale-color(map-get($colors, 'brown'), $lightness: -15%)};
+@define-color brown_5 #{"" + scale-color(map-get($colors, 'brown'), $lightness: -20%)};
+
+@define-color light_1 #{"" + map-get($colors, 'white')};
+@define-color light_2 #{"" + scale-color(map-get($colors, 'white'), $lightness: -5%)};
+@define-color light_3 #{"" + scale-color(map-get($colors, 'white'), $lightness: -10%)};
+@define-color light_4 #{"" + scale-color(map-get($colors, 'white'), $lightness: -15%)};
+@define-color light_5 #{"" + scale-color(map-get($colors, 'white'), $lightness: -20%)};

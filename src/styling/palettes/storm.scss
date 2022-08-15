@@ -1,0 +1,8 @@
+@import "./default.scss";
+
+$colors: map-merge(
+  $colors,
+  (
+    "black": #24283b,
+  )
+);
