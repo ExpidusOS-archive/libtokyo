@@ -46,7 +46,7 @@ custom_target('styling-gtk4-light',
   build_always: true,
   command: [sass, '@INPUT@', '@OUTPUT@'])
 custom_target('styling-gtk4-storm',
-  output: 'gtk4-dark.css',
+  output: 'gtk4-storm.css',
   input: 'src/styling/gtk4/storm.scss',
   build_always: true,
   command: [sass, '@INPUT@', '@OUTPUT@'])
