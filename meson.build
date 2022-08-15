@@ -1,5 +1,7 @@
 project('libtokyo', 'vala', 'c', license: 'GPL-3.0-only', version: '0.1.0-prealpha')
 
+gnome = import('gnome')
+
 prefix = get_option('prefix')
 bindir = prefix / get_option('bindir')
 datadir = prefix / get_option('datadir')
@@ -27,25 +29,40 @@ if node.found() and git.found()
   run_command([node, './scripts/update-package.js', shortver])
 endif
 
+adwaita = dependency('libadwaita-1', required: true, version: '>= 1.1.0')
+
 conf_data = configuration_data()
 conf_data.set('PREFIX', prefix)
 conf_data.set('BINDIR', bindir)
 conf_data.set('DATADIR', datadir)
 conf_data.set('LIBDIR', libdir)
 conf_data.set('LIBEXECDIR', libexecdir)
-conf_data.set('VERSION', '"@0@"'.format(longver))
+conf_data.set('VERSION', longver)
+conf_data.set('BUILDDIR', meson.current_build_dir())
+conf_data.set('SOURCEDIR', meson.current_source_dir())
 
-custom_target('styling-gtk4-default',
+conf_data_gtk4 = configuration_data()
+conf_data_gtk4.merge_from(conf_data)
+conf_data_gtk4.set('GTK_VERSION', '4')
+
+build_conf_h = configure_file(input: 'src/build.h.in', output: 'build.h',
+	configuration: conf_data)
+build_conf = configure_file(input: 'src/build.vala.in', output: 'build.vala',
+	configuration: conf_data)
+build_res_gtk4 = configure_file(input: 'src/tokyo-gtk.gresource.xml.in', output: 'tokyo-gtk4.gresource.xml',
+  configuration: conf_data_gtk4)
+
+gtk4_default = custom_target('styling-gtk4-default',
   output: 'gtk4-default.css',
   input: 'src/styling/gtk4/default.scss',
   build_always: true,
   command: [sass, '@INPUT@', '@OUTPUT@'])
-custom_target('styling-gtk4-light',
+gtk4_light = custom_target('styling-gtk4-light',
   output: 'gtk4-light.css',
   input: 'src/styling/gtk4/light.scss',
   build_always: true,
   command: [sass, '@INPUT@', '@OUTPUT@'])
-custom_target('styling-gtk4-storm',
+gtk4_storm = custom_target('styling-gtk4-storm',
   output: 'gtk4-storm.css',
   input: 'src/styling/gtk4/storm.scss',
   build_always: true,
@@ -61,3 +78,12 @@ if unbuild.found()
     },
     command: [unbuild, meson.current_source_dir()])
 endif
+
+tokyo_gtk4_res = gnome.compile_resources('tokyo-gtk4-resources', build_res_gtk4,
+  c_name: 'tokyo_gtk',
+  dependencies: [gtk4_storm, gtk4_light, gtk4_default])
+
+shared_library('tokyo-gtk4', [build_conf_h, build_conf, tokyo_gtk4_res, 'src/gtk4/application.vala', 'src/gtk4/applicationwindow.vala', 'src/gtk4/init.vala'],
+  vala_gir: 'TokyoGtk4-@0@.gir'.format(shortver.split('-')[0]),
+  dependencies: [adwaita],
+  version: shortver.split('-')[0])

@@ -7,7 +7,9 @@ pkgs.mkShell {
     ninja
     gcc
     vala
+    libadwaita.dev
     libadwaita.devdoc
+    pkg-config
   ];
   shellHooks = ''
     export PATH="$PWD/node_modules/.bin/:$PATH"

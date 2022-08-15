@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/expidus/tokyogtk">
+    <file alias="gtk-default.css">@BUILDDIR@/gtk@GTK_VERSION@-default.css</file>
+    <file alias="gtk-light.css">@BUILDDIR@/gtk@GTK_VERSION@-light.css</file>
+    <file alias="gtk-storm.css">@BUILDDIR@/gtk@GTK_VERSION@-storm.css</file>
+  </gresource>
+</gresources>
