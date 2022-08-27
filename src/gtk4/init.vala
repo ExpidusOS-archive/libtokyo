@@ -9,10 +9,12 @@ namespace TokyoGtk {
 
   public static void init() {
     if (_is_init) return;
+    
+    _is_init = true;
 
     GLib.debug("Initializing Tokyo GTK");
     GLib.resources_register(get_resource());
 
-    _is_init = true;
+    StyleManager.ensure();
   }
 }

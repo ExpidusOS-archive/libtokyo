@@ -1,11 +1,7 @@
 namespace TokyoGtk {
-  public class Application : Adw.Application {
-    public Application(string? application_id = null, GLib.ApplicationFlags flags) {
-      Object(application_id: application_id, flags: flags);
-    }
-
-    public override void startup() {
-      base.startup();
+  public class Window : Adw.Window {
+    public override void map() {
+      base.map();
 
       TokyoGtk.init();
       this.init_styling();
