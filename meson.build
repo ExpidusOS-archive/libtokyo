@@ -1,6 +1,7 @@
 project('libtokyo', 'vala', 'c', license: 'GPL-3.0-only', version: '0.1.0-prealpha')
 
 gnome = import('gnome')
+pkg = import('pkgconfig')
 
 prefix = get_option('prefix')
 bindir = prefix / get_option('bindir')
@@ -86,8 +87,16 @@ tokyo_gtk4_res = gnome.compile_resources('tokyo-gtk4-resources', build_res_gtk4,
 libtokyo_gtk4 = shared_library('tokyo-gtk4', [build_conf_h, build_conf, tokyo_gtk4_res, 'src/gtk4/application.vala', 'src/gtk4/applicationwindow.vala', 'src/gtk4/init.vala', 'src/gtk4/stylemanager.vala', 'src/gtk4/window.vala'],
   vala_gir: 'TokyoGtk4-@0@.gir'.format(shortver.split('-')[0]),
   dependencies: [adwaita],
-  version: shortver.split('-')[0])
+  version: shortver.split('-')[0],
+  install: true,
+  install_dir: [true, true, true, true])
 libtokyo_gtk4_dep = declare_dependency(link_with: libtokyo_gtk4, dependencies: [adwaita])
+pkg.generate(libtokyo_gtk4,
+  name: 'libtokyo-gtk4',
+  requires: ['libadwaita-1 >= 1.1.0'],
+  description: 'A libadwaita wrapper for ExpidusOS with Tokyo Night\'s styling',
+  url: 'https://github.com/ExpidusOS/libtokyo',
+  version: longver)
 
 executable('tokyo-gtk4-example', ['src/examples/gtk4/main.vala'],
   dependencies: [libtokyo_gtk4_dep])
