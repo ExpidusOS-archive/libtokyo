@@ -10,6 +10,7 @@ pkgs.mkShell {
     libadwaita.dev
     libadwaita.devdoc
     pkg-config
+    sass
   ];
   shellHooks = ''
     export PATH="$PWD/node_modules/.bin/:$PATH"
