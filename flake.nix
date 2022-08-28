@@ -24,7 +24,7 @@
             src = self;
             outputs = [ "out" "dev" ];
             
-            nativebuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass ];
+            nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass ];
             buildInputs = with pkgs; [ libadwaita ];
 
             enableParallelBuilding = true;

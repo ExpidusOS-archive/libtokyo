@@ -126,3 +126,6 @@ build.ninja
 
 # Misc
 compile_commands.json
+
+# nix
+result
