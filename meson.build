@@ -30,7 +30,7 @@ if node.found() and git.found()
   run_command([node, './scripts/update-package.js', shortver])
 endif
 
-adwaita = dependency('libadwaita-1', required: true, version: '>= 1.1.0')
+adwaita = dependency('libadwaita-1', required: false, version: '>= 1.1.0')
 handy = dependency('libhandy-1', required: false, version: '>= 1.6.0')
 
 conf_data = configuration_data()
@@ -43,33 +43,6 @@ conf_data.set('VERSION', longver)
 conf_data.set('BUILDDIR', meson.current_build_dir())
 conf_data.set('SOURCEDIR', meson.current_source_dir())
 
-conf_data_gtk4 = configuration_data()
-conf_data_gtk4.merge_from(conf_data)
-conf_data_gtk4.set('GTK_VERSION', '4')
-
-build_conf_h = configure_file(input: 'src/build.h.in', output: 'build.h',
-	configuration: conf_data)
-build_conf = configure_file(input: 'src/build.vala.in', output: 'build.vala',
-	configuration: conf_data)
-build_res_gtk4 = configure_file(input: 'src/tokyo-gtk.gresource.xml.in', output: 'tokyo-gtk4.gresource.xml',
-  configuration: conf_data_gtk4)
-
-gtk4_default = custom_target('styling-gtk4-default',
-  output: 'gtk4-default.css',
-  input: 'src/styling/gtk4/default.scss',
-  build_always: true,
-  command: [sass, '@INPUT@', '@OUTPUT@'])
-gtk4_light = custom_target('styling-gtk4-light',
-  output: 'gtk4-light.css',
-  input: 'src/styling/gtk4/light.scss',
-  build_always: true,
-  command: [sass, '@INPUT@', '@OUTPUT@'])
-gtk4_storm = custom_target('styling-gtk4-storm',
-  output: 'gtk4-storm.css',
-  input: 'src/styling/gtk4/storm.scss',
-  build_always: true,
-  command: [sass, '@INPUT@', '@OUTPUT@'])
-
 if unbuild.found()
   custom_target('nodejs',
     output: 'output',
@@ -81,26 +54,55 @@ if unbuild.found()
     command: [unbuild, meson.current_source_dir()])
 endif
 
-tokyo_gtk4_res = gnome.compile_resources('tokyo-gtk4-resources', build_res_gtk4,
-  c_name: 'tokyo_gtk',
-  dependencies: [gtk4_storm, gtk4_light, gtk4_default])
+if adwaita.found()
+  conf_data_gtk4 = configuration_data()
+  conf_data_gtk4.merge_from(conf_data)
+  conf_data_gtk4.set('GTK_VERSION', '4')
 
-libtokyo_gtk4 = shared_library('tokyo-gtk4', [build_conf_h, build_conf, tokyo_gtk4_res, 'src/gtk4/application.vala', 'src/gtk4/applicationwindow.vala', 'src/gtk4/init.vala', 'src/gtk4/stylemanager.vala', 'src/gtk4/window.vala'],
-  vala_gir: 'TokyoGtk4-@0@.gir'.format(shortver.split('-')[0]),
-  dependencies: [adwaita],
-  version: shortver.split('-')[0],
-  install: true,
-  install_dir: [true, true, true, true])
-libtokyo_gtk4_dep = declare_dependency(link_with: libtokyo_gtk4, dependencies: [adwaita])
-pkg.generate(libtokyo_gtk4,
-  name: 'libtokyo-gtk4',
-  requires: ['libadwaita-1 >= 1.1.0'],
-  description: 'A libadwaita wrapper for ExpidusOS with Tokyo Night\'s styling',
-  url: 'https://github.com/ExpidusOS/libtokyo',
-  version: longver)
+  build_conf_h = configure_file(input: 'src/build.h.in', output: 'build.h',
+  	configuration: conf_data)
+  build_conf = configure_file(input: 'src/build.vala.in', output: 'build.vala',
+  	configuration: conf_data)
+  build_res_gtk4 = configure_file(input: 'src/tokyo-gtk.gresource.xml.in', output: 'tokyo-gtk4.gresource.xml',
+    configuration: conf_data_gtk4)
 
-executable('tokyo-gtk4-example', ['src/examples/gtk4/main.vala'],
-  dependencies: [libtokyo_gtk4_dep])
+  gtk4_default = custom_target('styling-gtk4-default',
+    output: 'gtk4-default.css',
+    input: 'src/styling/gtk4/default.scss',
+    build_always: true,
+    command: [sass, '@INPUT@', '@OUTPUT@'])
+  gtk4_light = custom_target('styling-gtk4-light',
+    output: 'gtk4-light.css',
+    input: 'src/styling/gtk4/light.scss',
+    build_always: true,
+    command: [sass, '@INPUT@', '@OUTPUT@'])
+  gtk4_storm = custom_target('styling-gtk4-storm',
+    output: 'gtk4-storm.css',
+    input: 'src/styling/gtk4/storm.scss',
+    build_always: true,
+    command: [sass, '@INPUT@', '@OUTPUT@'])
+
+  tokyo_gtk4_res = gnome.compile_resources('tokyo-gtk4-resources', build_res_gtk4,
+    c_name: 'tokyo_gtk',
+    dependencies: [gtk4_storm, gtk4_light, gtk4_default])
+
+  libtokyo_gtk4 = shared_library('tokyo-gtk4', [build_conf_h, build_conf, tokyo_gtk4_res, 'src/gtk4/application.vala', 'src/gtk4/applicationwindow.vala', 'src/gtk4/init.vala', 'src/gtk4/stylemanager.vala', 'src/gtk4/window.vala'],
+    vala_gir: 'TokyoGtk4-@0@.gir'.format(shortver.split('-')[0]),
+    dependencies: [adwaita],
+    version: shortver.split('-')[0],
+    install: true,
+    install_dir: [true, true, true, true])
+  libtokyo_gtk4_dep = declare_dependency(link_with: libtokyo_gtk4, dependencies: [adwaita])
+  pkg.generate(libtokyo_gtk4,
+    name: 'libtokyo-gtk4',
+    requires: ['libadwaita-1 >= 1.1.0'],
+    description: 'A libadwaita wrapper for ExpidusOS with Tokyo Night\'s styling',
+    url: 'https://github.com/ExpidusOS/libtokyo',
+    version: longver)
+
+  executable('tokyo-gtk4-example', ['src/examples/gtk4/main.vala'],
+    dependencies: [libtokyo_gtk4_dep])
+endif
 
 if handy.found()
   gtk3_default = custom_target('styling-gtk3-default',
@@ -139,7 +141,7 @@ if handy.found()
   libtokyo_gtk3_dep = declare_dependency(link_with: libtokyo_gtk3, dependencies: [handy])
   pkg.generate(libtokyo_gtk3,
     name: 'libtokyo-gtk3',
-    requires: ['libhandy >= 1.6.0'],
+    requires: ['libhandy-1 >= 1.6.0'],
     description: 'A libhandy wrapper for ExpidusOS with Tokyo Night\'s styling',
     url: 'https://github.com/ExpidusOS/libtokyo',
     version: longver)

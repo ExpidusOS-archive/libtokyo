@@ -17,8 +17,7 @@
       packages = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
-        in
-        {
+        in rec {
           default = pkgs.stdenv.mkDerivation rec {
             name = "libtokyo";
             src = self;
@@ -35,6 +34,20 @@
               maintainers = [ "Tristan Ross" ];
             };
           };
+
+          full = default.overrideAttrs(old: {
+            name = "libtokyo-full";
+          });
+
+          gtk3 = default.overrideAttrs(old: {
+            name = "libtokyo-gtk3";
+            buildInputs = with pkgs; [ gtk3 libhandy ];
+          });
+
+          gtk4 = default.overrideAttrs(old: {
+            name = "libtokyo-gtk4";
+            buildInputs = with pkgs; [ gtk4 libadwaita ];
+          });
         });
 
       devShells = forAllSystems (system:
