@@ -111,8 +111,6 @@ scale {
   &.marks-before:not(.marks-after),
   &.marks-after:not(.marks-before) {
     > trough > slider {
-      // Adjust box-shadow for the 45deg rotation, for 0px 2px we ideally want
-      // 1/√2px 1/√2px, round that to 1px 1px
       box-shadow: 0 0 0 1px $_slider_border_color, 1px 1px 4px transparentize(black, .8);
 
       &:disabled {
