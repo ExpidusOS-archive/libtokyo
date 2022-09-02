@@ -25,7 +25,7 @@
             outputs = [ "out" "dev" ];
             
             nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass ];
-            buildInputs = with pkgs; [ libadwaita ];
+            buildInputs = with pkgs; [ libadwaita libhandy ];
 
             enableParallelBuilding = true;
 
@@ -50,11 +50,15 @@
               vala
               nodejs
               gcc
+              gtk3
+              gtk4
+              libhandy.dev
+              libhandy.devdoc
               libadwaita.dev
               libadwaita.devdoc
             ];
 
-            shellHooks = ''
+            shellHook = ''
               export PATH="$PWD/node_modules/.bin/:$PATH"
               alias run="npm run"
             '';

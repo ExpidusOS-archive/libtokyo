@@ -1,9 +1,9 @@
 namespace TokyoGtk {
-  public class Window : Adw.Window {
-    private Adw.HeaderBar _header;
+  public class Window : Hdy.Window {
+    private Hdy.HeaderBar _header;
     private Gtk.Box _content;
 
-    public Adw.HeaderBar header {
+    public Hdy.HeaderBar header {
       get {
         return this.header;
       }
@@ -14,14 +14,15 @@ namespace TokyoGtk {
 
     construct {
       this._content = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
-      this._header = new Adw.HeaderBar();
-      this._content.append(this._header);
+      this._header = new Hdy.HeaderBar();
+      this._header.show_close_button = true;
+      this._content.pack_start(this._header, false, true, 0);
 
       this.reset_content();
     }
 
     public void reset_content() {
-      this.set_content(this._content);
+      this.child = this._content;
     }
 
     public Gtk.Box get_box() {
@@ -40,11 +41,11 @@ namespace TokyoGtk {
     private void init_styling() {
       var style_manager = StyleManager.get_default();
 
-      style_manager.adw.notify["dark"].connect(() => {
+      style_manager.hdy.notify["dark"].connect(() => {
         this.update_stylesheet();
       });
 
-      style_manager.adw.notify["high-contrast"].connect(() => {
+      style_manager.hdy.notify["high-contrast"].connect(() => {
         this.update_stylesheet();
       });
 

@@ -1,3 +1,7 @@
 namespace TokyoGtk {
   public const string VERSION = "@VERSION@";
 }
+
+
+[CCode(cheader_filename="build.h")]
+extern const string G_LOG_DOMAIN;

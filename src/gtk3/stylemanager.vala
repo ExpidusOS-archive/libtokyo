@@ -10,12 +10,12 @@ namespace TokyoGtk {
 
   public sealed class StyleManager : GLib.Object {
     private Gtk.CssProvider provider;
-    private Adw.StyleManager _adw;
+    private Hdy.StyleManager _hdy;
     private Gdk.Display _display;
 
-    public Adw.StyleManager adw {
+    public Hdy.StyleManager hdy {
       get {
-        return this._adw;
+        return this._hdy;
       }
     }
 
@@ -28,14 +28,14 @@ namespace TokyoGtk {
           if (color == "storm") return ColorScheme.STORM;
         }
 
-        if (this.adw.high_contrast) {
+        if (this.hdy.high_contrast) {
           return ColorScheme.STORM;
         }
 
-        switch (this.adw.color_scheme) {
-          case Adw.ColorScheme.DEFAULT:
-          case Adw.ColorScheme.FORCE_DARK:
-          case Adw.ColorScheme.PREFER_DARK:
+        switch (this.hdy.color_scheme) {
+          case Hdy.ColorScheme.DEFAULT:
+          case Hdy.ColorScheme.FORCE_DARK:
+          case Hdy.ColorScheme.PREFER_DARK:
             return ColorScheme.NIGHT;
           default: return ColorScheme.LIGHT;
         }
@@ -51,8 +51,12 @@ namespace TokyoGtk {
       }
     }
 
-    public static StyleManager get_default() {
+    public static unowned StyleManager get_default() {
       return global_style_manager;
+    }
+
+    public static unowned StyleManager get_for_display(Gdk.Display display) {
+      return display_style_managers.get(display);
     }
 
     private static void register_display(Gdk.Display display) {
@@ -86,20 +90,20 @@ namespace TokyoGtk {
 
     construct {
       if (this.display != null) {
-        this._adw = Adw.StyleManager.get_for_display(this.display);
+        this._hdy = Hdy.StyleManager.get_for_display(this.display);
 
-        if (GLib.Environment.get_variable("GTK_THEME") == null) {
-          this.provider = new Gtk.CssProvider();
-          Gtk.StyleContext.add_provider_for_display(this.display, this.provider, Gtk.STYLE_PROVIDER_PRIORITY_THEME);
-        }
+        this.provider = new Gtk.CssProvider();
+        Gtk.StyleContext.add_provider_for_screen(this.display.get_default_screen(), this.provider, Gtk.STYLE_PROVIDER_PRIORITY_THEME);
 
-        this.adw.notify["color-scheme"].connect(() => {
+        this.hdy.notify["color-scheme"].connect(() => {
           this.update_stylesheet();
         });
 
-        this.adw.notify["high-contrast"].connect(() => {
+        this.hdy.notify["high-contrast"].connect(() => {
           this.update_stylesheet();
         });
+
+        GLib.debug("registering for display %s", this.display.get_name());
       }
 
       this.update_stylesheet();

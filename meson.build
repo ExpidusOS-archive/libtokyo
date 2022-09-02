@@ -31,6 +31,7 @@ if node.found() and git.found()
 endif
 
 adwaita = dependency('libadwaita-1', required: true, version: '>= 1.1.0')
+handy = dependency('libhandy-1', required: false, version: '>= 1.6.0')
 
 conf_data = configuration_data()
 conf_data.set('PREFIX', prefix)
@@ -100,3 +101,49 @@ pkg.generate(libtokyo_gtk4,
 
 executable('tokyo-gtk4-example', ['src/examples/gtk4/main.vala'],
   dependencies: [libtokyo_gtk4_dep])
+
+if handy.found()
+  gtk3_default = custom_target('styling-gtk3-default',
+    output: 'gtk3-default.css',
+    input: 'src/styling/gtk3/default.scss',
+    build_always: true,
+    command: [sass, '@INPUT@', '@OUTPUT@'])
+  gtk3_light = custom_target('styling-gtk3-light',
+    output: 'gtk3-light.css',
+    input: 'src/styling/gtk3/light.scss',
+    build_always: true,
+    command: [sass, '@INPUT@', '@OUTPUT@'])
+  gtk3_storm = custom_target('styling-gtk3-storm',
+    output: 'gtk3-storm.css',
+    input: 'src/styling/gtk3/storm.scss',
+    build_always: true,
+    command: [sass, '@INPUT@', '@OUTPUT@'])
+ 
+  conf_data_gtk3 = configuration_data()
+  conf_data_gtk3.merge_from(conf_data)
+  conf_data_gtk3.set('GTK_VERSION', '3')
+
+  build_res_gtk3 = configure_file(input: 'src/tokyo-gtk.gresource.xml.in', output: 'tokyo-gtk3.gresource.xml',
+    configuration: conf_data_gtk3)
+
+  tokyo_gtk3_res = gnome.compile_resources('tokyo-gtk3-resources', build_res_gtk3,
+    c_name: 'tokyo_gtk',
+    dependencies: [gtk3_storm, gtk3_light, gtk3_default])
+
+  libtokyo_gtk3 = shared_library('tokyo-gtk3', [build_conf_h, build_conf, tokyo_gtk3_res, 'src/gtk3/application.vala', 'src/gtk3/applicationwindow.vala', 'src/gtk3/init.vala', 'src/gtk3/stylemanager.vala', 'src/gtk3/window.vala'],
+    vala_gir: 'TokyoGtk3-@0@.gir'.format(shortver.split('-')[0]),
+    dependencies: [handy],
+    version: shortver.split('-')[0],
+    install: true,
+    install_dir: [true, true, true, true])
+  libtokyo_gtk3_dep = declare_dependency(link_with: libtokyo_gtk3, dependencies: [handy])
+  pkg.generate(libtokyo_gtk3,
+    name: 'libtokyo-gtk3',
+    requires: ['libhandy >= 1.6.0'],
+    description: 'A libadwaita wrapper for ExpidusOS with Tokyo Night\'s styling',
+    url: 'https://github.com/ExpidusOS/libtokyo',
+    version: longver)
+
+  executable('tokyo-gtk3-example', ['src/examples/gtk3/main.vala'],
+    dependencies: [libtokyo_gtk3_dep])
+endif

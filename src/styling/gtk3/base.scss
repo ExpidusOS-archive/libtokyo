@@ -1,0 +1,5 @@
+headerbar, headerbar:backdrop {
+  background-image: none;
+  background-color: #{"" + map-get($colors, 'secondary-background')};
+  color: #{"" + map-get($colors, 'secondary-text')};
+}
