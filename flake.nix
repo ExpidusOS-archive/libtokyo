@@ -18,41 +18,35 @@
         let
           pkgs = nixpkgsFor.${system};
 
-          nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass ];
-          meta = with pkgs.lib; {
-            homepage = "https://github.com/ExpidusOS/libtokyo";
-            license = with licenses; [ gpl3Only ];
-            maintainers = [ "Tristan Ross" ];
-          };
-        in rec {
-          default = pkgs.stdenv.mkDerivation rec {
+          mkDerivation = ({ name, buildInputs }: pkgs.stdenv.mkDerivation rec {
+            inherit name buildInputs;
+
+            src = self;
+            outputs = [ "out" "dev" ];
+
+            enableParallelBuilding = true;
+            nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass ];
+
+            meta = with pkgs.lib; {
+              homepage = "https://github.com/ExpidusOS/libtokyo";
+              license = with licenses; [ gpl3Only ];
+              maintainers = [ "Tristan Ross" ];
+            };
+          });
+        in {
+          default = mkDerivation {
             name = "libtokyo";
-            src = self;
-            outputs = [ "out" "dev" ];
-            enableParallelBuilding = true;
-            buildInputs = with pkgs; [ gtk3 gtk4 libadwaita libhandy ];
-            
-            inherit nativeBuildInputs meta;
+            buildInputs = with pkgs; [ gtk3 libhandy gtk4 libadwaita ];
           };
 
-          gtk3 = pkgs.stdenv.mkDerivation rec {
+          gtk3 = mkDerivation {
             name = "libtokyo-gtk3";
-            src = self;
-            outputs = [ "out" "dev" ];
-            enableParallelBuilding = true;
             buildInputs = with pkgs; [ gtk3 libhandy ];
-            
-            inherit nativeBuildInputs meta;
           };
 
-          gtk4 = pkgs.stdenv.mkDerivation rec {
+          gtk4 = mkDerivation {
             name = "libtokyo-gtk4";
-            src = self;
-            outputs = [ "out" "dev" ];
-            enableParallelBuilding = true;
             buildInputs = with pkgs; [ gtk4 libadwaita ];
-            
-            inherit nativeBuildInputs meta;
           };
         });
 
