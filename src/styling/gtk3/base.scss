@@ -1,5 +1,7 @@
-headerbar, headerbar:backdrop {
-  background-image: none;
-  background-color: #{"" + map-get($colors, 'secondary-background')};
-  color: #{"" + map-get($colors, 'secondary-text')};
-}
+$contrast: 'normal';
+
+@import './functions.scss';
+@import './colors.scss';
+@import './drawing.scss';
+@import './common.scss';
+@import './compat-colors.scss';

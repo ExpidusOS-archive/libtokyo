@@ -92,8 +92,14 @@ namespace TokyoGtk {
       if (this.display != null) {
         this._hdy = Hdy.StyleManager.get_for_display(this.display);
 
-        this.provider = new Gtk.CssProvider();
-        Gtk.StyleContext.add_provider_for_screen(this.display.get_default_screen(), this.provider, Gtk.STYLE_PROVIDER_PRIORITY_THEME);
+        if (GLib.Environment.get_variable("GTK_THEME") == null) {
+          var gtk_settings = Gtk.Settings.get_for_screen(this.display.get_default_screen());
+
+          gtk_settings.gtk_theme_name = "Tokyo-empty";
+
+          this.provider = new Gtk.CssProvider();
+          Gtk.StyleContext.add_provider_for_screen(this.display.get_default_screen(), this.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        }
 
         this.hdy.notify["color-scheme"].connect(() => {
           this.update_stylesheet();

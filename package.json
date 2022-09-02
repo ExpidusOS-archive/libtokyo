@@ -1,6 +1,6 @@
 {
   "name": "libtokyo",
-  "version": "0.1.0-prealpha-1688bb5",
+  "version": "0.1.0-prealpha-fa9a725",
   "description": "A libadwaita wrapper for ExpidusOS with Tokyo Night's styling",
   "main": "./builddir/output/styling.cjs",
   "exports": {

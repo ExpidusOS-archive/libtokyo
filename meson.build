@@ -140,7 +140,7 @@ if handy.found()
   pkg.generate(libtokyo_gtk3,
     name: 'libtokyo-gtk3',
     requires: ['libhandy >= 1.6.0'],
-    description: 'A libadwaita wrapper for ExpidusOS with Tokyo Night\'s styling',
+    description: 'A libhandy wrapper for ExpidusOS with Tokyo Night\'s styling',
     url: 'https://github.com/ExpidusOS/libtokyo',
     version: longver)
 
