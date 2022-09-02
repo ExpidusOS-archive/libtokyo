@@ -45,7 +45,7 @@
             inherit nativeBuildInputs meta;
           };
 
-          gtk4 = mks.stdenv.mkDerivation rec {
+          gtk4 = pkgs.stdenv.mkDerivation rec {
             name = "libtokyo-gtk4";
             src = self;
             outputs = [ "out" "dev" ];
