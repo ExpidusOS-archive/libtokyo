@@ -25,7 +25,7 @@
             outputs = [ "out" "dev" ];
             
             nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass ];
-            buildInputs = with pkgs; [ libadwaita libhandy ];
+            buildInputs = with pkgs; [ gtk3 gtk4 libadwaita libhandy ];
 
             enableParallelBuilding = true;
 
