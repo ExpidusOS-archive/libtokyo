@@ -43,7 +43,7 @@
             buildInputs = with pkgs; [ gtk3 libhandy ];
             
             inherit nativeBuildInputs meta;
-          });
+          };
 
           gtk4 = mks.stdenv.mkDerivation rec {
             name = "libtokyo-gtk4";
@@ -53,7 +53,7 @@
             buildInputs = with pkgs; [ gtk4 libadwaita ];
             
             inherit nativeBuildInputs meta;
-          });
+          };
         });
 
       devShells = forAllSystems (system:
