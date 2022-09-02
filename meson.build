@@ -95,7 +95,7 @@ if adwaita.found()
     install_dir: [true, true, true, true])
   libtokyo_gtk4_dep = declare_dependency(link_with: libtokyo_gtk4, dependencies: [adwaita])
   pkg.generate(libtokyo_gtk4,
-    name: 'libtokyo-gtk4',
+    name: 'tokyo-gtk4',
     requires: ['libadwaita-1 >= 1.1.0'],
     description: 'A libadwaita wrapper for ExpidusOS with Tokyo Night\'s styling',
     url: 'https://github.com/ExpidusOS/libtokyo',
@@ -141,7 +141,7 @@ if handy.found()
     install_dir: [true, true, true, true])
   libtokyo_gtk3_dep = declare_dependency(link_with: libtokyo_gtk3, dependencies: [handy])
   pkg.generate(libtokyo_gtk3,
-    name: 'libtokyo-gtk3',
+    name: 'tokyo-gtk3',
     requires: ['libhandy-1 >= 1.6.0'],
     description: 'A libhandy wrapper for ExpidusOS with Tokyo Night\'s styling',
     url: 'https://github.com/ExpidusOS/libtokyo',
