@@ -19,6 +19,7 @@ namespace TokyoGtk {
       this._content.pack_start(this._header, false, true, 0);
 
       this.reset_content();
+      this.set_default_size(300, 300);
     }
 
     public void reset_content() {

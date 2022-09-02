@@ -29,6 +29,10 @@ namespace TokyoGtk {
 
       this.reset_content();
       this._content.show_all();
+
+      this.set_position(Gtk.WindowPosition.MOUSE);
+      this.set_gravity(Gdk.Gravity.CENTER);
+      this.set_default_size(300, 300);
     }
 
     public void reset_content() {
