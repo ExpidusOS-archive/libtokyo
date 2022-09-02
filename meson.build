@@ -54,15 +54,16 @@ if unbuild.found()
     command: [unbuild, meson.current_source_dir()])
 endif
 
+build_conf_h = configure_file(input: 'src/build.h.in', output: 'build.h',
+	configuration: conf_data)
+build_conf = configure_file(input: 'src/build.vala.in', output: 'build.vala',
+	configuration: conf_data)
+
 if adwaita.found()
   conf_data_gtk4 = configuration_data()
   conf_data_gtk4.merge_from(conf_data)
   conf_data_gtk4.set('GTK_VERSION', '4')
 
-  build_conf_h = configure_file(input: 'src/build.h.in', output: 'build.h',
-  	configuration: conf_data)
-  build_conf = configure_file(input: 'src/build.vala.in', output: 'build.vala',
-  	configuration: conf_data)
   build_res_gtk4 = configure_file(input: 'src/tokyo-gtk.gresource.xml.in', output: 'tokyo-gtk4.gresource.xml',
     configuration: conf_data_gtk4)
 
