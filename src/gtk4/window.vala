@@ -19,6 +19,8 @@ namespace TokyoGtk {
     }
 
     construct {
+      this.get_style_context().add_provider(this.style_manager.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
       this._content = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
       this._header = new Adw.HeaderBar();
       this._content.append(this._header);

@@ -25,6 +25,8 @@ namespace TokyoGtk {
         else this.title = "libtokyo-gtk3-application-window";
       }
 
+      this.get_style_context().add_provider(this.style_manager.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
       this._content = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
       this._header = new Hdy.HeaderBar();
       this._header.show_close_button = true;
