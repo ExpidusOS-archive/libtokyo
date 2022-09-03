@@ -9,9 +9,15 @@ namespace TokyoGtk {
   }
 
   public sealed class StyleManager : GLib.Object {
-    private Gtk.CssProvider provider;
+    private Gtk.CssProvider _provider;
     private Adw.StyleManager _adw;
     private Gdk.Display _display;
+
+    public Gtk.CssProvider provider {
+      get {
+        return this._provider;
+      }
+    }
 
     public Adw.StyleManager adw {
       get {
@@ -51,8 +57,12 @@ namespace TokyoGtk {
       }
     }
 
-    public static StyleManager get_default() {
+    public static unowned StyleManager get_default() {
       return global_style_manager;
+    }
+
+    public static unowned StyleManager get_for_display(Gdk.Display display) {
+      return display_style_managers.get(display);
     }
 
     private static void register_display(Gdk.Display display) {
@@ -89,7 +99,7 @@ namespace TokyoGtk {
         this._adw = Adw.StyleManager.get_for_display(this.display);
 
         if (GLib.Environment.get_variable("GTK_THEME") == null) {
-          this.provider = new Gtk.CssProvider();
+          this._provider = new Gtk.CssProvider();
           Gtk.StyleContext.add_provider_for_display(this.display, this.provider, Gtk.STYLE_PROVIDER_PRIORITY_THEME);
         }
 

@@ -3,6 +3,12 @@ namespace TokyoGtk {
     private Hdy.HeaderBar _header;
     private Gtk.Box _content;
 
+    public unowned StyleManager style_manager {
+      get {
+        return StyleManager.get_for_display(this.get_display());
+      }
+    }
+
     public Hdy.HeaderBar header {
       get {
         return this.header;

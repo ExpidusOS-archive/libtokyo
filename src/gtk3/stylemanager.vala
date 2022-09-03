@@ -9,9 +9,15 @@ namespace TokyoGtk {
   }
 
   public sealed class StyleManager : GLib.Object {
-    private Gtk.CssProvider provider;
+    private Gtk.CssProvider _provider;
     private Hdy.StyleManager _hdy;
     private Gdk.Display _display;
+
+    public Gtk.CssProvider provider {
+      get {
+        return this._provider;
+      }
+    }
 
     public Hdy.StyleManager hdy {
       get {
@@ -97,7 +103,7 @@ namespace TokyoGtk {
 
           gtk_settings.gtk_theme_name = "Tokyo-empty";
 
-          this.provider = new Gtk.CssProvider();
+          this._provider = new Gtk.CssProvider();
           Gtk.StyleContext.add_provider_for_screen(this.display.get_default_screen(), this.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         }
 
