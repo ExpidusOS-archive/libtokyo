@@ -1,7 +1,12 @@
 {
   description = "A libadwaita wrapper for ExpidusOS with Tokyo Night's styling";
 
-  outputs = { self, nixpkgs }:
+  inputs.ntk = {
+    url = path:subprojects/ntk;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = { self, nixpkgs, ntk }:
     let
       supportedSystems = [
         "aarch64-linux"
@@ -18,9 +23,10 @@
       packages = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
+          ntk-pkg = ntk.packages.${system}.default;
 
-          mkDerivation = ({ name, buildInputs }: pkgs.stdenv.mkDerivation rec {
-            inherit name buildInputs src;
+          mkDerivation = ({ name, buildInputs, mesonFlags ? [] }: pkgs.stdenv.mkDerivation rec {
+            inherit name buildInputs src mesonFlags;
 
             outputs = [ "out" "dev" ];
 
@@ -36,28 +42,33 @@
         in {
           default = mkDerivation {
             name = "libtokyo";
-            buildInputs = with pkgs; [ gtk3 libhandy gtk4 libadwaita ];
+            mesonFlags = ["-Dntk=enabled" "-Dgtk4=enabled" "-Dgtk3=enabled"];
+            buildInputs = with pkgs; [ gtk3 libhandy gtk4 libadwaita ntk-pkg ];
           };
 
           gtk3 = mkDerivation {
             name = "libtokyo-gtk3";
+            mesonFlags = ["-Dntk=disabled" "-Dgtk4=disabled" "-Dgtk3=enabled"];
             buildInputs = with pkgs; [ gtk3 libhandy ];
           };
 
           gtk4 = mkDerivation {
             name = "libtokyo-gtk4";
+            mesonFlags = ["-Dntk=disabled" "-Dgtk4=enabled" "-Dgtk3=disabled"];
             buildInputs = with pkgs; [ gtk4 libadwaita ];
           };
 
           ntk = mkDerivation {
             name = "libtokyo-ntk";
-            buildInputs = with pkgs; [];
+            mesonFlags = ["-Dntk=enabled" "-Dgtk4=disabled" "-Dgtk3=disabled"];
+            buildInputs = with pkgs; [ ntk-pkg ];
           };
         });
 
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
+          ntk-pkg = ntk.packages.${system}.default;
         in
         {
           default = pkgs.mkShell {
@@ -70,11 +81,13 @@
               gcc
               gtk3
               gtk4
+              libhandy
               libhandy.dev
               libhandy.devdoc
+              libadwaita
               libadwaita.dev
               libadwaita.devdoc
-              gobject-introspection
+              ntk-pkg
             ];
 
             shellHook = ''

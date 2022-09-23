@@ -14,9 +14,27 @@
         "type": "indirect"
       }
     },
+    "ntk": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-Tuchj6WWEvJ4KIdHvy7umsBy2q915t8cUHE92GrxS6U=",
+        "path": "subprojects/ntk",
+        "type": "path"
+      },
+      "original": {
+        "path": "subprojects/ntk",
+        "type": "path"
+      }
+    },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "ntk": "ntk"
       }
     }
   },

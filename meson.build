@@ -32,10 +32,12 @@ endif
 
 adwaita = dependency('libadwaita-1', required: get_option('gtk4'), version: '>= 1.1.0')
 handy = dependency('libhandy-1', required: get_option('gtk3'), version: '>= 1.6.0')
-ntk = dependency('ntk-0.1.0', required: get_option('ntk').enabled())
+ntk = dependency('ntk', required: get_option('ntk').enabled())
+has_ntk = ntk.found()
 if not ntk.found() and not get_option('ntk').disabled()
   ntk_subproject = subproject('ntk')
   ntk = ntk_subproject.get_variable('libntk')
+  has_ntk = true
 endif
 
 conf_data = configuration_data()
