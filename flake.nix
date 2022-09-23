@@ -1,27 +1,27 @@
 {
   description = "A libadwaita wrapper for ExpidusOS with Tokyo Night's styling";
 
-  inputs.ntk = {
-    url = github:ExpidusOS/ntk?submodules=1;
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
-  outputs = { self, nixpkgs, ntk }:
+  outputs = { self, nixpkgs }:
     let
-      supportedSystems = builtins.attrNames ntk.packages;
+      supportedSystems = [
+        "aarch64-linux"
+        "i686-linux"
+        "riscv64-linux"
+        "x86_64-linux"
+        "x86_64-darwin"
+      ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
+      src = self // { submodules = true; };
     in
     {
       packages = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
-          ntk-pkg = ntk.packages.${system}.default;
 
           mkDerivation = ({ name, buildInputs }: pkgs.stdenv.mkDerivation rec {
-            inherit name buildInputs;
+            inherit name buildInputs src;
 
-            src = self;
             outputs = [ "out" "dev" ];
 
             enableParallelBuilding = true;
@@ -36,7 +36,7 @@
         in {
           default = mkDerivation {
             name = "libtokyo";
-            buildInputs = with pkgs; [ gtk3 libhandy gtk4 libadwaita ntk-pkg ];
+            buildInputs = with pkgs; [ gtk3 libhandy gtk4 libadwaita ];
           };
 
           gtk3 = mkDerivation {
@@ -51,14 +51,13 @@
 
           ntk = mkDerivation {
             name = "libtokyo-ntk";
-            buildInputs = with pkgs; [ ntk ];
+            buildInputs = with pkgs; [];
           };
         });
 
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
-          ntk-pkg = ntk.packages.${system}.default;
         in
         {
           default = pkgs.mkShell {
@@ -75,7 +74,7 @@
               libhandy.devdoc
               libadwaita.dev
               libadwaita.devdoc
-              ntk-pkg
+              gobject-introspection
             ];
 
             shellHook = ''
@@ -84,5 +83,7 @@
             '';
           };
         });
+
+      submodules = true;
     };
 }

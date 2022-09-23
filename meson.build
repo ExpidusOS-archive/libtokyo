@@ -30,8 +30,13 @@ if node.found() and git.found()
   run_command([node, './scripts/update-package.js', shortver])
 endif
 
-adwaita = dependency('libadwaita-1', required: false, version: '>= 1.1.0')
-handy = dependency('libhandy-1', required: false, version: '>= 1.6.0')
+adwaita = dependency('libadwaita-1', required: get_option('gtk4'), version: '>= 1.1.0')
+handy = dependency('libhandy-1', required: get_option('gtk3'), version: '>= 1.6.0')
+ntk = dependency('ntk-0.1.0', required: get_option('ntk').enabled())
+if not ntk.found() and not get_option('ntk').disabled()
+  ntk_subproject = subproject('ntk')
+  ntk = ntk_subproject.get_variable('libntk')
+endif
 
 conf_data = configuration_data()
 conf_data.set('PREFIX', prefix)

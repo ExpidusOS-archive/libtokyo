@@ -107,6 +107,7 @@ dist
 ### Meson ###
 # subproject directories
 /subprojects/*
+!/subprojects/ntk
 !/subprojects/*.wrap
 
 # Meson Directories

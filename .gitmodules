@@ -1,0 +1,3 @@
+[submodule "subprojects/ntk"]
+	path = subprojects/ntk
+	url = https://github.com/ExpidusOS/ntk

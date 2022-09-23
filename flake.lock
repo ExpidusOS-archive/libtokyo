@@ -14,30 +14,9 @@
         "type": "indirect"
       }
     },
-    "ntk": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1663952631,
-        "narHash": "sha256-loMWFpcfQhMOfRallmdYqZVkhd/TuG+5tCZa9noaVqU=",
-        "owner": "ExpidusOS",
-        "repo": "ntk",
-        "rev": "38911aa73795a134dae0509a0d15d2fb2134174a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ExpidusOS",
-        "repo": "ntk",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs",
-        "ntk": "ntk"
+        "nixpkgs": "nixpkgs"
       }
     }
   },
