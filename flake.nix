@@ -1,14 +1,14 @@
 {
   description = "A libadwaita wrapper for ExpidusOS with Tokyo Night's styling";
-  outputs = { self, nixpkgs }:
+
+  inputs.ntk = {
+    url = github:ExpidusOS/ntk?submodules=1;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = { self, nixpkgs, ntk }:
     let
-      supportedSystems = [
-        "aarch64-linux"
-        "i686-linux"
-        "riscv64-linux"
-        "x86_64-linux"
-        "x86_64-darwin"
-      ];
+      supportedSystems = builtins.attrNames ntk.packages;
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
     in
@@ -16,6 +16,7 @@
       packages = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
+          ntk-pkg = ntk.packages.${system}.default;
 
           mkDerivation = ({ name, buildInputs }: pkgs.stdenv.mkDerivation rec {
             inherit name buildInputs;
@@ -35,7 +36,7 @@
         in {
           default = mkDerivation {
             name = "libtokyo";
-            buildInputs = with pkgs; [ gtk3 libhandy gtk4 libadwaita ];
+            buildInputs = with pkgs; [ gtk3 libhandy gtk4 libadwaita ntk-pkg ];
           };
 
           gtk3 = mkDerivation {
@@ -47,11 +48,17 @@
             name = "libtokyo-gtk4";
             buildInputs = with pkgs; [ gtk4 libadwaita ];
           };
+
+          ntk = mkDerivation {
+            name = "libtokyo-ntk";
+            buildInputs = with pkgs; [ ntk ];
+          };
         });
 
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
+          ntk-pkg = ntk.packages.${system}.default;
         in
         {
           default = pkgs.mkShell {
@@ -68,6 +75,7 @@
               libhandy.devdoc
               libadwaita.dev
               libadwaita.devdoc
+              ntk-pkg
             ];
 
             shellHook = ''
