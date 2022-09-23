@@ -4,13 +4,13 @@ import sass from "rollup-plugin-sass";
 import { getSassVariablesStringSync } from "node-sass-variables";
 import { defineBuildConfig } from "unbuild";
 
-const srcdir = resolve(join(__dirname, "src"));
+const srcdir = resolve(__dirname, "styling");
 const outDir = resolve(process.env.OUTDIR ?? join(__dirname, "dist"));
 
 export default defineBuildConfig({
   entries: [
     {
-      input: join(srcdir, "styling"),
+      input: srcdir,
       outDir,
       ext: "cjs",
     },
@@ -19,13 +19,13 @@ export default defineBuildConfig({
     "rollup:options"(_ctx, options) {
       options.plugins.push(
         sass({
-          include: join(srcdir, "styling", "**/*.scss"),
+          include: join(srcdir, "**/*.scss"),
         })
       );
 
       options.plugins.push(
         css({
-          include: join(srcdir, "styling", "**/*.scss"),
+          include: join(srcdir, "**/*.scss"),
           transform(code: string) {
             const transform = ({
               type,
