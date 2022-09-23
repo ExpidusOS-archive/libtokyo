@@ -88,6 +88,7 @@ if adwaita.found()
     dependencies: [gtk4_storm, gtk4_light, gtk4_default])
 
   libtokyo_gtk4 = shared_library('tokyo-gtk4', [build_conf_h, build_conf, tokyo_gtk4_res, 'src/gtk4/application.vala', 'src/gtk4/applicationwindow.vala', 'src/gtk4/init.vala', 'src/gtk4/stylemanager.vala', 'src/gtk4/window.vala'],
+    c_args: ['-DG_LOG_DOMAIN="TokyoGtk"'],
     vala_gir: 'TokyoGtk4-@0@.gir'.format(shortver.split('-')[0]),
     dependencies: [adwaita],
     version: shortver.split('-')[0],
@@ -134,6 +135,7 @@ if handy.found()
     dependencies: [gtk3_storm, gtk3_light, gtk3_default])
 
   libtokyo_gtk3 = shared_library('tokyo-gtk3', [build_conf_h, build_conf, tokyo_gtk3_res, 'src/gtk3/application.vala', 'src/gtk3/applicationwindow.vala', 'src/gtk3/init.vala', 'src/gtk3/stylemanager.vala', 'src/gtk3/window.vala'],
+    c_args: ['-DG_LOG_DOMAIN="TokyoGtk"'],
     vala_gir: 'TokyoGtk3-@0@.gir'.format(shortver.split('-')[0]),
     dependencies: [handy],
     version: shortver.split('-')[0],
