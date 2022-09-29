@@ -1,54 +1,104 @@
 $contrast: 'normal';
 $variant: 'dark';
 
-@function gtkcolor($c) {
-  @return unquote("@#{$c}");
-}
+$accent_color: scale-color(map-get($colors, 'blue'), $lightness: -10%);
+$accent_bg_color: map-get($colors, 'blue');
+$accent_fg_color: map-get($colors, 'neutral-text');
 
-$blue_1: gtkcolor(blue_1);
-$blue_2: gtkcolor(blue_2);
-$blue_3: gtkcolor(blue_3);
-$blue_4: gtkcolor(blue_4);
-$blue_5: gtkcolor(blue_5);
+$destructive_color: scale-color(map-get($colors, 'red'), $lightness: -10%);
+$destructive_bg_color: map-get($colors, 'red');
+$destructive_fg_color: map-get($colors, 'neutral-text');
 
-$green_1: gtkcolor(green_1);
-$green_2: gtkcolor(green_2);
-$green_3: gtkcolor(green_3);
-$green_4: gtkcolor(green_4);
-$green_5: gtkcolor(green_5);
+$success_color: scale-color(map-get($colors, 'green'), $lightness: -10%);
+$success_bg_color: map-get($colors, 'green');
+$success_fg_color: map-get($colors, 'neutral-text');
 
-$orange_1: gtkcolor(orange_1);
-$orange_2: gtkcolor(orange_2);
-$orange_3: gtkcolor(orange_3);
-$orange_4: gtkcolor(orange_4);
-$orange_5: gtkcolor(orange_5);
+$warning_color: scale-color(map-get($colors, 'orange'), $lightness: -10%);
+$warning_bg_color: map-get($colors, 'yellow');
+$warning_fg_color: map-get($colors, 'neutral-text');
 
-$red_1: gtkcolor(red_1);
-$red_2: gtkcolor(red_2);
-$red_3: gtkcolor(red_3);
-$red_4: gtkcolor(red_4);
-$red_5: gtkcolor(red_5);
+$error_color: scale-color(map-get($colors, 'red'), $lightness: -10%);
+$error_bg_color: map-get($colors, 'red');
+$error_fg_color: map-get($colors, 'neutral-text');
 
-$purple_1: gtkcolor(purple_1);
-$purple_2: gtkcolor(purple_2);
-$purple_3: gtkcolor(purple_3);
-$purple_4: gtkcolor(purple_4);
-$purple_5: gtkcolor(purple_5);
+$window_bg_color: map-get($colors, 'background');
+$window_fg_color: map-get($colors, 'accent-text');
 
-$brown_1: gtkcolor(brown_1);
-$brown_2: gtkcolor(brown_2);
-$brown_3: gtkcolor(brown_3);
-$brown_4: gtkcolor(brown_4);
-$brown_5: gtkcolor(brown_5);
+$view_bg_color: map-get($colors, 'background');
+$view_fg_color: map-get($colors, 'accent-text');
 
-$light_1: gtkcolor(light_1);
-$light_2: gtkcolor(light_2);
-$light_3: gtkcolor(light_3);
-$light_4: gtkcolor(light_4);
-$light_5: gtkcolor(light_5);
+$headerbar_bg_color: map-get($colors, 'secondary-background');
+$headerbar_fg_color: map-get($colors, 'secondary-text');
+$headerbar_border_color: map-get($colors, 'secondary-background-border');
+$headerbar_backdrop_color: map-get($colors, 'secondary-background');
+$headerbar_shade_color: map-get($colors, 'secondary-background-border');
+
+$card_bg_color: mix(map-get($colors, 'background'), map-get($colors, 'secondary-background'), 50%);
+$card_fg_color: map-get($colors, 'text');
+$card_shade_color: mix(map-get($colors, 'background-border'), map-get($colors, 'secondary-background-border'), 50%);
+
+$popover_bg_color: map-get($colors, 'secondary-background');
+$popover_fg_color: map-get($colors, 'secondary-text');
+
+$shade_color: map-get($colors, 'background');
+$scrollbar_outline_color: map-get($colors, 'background-border');
+$borders: map-get($colors, 'background-border');
+
+$blue_1: map-get($colors, 'blue-light');
+$blue_2: map-get($colors, 'blue-sky');
+$blue_3: mix(map-get($colors, 'blue'), map-get($colors, 'blue-dark'), 33%);
+$blue_4: mix(map-get($colors, 'blue'), map-get($colors, 'blue-dark'), 66%);
+$blue_5: map-get($colors, 'blue-dark');
+
+$green_1: map-get($colors, 'green');
+$green_2: mix(map-get($colors, 'green'), map-get($colors, 'green-dark'), 25%);
+$green_3: mix(map-get($colors, 'green'), map-get($colors, 'green-dark'), 50%);
+$green_4: mix(map-get($colors, 'green'), map-get($colors, 'green-dark'), 75%);
+$green_5: map-get($colors, 'green-dark');
+
+$yellow_1: map-get($colors, 'yellow');
+$yellow_2: scale-color(map-get($colors, 'yellow'), $lightness: -5%);
+$yellow_3: scale-color(map-get($colors, 'yellow'), $lightness: -10%);
+$yellow_4: scale-color(map-get($colors, 'yellow'), $lightness: -15%);
+$yellow_5: scale-color(map-get($colors, 'yellow'), $lightness: -20%);
+
+$orange_1: map-get($colors, 'orange');
+$orange_2: scale-color(map-get($colors, 'orange'), $lightness: -5%);
+$orange_3: scale-color(map-get($colors, 'orange'), $lightness: -10%);
+$orange_4: scale-color(map-get($colors, 'orange'), $lightness: -15%);
+$orange_5: scale-color(map-get($colors, 'orange'), $lightness: -20%);
+
+$red_1: map-get($colors, 'red');
+$red_2: scale-color(map-get($colors, 'red'), $lightness: -5%);
+$red_3: scale-color(map-get($colors, 'red'), $lightness: -10%);
+$red_4: scale-color(map-get($colors, 'red'), $lightness: -15%);
+$red_5: scale-color(map-get($colors, 'red'), $lightness: -20%);
+
+$purple_1: map-get($colors, 'purple');
+$purple_2: scale-color(map-get($colors, 'purple'), $lightness: -5%);
+$purple_3: scale-color(map-get($colors, 'purple'), $lightness: -10%);
+$purple_4: scale-color(map-get($colors, 'purple'), $lightness: -15%);
+$purple_5: scale-color(map-get($colors, 'purple'), $lightness: -20%);
+
+$brown_1: map-get($colors, 'brown');
+$brown_2: scale-color(map-get($colors, 'brown'), $lightness: -5%);
+$brown_3: scale-color(map-get($colors, 'brown'), $lightness: -10%);
+$brown_4: scale-color(map-get($colors, 'brown'), $lightness: -15%);
+$brown_5: scale-color(map-get($colors, 'brown'), $lightness: -20%);
+
+$light_1: map-get($colors, 'white');
+$light_2: scale-color(map-get($colors, 'white'), $lightness: -5%);
+$light_3: scale-color(map-get($colors, 'white'), $lightness: -10%);
+$light_4: scale-color(map-get($colors, 'white'), $lightness: -15%);
+$light_5: scale-color(map-get($colors, 'white'), $lightness: -20%);
+
+$dark_1: map-get($colors, 'grey');
+$dark_2: map-get($colors, 'grey-light');
+$dark_3: map-get($colors, 'grey-medium');
+$dark_4: map-get($colors, 'grey-dark');
+$dark_5: map-get($colors, 'black');
 
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_functions';
-@import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_defaults';
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_colors';
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_drawing';
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_common';

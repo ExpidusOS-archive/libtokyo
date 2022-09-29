@@ -93,3 +93,9 @@ label {
 @define-color light_3 #{"" + scale-color(map-get($colors, 'white'), $lightness: -10%)};
 @define-color light_4 #{"" + scale-color(map-get($colors, 'white'), $lightness: -15%)};
 @define-color light_5 #{"" + scale-color(map-get($colors, 'white'), $lightness: -20%)};
+
+@define-color dark_1 #{"" + map-get($colors, 'grey')};
+@define-color dark_2 #{"" + map-get($colors, 'grey-light')};
+@define-color dark_3 #{"" + map-get($colors, 'grey-medium')};
+@define-color dark_4 #{"" + map-get($colors, 'grey-dark')};
+@define-color dark_5 #{"" + map-get($colors, 'black')};
