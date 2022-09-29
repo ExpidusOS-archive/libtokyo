@@ -42,25 +42,25 @@
         in {
           default = mkDerivation {
             name = "libtokyo";
-            mesonFlags = ["-Dntk=enabled" "-Dgtk4=enabled" "-Dgtk3=enabled"];
+            mesonFlags = ["-Dntk=enabled" "-Dgtk4=enabled" "-Dgtk3=enabled" "-Dnodejs=disabled"];
             buildInputs = with pkgs; [ gtk3 libhandy gtk4 libadwaita ntk-pkg ];
           };
 
           gtk3 = mkDerivation {
             name = "libtokyo-gtk3";
-            mesonFlags = ["-Dntk=disabled" "-Dgtk4=disabled" "-Dgtk3=enabled"];
+            mesonFlags = ["-Dntk=disabled" "-Dgtk4=disabled" "-Dgtk3=enabled" "-Dnodejs=disabled"];
             buildInputs = with pkgs; [ gtk3 libhandy ];
           };
 
           gtk4 = mkDerivation {
             name = "libtokyo-gtk4";
-            mesonFlags = ["-Dntk=disabled" "-Dgtk4=enabled" "-Dgtk3=disabled"];
+            mesonFlags = ["-Dntk=disabled" "-Dgtk4=enabled" "-Dgtk3=disabled" "-Dnodejs=disabled"];
             buildInputs = with pkgs; [ gtk4 libadwaita ];
           };
 
           ntk = mkDerivation {
             name = "libtokyo-ntk";
-            mesonFlags = ["-Dntk=enabled" "-Dgtk4=disabled" "-Dgtk3=disabled"];
+            mesonFlags = ["-Dntk=enabled" "-Dgtk4=disabled" "-Dgtk3=disabled" "-Dnodejs=disabled"];
             buildInputs = with pkgs; [ ntk-pkg ];
           };
         });
