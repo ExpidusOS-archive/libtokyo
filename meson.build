@@ -26,6 +26,11 @@ node = find_program('node', required: get_option('nodejs'))
 sass = find_program('sass', './node_modules/.bin/sass', required: true)
 unbuild = find_program('unbuild', './node_modules/.bin/unbuild', required: node.found())
 
+sass_flags = ['-I' + join_paths(meson.project_source_root(), 'styling')]
+if sass.full_path() != join_paths(meson.project_source_root(), 'node_modules', '.bin', 'sass')
+  sass_flags += ['--default-encoding=UTF-8']
+endif
+
 if node.found() and git.found()
   run_command([node, './scripts/update-package.js', shortver])
 endif
