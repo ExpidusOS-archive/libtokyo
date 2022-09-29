@@ -1,7 +1,60 @@
 $contrast: 'normal';
+$variant: 'dark';
 
-@import './functions.scss';
-@import './colors.scss';
-@import './drawing.scss';
-@import './common.scss';
-@import './compat-colors.scss';
+@function gtkcolor($c) {
+  @return unquote("@#{$c}");
+}
+
+$blue_1: gtkcolor(blue_1);
+$blue_2: gtkcolor(blue_2);
+$blue_3: gtkcolor(blue_3);
+$blue_4: gtkcolor(blue_4);
+$blue_5: gtkcolor(blue_5);
+
+$green_1: gtkcolor(green_1);
+$green_2: gtkcolor(green_2);
+$green_3: gtkcolor(green_3);
+$green_4: gtkcolor(green_4);
+$green_5: gtkcolor(green_5);
+
+$orange_1: gtkcolor(orange_1);
+$orange_2: gtkcolor(orange_2);
+$orange_3: gtkcolor(orange_3);
+$orange_4: gtkcolor(orange_4);
+$orange_5: gtkcolor(orange_5);
+
+$red_1: gtkcolor(red_1);
+$red_2: gtkcolor(red_2);
+$red_3: gtkcolor(red_3);
+$red_4: gtkcolor(red_4);
+$red_5: gtkcolor(red_5);
+
+$purple_1: gtkcolor(purple_1);
+$purple_2: gtkcolor(purple_2);
+$purple_3: gtkcolor(purple_3);
+$purple_4: gtkcolor(purple_4);
+$purple_5: gtkcolor(purple_5);
+
+$brown_1: gtkcolor(brown_1);
+$brown_2: gtkcolor(brown_2);
+$brown_3: gtkcolor(brown_3);
+$brown_4: gtkcolor(brown_4);
+$brown_5: gtkcolor(brown_5);
+
+$light_1: gtkcolor(light_1);
+$light_2: gtkcolor(light_2);
+$light_3: gtkcolor(light_3);
+$light_4: gtkcolor(light_4);
+$light_5: gtkcolor(light_5);
+
+@import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_functions';
+@import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_defaults';
+@import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_colors';
+@import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_drawing';
+@import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_common';
+@import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_colors-public';
+@import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_custom';
+@import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_libhandy';
+@import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_granite';
+@import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_apps';
+@import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_phosh';

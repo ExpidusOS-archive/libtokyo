@@ -22,7 +22,7 @@ if git.found()
 	endif
 endif
 
-node = find_program('node', required: false)
+node = find_program('node', required: get_option('nodejs'))
 sass = find_program('sass', './node_modules/.bin/sass', required: true)
 unbuild = find_program('unbuild', './node_modules/.bin/unbuild', required: node.found())
 
@@ -50,7 +50,7 @@ conf_data.set('VERSION', longver)
 conf_data.set('BUILDDIR', meson.current_build_dir())
 conf_data.set('SOURCEDIR', meson.current_source_dir())
 
-if unbuild.found()
+if unbuild.found() and node.found()
   custom_target('nodejs',
     output: 'output',
     input: 'styling/index.ts',
