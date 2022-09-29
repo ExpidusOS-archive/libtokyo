@@ -7,3 +7,5 @@ configure_file(input: '../index.theme.in',
   configuration: gtk3_theme_default_conf_data,
   install: true,
   install_dir: join_paths(datadir, 'themes', 'Tokyo-Night'))
+
+subdir('gtk-3.0')
