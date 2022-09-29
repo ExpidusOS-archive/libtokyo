@@ -68,3 +68,4 @@ endif
 
 subdir('gtk4')
 subdir('gtk3')
+subdir('theme')
