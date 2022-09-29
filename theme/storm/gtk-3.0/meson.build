@@ -1,4 +1,4 @@
-custom_target('theme-gtk3-storm',
+theme_gtk3_storm = custom_target('theme-gtk3-storm',
   output: 'gtk.css',
   input: '../../../gtk3/styling/storm.scss',
   build_always: true,

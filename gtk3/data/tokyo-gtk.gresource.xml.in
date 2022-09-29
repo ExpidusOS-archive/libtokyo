@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/com/expidus/tokyogtk">
-    <file alias="gtk-default.css">@BUILDDIR@/gtk3/gtk-default.css</file>
-    <file alias="gtk-light.css">@BUILDDIR@/gtk3/gtk-light.css</file>
-    <file alias="gtk-storm.css">@BUILDDIR@/gtk3/gtk-storm.css</file>
+    <file alias="gtk-default.css">@BUILDDIR@/theme/default/gtk-3.0/gtk.css</file>
+    <file alias="gtk-light.css">@BUILDDIR@/theme/light/gtk-3.0/gtk.css</file>
+    <file alias="gtk-storm.css">@BUILDDIR@/theme/storm/gtk-3.0/gtk.css</file>
     <file alias="assets/bullet-symbolic.svg">@SOURCEDIR@/gtk3/deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/assets/bullet-symbolic.svg</file>
     <file alias="assets/bullet-symbolic.symbolic.png">@SOURCEDIR@/gtk3/deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/assets/bullet-symbolic.symbolic.png</file>
     <file alias="assets/bullet@2-symbolic.symbolic.png">@SOURCEDIR@/gtk3/deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/assets/bullet@2-symbolic.symbolic.png</file>

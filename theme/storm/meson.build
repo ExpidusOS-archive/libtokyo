@@ -7,3 +7,5 @@ configure_file(input: '../index.theme.in',
   configuration: gtk3_theme_storm_conf_data,
   install: true,
   install_dir: join_paths(datadir, 'themes', 'Tokyo-Night-Storm'))
+
+subdir('gtk-3.0')
