@@ -13,17 +13,17 @@ if adwaita.found()
     output: 'gtk-default.css',
     input: 'styling/default.scss',
     build_always: true,
-    command: [sass, '@INPUT@', '@OUTPUT@', '-I' + join_paths(meson.project_source_root(), 'styling')], '--default-encoding=UTF-8')
+    command: [sass, '@INPUT@', '@OUTPUT@', '-I' + join_paths(meson.project_source_root(), 'styling'), '--default-encoding=UTF-8'])
   gtk4_light = custom_target('styling-gtk4-light',
     output: 'gtk-light.css',
     input: 'styling/light.scss',
     build_always: true,
-    command: [sass, '@INPUT@', '@OUTPUT@', '-I' + join_paths(meson.project_source_root(), 'styling')], '--default-encoding=UTF-8')
+    command: [sass, '@INPUT@', '@OUTPUT@', '-I' + join_paths(meson.project_source_root(), 'styling'), '--default-encoding=UTF-8'])
   gtk4_storm = custom_target('styling-gtk4-storm',
     output: 'gtk-storm.css',
     input: 'styling/storm.scss',
     build_always: true,
-    command: [sass, '@INPUT@', '@OUTPUT@', '-I' + join_paths(meson.project_source_root(), 'styling')], '--default-encoding=UTF-8')
+    command: [sass, '@INPUT@', '@OUTPUT@', '-I' + join_paths(meson.project_source_root(), 'styling'), '--default-encoding=UTF-8'])
 
   tokyo_gtk4_res = gnome.compile_resources('tokyo-gtk4-resources', build_res_gtk4,
     c_name: 'tokyo_gtk',

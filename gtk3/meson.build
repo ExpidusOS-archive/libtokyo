@@ -13,17 +13,17 @@ if handy.found()
     output: 'gtk-default.css',
     input: 'styling/default.scss',
     build_always: true,
-    command: [sass, '@INPUT@', '@OUTPUT@', '-I' + join_paths(meson.project_source_root(), 'styling')], '--default-encoding=UTF-8')
+    command: [sass, '@INPUT@', '@OUTPUT@', '-I' + join_paths(meson.project_source_root(), 'styling'), '--default-encoding=UTF-8'])
   gtk3_light = custom_target('styling-gtk3-light',
     output: 'gtk-light.css',
     input: 'styling/light.scss',
     build_always: true,
-    command: [sass, '@INPUT@', '@OUTPUT@', '-I' + join_paths(meson.project_source_root(), 'styling')], '--default-encoding=UTF-8')
+    command: [sass, '@INPUT@', '@OUTPUT@', '-I' + join_paths(meson.project_source_root(), 'styling'), '--default-encoding=UTF-8'])
   gtk3_storm = custom_target('styling-gtk3-storm',
     output: 'gtk-storm.css',
     input: 'styling/storm.scss',
     build_always: true,
-    command: [sass, '@INPUT@', '@OUTPUT@', '-I' + join_paths(meson.project_source_root(), 'styling')], '--default-encoding=UTF-8')
+    command: [sass, '@INPUT@', '@OUTPUT@', '-I' + join_paths(meson.project_source_root(), 'styling'), '--default-encoding=UTF-8'])
 
   tokyo_gtk3_res = gnome.compile_resources('tokyo-gtk3-resources', build_res_gtk3,
     c_name: 'tokyo_gtk',
