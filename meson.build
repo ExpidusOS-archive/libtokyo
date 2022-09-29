@@ -36,6 +36,9 @@ if node.found() and git.found()
 endif
 
 adwaita = dependency('libadwaita-1', required: get_option('gtk4'), version: '>= 1.1.0')
+gresource = find_program('gresource', required: adwaita.found())
+grep = find_program('grep', required: gresource.found())
+
 handy = dependency('libhandy-1', required: get_option('gtk3'), version: '>= 1.6.0')
 ntk = dependency('ntk', required: get_option('ntk').enabled())
 has_ntk = ntk.found()
