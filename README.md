@@ -8,6 +8,7 @@ The `libadwaita`-like library for ExpidusOS, includes GTK themes for both 3.0 an
 
 * `node` (**version** >= 16, **only if using `gtk4` option**)
 * `meson`
+* `gettext`
 * `pkg-config`
 * `sass` (**required if not using nodejs**)
 * `vala`
