@@ -13,7 +13,14 @@ tokyo_gtk3_res = gnome.compile_resources('tokyo-gtk3-resources', build_res_gtk3,
   c_name: 'tokyo_gtk',
   dependencies: [theme_gtk3_default, theme_gtk3_light, theme_gtk3_storm])
 
-libtokyo_gtk3 = shared_library('tokyo-gtk3', [build_conf_gtk3, tokyo_gtk3_res, 'lib/application.vala', 'lib/applicationwindow.vala', 'lib/init.vala', 'lib/stylemanager.vala', 'lib/window.vala'],
+libtokyo_gtk3_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala', 'lib/init.vala', 'lib/stylemanager.vala', 'lib/window.vala']
+libtokyo_gtk3_sources = [build_conf_gtk3]
+
+foreach src : libtokyo_gtk3_rel_sources
+  libtokyo_gtk3_sources += [join_paths(meson.current_source_dir(), src)]
+endforeach
+
+libtokyo_gtk3 = shared_library('tokyo-gtk3', build_conf_gtk3, tokyo_gtk3_res, libtokyo_gtk3_rel_sources,
   c_args: ['-DG_LOG_DOMAIN="TokyoGtk"', '-DGETTEXT_PACKAGE="libtokyo"'],
   vala_args: ['--define=GETTEXT_PACKAGE="libtokyo"'],
   vala_gir: 'TokyoGtk3-@0@.gir'.format(shortver.split('-')[0]),
@@ -31,3 +38,5 @@ pkg.generate(libtokyo_gtk3,
 
 executable('tokyo-gtk3-example', ['examples/main.vala'],
   dependencies: [libtokyo_gtk3_dep])
+
+subdir('docs', if_found: [valadoc])

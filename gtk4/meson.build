@@ -25,11 +25,18 @@ gtk4_storm = custom_target('styling-gtk4-storm',
   build_always: true,
   command: [sass, '@INPUT@', '@OUTPUT@', sass_flags])
 
+libtokyo_gtk4_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala', 'lib/init.vala', 'lib/stylemanager.vala', 'lib/window.vala']
+libtokyo_gtk4_sources = [build_conf_gtk4]
+
+foreach src : libtokyo_gtk4_rel_sources
+  libtokyo_gtk4_sources += [join_paths(meson.current_source_dir(), src)]
+endforeach
+
 tokyo_gtk4_res = gnome.compile_resources('tokyo-gtk4-resources', build_res_gtk4,
   c_name: 'tokyo_gtk',
   dependencies: [gtk4_storm, gtk4_light, gtk4_default])
 
-libtokyo_gtk4 = shared_library('tokyo-gtk4', [build_conf_gtk4, tokyo_gtk4_res, 'lib/application.vala', 'lib/applicationwindow.vala', 'lib/init.vala', 'lib/stylemanager.vala', 'lib/window.vala'],
+libtokyo_gtk4 = shared_library('tokyo-gtk4', build_conf_gtk4, tokyo_gtk4_res, libtokyo_gtk4_rel_sources,
   c_args: ['-DG_LOG_DOMAIN="TokyoGtk"', '-DGETTEXT_PACKAGE="libtokyo"'],
   vala_args: ['--define=GETTEXT_PACKAGE="libtokyo"'],
   vala_gir: 'TokyoGtk4-@0@.gir'.format(shortver.split('-')[0]),
@@ -47,3 +54,5 @@ pkg.generate(libtokyo_gtk4,
 
 executable('tokyo-gtk4-example', ['examples/main.vala'],
   dependencies: [libtokyo_gtk4_dep])
+
+subdir('docs', if_found: [valadoc])
