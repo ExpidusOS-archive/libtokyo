@@ -29,11 +29,9 @@ tokyo_gtk4_res = gnome.compile_resources('tokyo-gtk4-resources', build_res_gtk4,
   c_name: 'tokyo_gtk',
   dependencies: [gtk4_storm, gtk4_light, gtk4_default])
 
-subdir('po')
-
 libtokyo_gtk4 = shared_library('tokyo-gtk4', [build_conf_gtk4, tokyo_gtk4_res, 'lib/application.vala', 'lib/applicationwindow.vala', 'lib/init.vala', 'lib/stylemanager.vala', 'lib/window.vala'],
-  c_args: ['-DG_LOG_DOMAIN="TokyoGtk"', '-DGETTEXT_PACKAGE="libtokyo-gtk4"'],
-  vala_args: ['--define=GETTEXT_PACKAGE="libtokyo-gtk4"'],
+  c_args: ['-DG_LOG_DOMAIN="TokyoGtk"', '-DGETTEXT_PACKAGE="libtokyo"'],
+  vala_args: ['--define=GETTEXT_PACKAGE="libtokyo"'],
   vala_gir: 'TokyoGtk4-@0@.gir'.format(shortver.split('-')[0]),
   dependencies: [adwaita],
   version: shortver.split('-')[0],

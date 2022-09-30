@@ -76,6 +76,7 @@ if unbuild.found() and node.found()
     command: [unbuild, meson.current_source_dir()])
 endif
 
+subdir('po')
 subdir('build-tools')
 subdir('theme')
 subdir('gtk4', if_found: [adwaita])
