@@ -56,3 +56,7 @@ executable('tokyo-gtk4-example', ['examples/main.vala'],
   dependencies: [libtokyo_gtk4_dep])
 
 subdir('docs', if_found: [valadoc])
+
+if get_option('tests')
+  subdir('tests')
+endif
