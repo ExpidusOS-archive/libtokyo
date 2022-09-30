@@ -1,4 +1,4 @@
-foreach name : ['application', 'window']
+foreach name : ['application', 'applicationwindow', 'window']
   test('gtk3/@0@'.format(name), executable('test-@0@'.format(name), name + '.vala',
       c_args: ['-I' + join_paths(meson.project_build_root(), 'gtk3')],
       dependencies: [libtokyo_gtk3_dep]),
