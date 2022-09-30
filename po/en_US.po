@@ -1,14 +1,14 @@
-# English translations for libtokyo package.
-# Copyright (C) 2022 THE libtokyo'S COPYRIGHT HOLDER
+# English translations for libtokyo 0.1.0-prealpha-022c4f1 package.
+# Copyright (C) 2022 Midstall Software
 # This file is distributed under the same license as the libtokyo package.
 # Automatically generated, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libtokyo\n"
+"Project-Id-Version: libtokyo 0.1.0-prealpha-022c4f1 (branch 'master')\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-30 11:10-0700\n"
-"PO-Revision-Date: 2022-09-30 11:10-0700\n"
+"POT-Creation-Date: 2022-09-30 12:27-0700\n"
+"PO-Revision-Date: 2022-09-30 12:27-0700\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_US\n"
