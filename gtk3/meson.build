@@ -1,6 +1,7 @@
 conf_data_gtk3 = configuration_data()
 conf_data_gtk3.merge_from(conf_data)
 conf_data_gtk3.set('GTK_VERSION', '3')
+conf_data_gtk3.set('LOCALDIR', join_paths(datadir, 'locale'))
 
 build_conf_gtk3 = configure_file(input: 'lib/build.vala.in', output: 'build.vala',
  configuration: conf_data_gtk3)

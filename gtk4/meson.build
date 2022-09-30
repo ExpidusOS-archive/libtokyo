@@ -1,6 +1,7 @@
 conf_data_gtk4 = configuration_data()
 conf_data_gtk4.merge_from(conf_data)
 conf_data_gtk4.set('GTK_VERSION', '4')
+conf_data_gtk4.set('LOCALDIR', join_paths(datadir, 'locale'))
 
 build_conf_gtk4 = configure_file(input: 'lib/build.vala.in', output: 'build.vala',
  configuration: conf_data_gtk4)
