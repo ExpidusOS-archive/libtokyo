@@ -16,5 +16,12 @@ theme_gtk4_light = custom_target('theme-gtk4-default',
   install_dir: join_paths(datadir, 'themes', 'Tokyo-Night-Light', 'gtk-4.0'))
 
 foreach asset : adwaita_assets
-  install_data(asset.full_path(), install_dir: join_paths(datadir, 'themes', 'Tokyo-Night-Light', 'gtk-4.0', 'assets'))
+  asset_name = fs.name(asset.full_path())
+
+  custom_target('theme-gtk4-default-asset-@0@'.format(asset_name),
+    input: asset,
+    output: asset_name,
+    command: ['cp', '@INPUT@', '@OUTPUT@'],
+    install: true,
+    install_dir: join_paths(datadir, 'themes', 'Tokyo-Night', 'gtk-4.0', 'assets'))
 endforeach
