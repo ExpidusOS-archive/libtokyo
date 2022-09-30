@@ -1,0 +1,15 @@
+*.scss
+*.css
+*.html
+
+!gtk3/styles/**/*.scss
+!gtk3/styles/*.scss
+
+!gtk4/styles/**/*.scss
+!gtk4/styles/*.scss
+
+!styles/**/*.css
+!styles/*.css
+
+gtk3/deps
+subprojects
