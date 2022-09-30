@@ -1,79 +1,83 @@
 namespace TokyoGtk {
-  public class Application : Adw.Application {
-    private Gtk.AboutDialog _about_window;
+public class Application : Adw.Application {
+  private Gtk.AboutDialog _about_window;
 
-    public Gtk.AboutDialog about_window {
-      get {
-        return this._about_window;
-      }
-      set {
-        this._about_window = value;
-      }
+  public Gtk.AboutDialog about_window {
+    get {
+      return this._about_window;
     }
-
-    public Application(string? application_id = null, GLib.ApplicationFlags flags) {
-      Object(application_id: application_id, flags: flags);
+    set {
+      this._about_window = value;
     }
+  }
 
-    public override void startup() {
-      base.startup();
+  public Application(string ?application_id = null, GLib.ApplicationFlags flags) {
+    Object(application_id: application_id, flags: flags);
+  }
 
-      var menu = new GLib.Menu();
+  public override void startup() {
+    base.startup();
 
-      var appMenu = new GLib.Menu();
-      appMenu.append_item(new GLib.MenuItem(N_("About"), "app.about"));
-      appMenu.append_item(new GLib.MenuItem(N_("Preferences"), "app.preferences"));
-      menu.append_section(null, appMenu);
+    var menu = new GLib.Menu();
 
-      var windowMenu = new GLib.Menu();
-      windowMenu.append_item(new GLib.MenuItem(N_("Hide"), "window.hide"));
-      windowMenu.append_item(new GLib.MenuItem(N_("Hide Others"), "window.hide.others"));
-      windowMenu.append_item(new GLib.MenuItem(N_("Show All"), "window.showall"));
-      menu.append_section(null, windowMenu);
+    var appMenu = new GLib.Menu();
+    appMenu.append_item(new GLib.MenuItem(N_("About"), "app.about"));
+    appMenu.append_item(new GLib.MenuItem(N_("Preferences"), "app.preferences"));
+    menu.append_section(null, appMenu);
 
-      var otherMenu = new GLib.Menu();
-      otherMenu.append_item(new GLib.MenuItem(N_("Quit Application"), "app.quit"));
-      menu.append_section(null, otherMenu);
+    var windowMenu = new GLib.Menu();
+    windowMenu.append_item(new GLib.MenuItem(N_("Hide"), "window.hide"));
+    windowMenu.append_item(new GLib.MenuItem(N_("Hide Others"), "window.hide.others"));
+    windowMenu.append_item(new GLib.MenuItem(N_("Show All"), "window.showall"));
+    menu.append_section(null, windowMenu);
 
-      this.set_menubar(menu);
+    var otherMenu = new GLib.Menu();
+    otherMenu.append_item(new GLib.MenuItem(N_("Quit Application"), "app.quit"));
+    menu.append_section(null, otherMenu);
 
-      var aboutAction = new GLib.SimpleAction("about", null);
-      aboutAction.activate.connect(() => {
+    this.set_menubar(menu);
+
+    var aboutAction = new GLib.SimpleAction("about", null);
+    aboutAction.activate.connect(() => {
         if (this.about_window != null) {
           this.about_window.set_application(this);
           this.about_window.set_modal(true);
           this.about_window.set_transient_for(this.get_active_window());
 
-          if (this.about_window.get_visible()) this.about_window.hide();
-          else this.about_window.show();
+          if (this.about_window.get_visible()) {
+            this.about_window.hide();
+          }else{
+            this.about_window.show();
+          }
         }
       });
-      this.add_action(aboutAction);
+    this.add_action(aboutAction);
 
-      var quitAction = new GLib.SimpleAction("quit", null);
-      quitAction.activate.connect(() => {
+    var quitAction = new GLib.SimpleAction("quit", null);
+    quitAction.activate.connect(() => {
         this.quit();
       });
-      this.add_action(quitAction);
+    this.add_action(quitAction);
 
-      TokyoGtk.init();
-      this.init_styling();
-    }
-
-    private void update_stylesheet() {}
-
-    private void init_styling() {
-      var style_manager = StyleManager.get_default();
-
-      style_manager.adw.notify["dark"].connect(() => {
-        this.update_stylesheet();
-      });
-
-      style_manager.adw.notify["high-contrast"].connect(() => {
-        this.update_stylesheet();
-      });
-
-      this.update_stylesheet();
-    }
+    TokyoGtk.init();
+    this.init_styling();
   }
+
+  private void update_stylesheet() {
+  }
+
+  private void init_styling() {
+    var style_manager = StyleManager.get_default();
+
+    style_manager.adw.notify["dark"].connect(() => {
+        this.update_stylesheet();
+      });
+
+    style_manager.adw.notify["high-contrast"].connect(() => {
+        this.update_stylesheet();
+      });
+
+    this.update_stylesheet();
+  }
+}
 }

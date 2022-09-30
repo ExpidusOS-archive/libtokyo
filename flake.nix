@@ -31,7 +31,7 @@
             outputs = [ "out" "dev" "devdoc" ];
 
             enableParallelBuilding = true;
-            nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass nodejs ];
+            nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass nodejs uncrustify ];
 
             meta = with pkgs.lib; {
               homepage = "https://github.com/ExpidusOS/libtokyo";
@@ -88,6 +88,7 @@
               libadwaita.dev
               libadwaita.devdoc
               ntk-pkg
+              uncrustify
             ];
 
             shellHook = ''

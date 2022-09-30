@@ -26,11 +26,16 @@ gtk4_storm = custom_target('styling-gtk4-storm',
   command: [sass, '@INPUT@', '@OUTPUT@', sass_flags])
 
 libtokyo_gtk4_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala', 'lib/init.vala', 'lib/stylemanager.vala', 'lib/window.vala']
-libtokyo_gtk4_sources = [build_conf_gtk4]
+libtokyo_gtk4_sources = []
 
 foreach src : libtokyo_gtk4_rel_sources
   libtokyo_gtk4_sources += [join_paths(meson.current_source_dir(), src)]
 endforeach
+
+run_target('gtk4-prettier',
+  command: [uncrustify, '-c', join_paths(meson.project_source_root(), 'uncrustify.cfg'), '--no-backup', libtokyo_gtk4_sources])
+
+libtokyo_gtk4_sources += [build_conf_gtk4]
 
 tokyo_gtk4_res = gnome.compile_resources('tokyo-gtk4-resources', build_res_gtk4,
   c_name: 'tokyo_gtk',

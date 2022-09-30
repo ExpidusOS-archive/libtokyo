@@ -31,6 +31,7 @@ if adwaita.found()
   use_nodejs = true
 endif
 
+uncrustify = find_program('uncrustify', native: true, required: false)
 valadoc = find_program('valadoc', required: get_option('docs'), native: true)
 node = find_program('node', required: use_nodejs, native: true)
 sass = find_program('sass', dirs: [join_paths(meson.project_source_root(), 'node_modules', '.bin')], required: true, native: true)

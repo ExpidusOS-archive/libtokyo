@@ -14,11 +14,16 @@ tokyo_gtk3_res = gnome.compile_resources('tokyo-gtk3-resources', build_res_gtk3,
   dependencies: [theme_gtk3_default, theme_gtk3_light, theme_gtk3_storm])
 
 libtokyo_gtk3_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala', 'lib/init.vala', 'lib/stylemanager.vala', 'lib/window.vala']
-libtokyo_gtk3_sources = [build_conf_gtk3]
+libtokyo_gtk3_sources = []
 
 foreach src : libtokyo_gtk3_rel_sources
   libtokyo_gtk3_sources += [join_paths(meson.current_source_dir(), src)]
 endforeach
+
+run_target('gtk3-prettier',
+  command: [uncrustify, '-c', join_paths(meson.project_source_root(), 'uncrustify.cfg'), '--no-backup', libtokyo_gtk3_sources])
+
+libtokyo_gtk3_sources += [build_conf_gtk3]
 
 libtokyo_gtk3 = shared_library('tokyo-gtk3', build_conf_gtk3, tokyo_gtk3_res, libtokyo_gtk3_rel_sources,
   c_args: ['-DG_LOG_DOMAIN="TokyoGtk"', '-DGETTEXT_PACKAGE="libtokyo"'],
