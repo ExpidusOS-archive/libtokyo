@@ -1,44 +1,44 @@
 namespace TokyoGtk {
-public class Application : Adw.Application {
-  private Gtk.AboutDialog _about_window;
+  public class Application : Adw.Application {
+    private Gtk.AboutDialog _about_window;
 
-  public Gtk.AboutDialog about_window {
-    get {
-      return this._about_window;
+    public Gtk.AboutDialog about_window {
+      get {
+        return this._about_window;
+      }
+      set {
+        this._about_window = value;
+      }
     }
-    set {
-      this._about_window = value;
+
+    public Application(string ?application_id = null, GLib.ApplicationFlags flags) {
+      Object(application_id: application_id, flags: flags);
     }
-  }
 
-  public Application(string ?application_id = null, GLib.ApplicationFlags flags) {
-    Object(application_id: application_id, flags: flags);
-  }
+    public override void startup() {
+      base.startup();
 
-  public override void startup() {
-    base.startup();
+      var menu = new GLib.Menu();
 
-    var menu = new GLib.Menu();
+      var appMenu = new GLib.Menu();
+      appMenu.append_item(new GLib.MenuItem(N_("About"), "app.about"));
+      appMenu.append_item(new GLib.MenuItem(N_("Preferences"), "app.preferences"));
+      menu.append_section(null, appMenu);
 
-    var appMenu = new GLib.Menu();
-    appMenu.append_item(new GLib.MenuItem(N_("About"), "app.about"));
-    appMenu.append_item(new GLib.MenuItem(N_("Preferences"), "app.preferences"));
-    menu.append_section(null, appMenu);
+      var windowMenu = new GLib.Menu();
+      windowMenu.append_item(new GLib.MenuItem(N_("Hide"), "window.hide"));
+      windowMenu.append_item(new GLib.MenuItem(N_("Hide Others"), "window.hide.others"));
+      windowMenu.append_item(new GLib.MenuItem(N_("Show All"), "window.showall"));
+      menu.append_section(null, windowMenu);
 
-    var windowMenu = new GLib.Menu();
-    windowMenu.append_item(new GLib.MenuItem(N_("Hide"), "window.hide"));
-    windowMenu.append_item(new GLib.MenuItem(N_("Hide Others"), "window.hide.others"));
-    windowMenu.append_item(new GLib.MenuItem(N_("Show All"), "window.showall"));
-    menu.append_section(null, windowMenu);
+      var otherMenu = new GLib.Menu();
+      otherMenu.append_item(new GLib.MenuItem(N_("Quit Application"), "app.quit"));
+      menu.append_section(null, otherMenu);
 
-    var otherMenu = new GLib.Menu();
-    otherMenu.append_item(new GLib.MenuItem(N_("Quit Application"), "app.quit"));
-    menu.append_section(null, otherMenu);
+      this.set_menubar(menu);
 
-    this.set_menubar(menu);
-
-    var aboutAction = new GLib.SimpleAction("about", null);
-    aboutAction.activate.connect(() => {
+      var aboutAction = new GLib.SimpleAction("about", null);
+      aboutAction.activate.connect(() => {
         if (this.about_window != null) {
           this.about_window.set_application(this);
           this.about_window.set_modal(true);
@@ -51,33 +51,33 @@ public class Application : Adw.Application {
           }
         }
       });
-    this.add_action(aboutAction);
+      this.add_action(aboutAction);
 
-    var quitAction = new GLib.SimpleAction("quit", null);
-    quitAction.activate.connect(() => {
+      var quitAction = new GLib.SimpleAction("quit", null);
+      quitAction.activate.connect(() => {
         this.quit();
       });
-    this.add_action(quitAction);
+      this.add_action(quitAction);
 
-    TokyoGtk.init();
-    this.init_styling();
-  }
+      TokyoGtk.init();
+      this.init_styling();
+    }
 
-  private void update_stylesheet() {
-  }
+    private void update_stylesheet() {
+    }
 
-  private void init_styling() {
-    var style_manager = StyleManager.get_default();
+    private void init_styling() {
+      var style_manager = StyleManager.get_default();
 
-    style_manager.adw.notify["dark"].connect(() => {
+      style_manager.adw.notify["dark"].connect(() => {
         this.update_stylesheet();
       });
 
-    style_manager.adw.notify["high-contrast"].connect(() => {
+      style_manager.adw.notify["high-contrast"].connect(() => {
         this.update_stylesheet();
       });
 
-    this.update_stylesheet();
+      this.update_stylesheet();
+    }
   }
-}
 }

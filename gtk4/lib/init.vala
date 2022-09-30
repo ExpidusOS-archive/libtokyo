@@ -1,26 +1,26 @@
 namespace TokyoGtk {
-public extern GLib.Resource get_resource();
+  public extern GLib.Resource get_resource();
 
-private static bool _is_init = false;
+  private static bool _is_init = false;
 
-public static bool is_initialized() {
-  return _is_init;
-}
-
-public static void init() {
-  if (_is_init) {
-    return;
+  public static bool is_initialized() {
+    return _is_init;
   }
 
-  _is_init = true;
+  public static void init() {
+    if (_is_init) {
+      return;
+    }
 
-  GLib.debug("Initializing Tokyo GTK");
-  GLib.resources_register(get_resource());
+    _is_init = true;
 
-  Adw.init();
-  StyleManager.ensure();
+    GLib.debug("Initializing Tokyo GTK");
+    GLib.resources_register(get_resource());
 
-  GLib.Intl.bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-  GLib.Intl.bindtextdomain(GETTEXT_PACKAGE, LOCALDIR);
-}
+    Adw.init();
+    StyleManager.ensure();
+
+    GLib.Intl.bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+    GLib.Intl.bindtextdomain(GETTEXT_PACKAGE, LOCALDIR);
+  }
 }
