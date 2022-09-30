@@ -15,13 +15,23 @@ localstatedir = get_option('localstatedir')
 longver = '@0@'.format(meson.project_version())
 shortver = longver
 git = find_program('git', native: true, required: false)
+conf_data = configuration_data()
+i18n_args = ['--package-version=@0@'.format(longver), '--copyright-holder=Midstall Software']
+
 if git.found()
 	git_commit = run_command([git, 'rev-parse', '--short', 'HEAD'])
 	git_branch = run_command([git, 'rev-parse', '--abbrev-ref', 'HEAD'])
+  git_config_username = run_command([git, 'config', '--get', 'user.name'])
+
 	if git_commit.returncode() == 0 and git_branch.returncode() == 0
     shortver = '@0@-@1@'.format(meson.project_version(), git_commit.stdout().strip())
 		longver = '@0@ (branch \'@1@\')'.format(shortver, git_branch.stdout().strip())
 	endif
+
+  if git_config_username.returncode() == 0
+    git_username = git_config_username.stdout().strip()
+    conf_data.set('BUILD_USER', git_username)
+  endif
 endif
 
 adwaita = dependency('libadwaita-1', required: get_option('gtk4'), version: '>= 1.1.0')
@@ -57,7 +67,6 @@ if not ntk.found() and not get_option('ntk').disabled()
   has_ntk = true
 endif
 
-conf_data = configuration_data()
 conf_data.set('PREFIX', prefix)
 conf_data.set('BINDIR', bindir)
 conf_data.set('DATADIR', datadir)
