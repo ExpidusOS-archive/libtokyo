@@ -13,7 +13,7 @@ namespace TokyoGtk {
     private Hdy.StyleManager _hdy;
     private Gdk.Display _display;
 
-    public Gtk.CssProvider provider {
+    public Gtk.CssProvider? provider {
       get {
         return this._provider;
       }
@@ -62,6 +62,7 @@ namespace TokyoGtk {
     }
 
     public static unowned StyleManager get_for_display(Gdk.Display display) {
+      if (display_style_managers == null) display_style_managers = new GLib.HashTable<Gdk.Display, StyleManager>(GLib.direct_hash, GLib.direct_equal);
       return display_style_managers.get(display);
     }
 
@@ -76,7 +77,7 @@ namespace TokyoGtk {
     }
 
     public static void ensure() {
-      display_style_managers = new GLib.HashTable<Gdk.Display, StyleManager>(GLib.direct_hash, GLib.direct_equal);
+      if (display_style_managers == null) display_style_managers = new GLib.HashTable<Gdk.Display, StyleManager>(GLib.direct_hash, GLib.direct_equal);
       var display_manager = Gdk.DisplayManager.@get();
 
       display_manager.list_displays().@foreach((display) => {
