@@ -67,6 +67,7 @@ namespace TokyoGtk {
     }
 
     private static void register_display(Gdk.Display display) {
+      if (display_style_managers == null) display_style_managers = new GLib.HashTable<Gdk.Display, StyleManager>(GLib.direct_hash, GLib.direct_equal);
       if (!display_style_managers.contains(display)) {
         display_style_managers.insert(display, new StyleManager(display));
 

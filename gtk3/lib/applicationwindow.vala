@@ -15,7 +15,7 @@ namespace TokyoGtk {
       }
     }
 
-    public ApplicationWindow(Gtk.Application app) {
+    public ApplicationWindow(Gtk.Application? app) {
       Object(application: app);
     }
 
