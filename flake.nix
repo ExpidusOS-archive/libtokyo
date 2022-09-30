@@ -2,7 +2,7 @@
   description = "A libadwaita wrapper for ExpidusOS with Tokyo Night's styling";
 
   inputs.ntk = {
-    url = path:./subprojects/ntk;
+    url = path:subprojects/ntk;
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
