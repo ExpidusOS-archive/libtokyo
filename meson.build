@@ -2,6 +2,7 @@ project('libtokyo', 'vala', 'c', license: 'GPL-3.0-only', version: '0.1.0-prealp
 
 gnome = import('gnome')
 pkg = import('pkgconfig')
+fs = import('fs')
 
 prefix = get_option('prefix')
 bindir = prefix / get_option('bindir')
@@ -74,6 +75,7 @@ if unbuild.found() and node.found()
     command: [unbuild, meson.current_source_dir()])
 endif
 
+subdir('build-tools')
 subdir('theme')
 subdir('gtk4', if_found: [adwaita])
 subdir('gtk3', if_found: [handy])
