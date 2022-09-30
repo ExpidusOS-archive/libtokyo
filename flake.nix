@@ -31,7 +31,7 @@
             outputs = [ "out" "dev" ];
 
             enableParallelBuilding = true;
-            nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass ];
+            nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass nodejs ];
 
             meta = with pkgs.lib; {
               homepage = "https://github.com/ExpidusOS/libtokyo";

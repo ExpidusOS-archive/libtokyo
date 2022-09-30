@@ -29,9 +29,9 @@ if adwaita.found()
   use_nodejs = true
 endif
 
-node = find_program('node', required: use_nodejs)
-sass = find_program('sass', './node_modules/.bin/sass', required: true)
-unbuild = find_program('unbuild', './node_modules/.bin/unbuild', required: node.found())
+node = find_program('node', required: use_nodejs, native: true)
+sass = find_program('sass', dirs: [join_paths(meson.project_source_root(), 'node_modules', '.bin')], required: true, native: true)
+unbuild = find_program('unbuild', './node_modules/.bin/unbuild', required: get_option('nodejs'), native: true)
 
 sass_flags = ['-I' + meson.project_source_root(), '-I' + meson.project_build_root()]
 if sass.full_path() != join_paths(meson.project_source_root(), 'node_modules', '.bin', 'sass')
