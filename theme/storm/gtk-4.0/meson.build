@@ -14,3 +14,7 @@ theme_gtk4_storm = custom_target('theme-gtk4-default',
   command: [sass, '@INPUT@', '@OUTPUT@', sass_flags],
   install: true,
   install_dir: join_paths(datadir, 'themes', 'Tokyo-Night-Storm', 'gtk-4.0'))
+
+foreach asset : adwaita_assets
+  install_data(asset.full_path(), install_dir: join_paths(datadir, 'themes', 'Tokyo-Night-Storm', 'gtk-4.0', 'assets'))
+endforeach
