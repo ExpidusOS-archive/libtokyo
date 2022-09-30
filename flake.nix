@@ -28,7 +28,7 @@
           mkDerivation = ({ name, buildInputs, mesonFlags ? [] }: pkgs.stdenv.mkDerivation rec {
             inherit name buildInputs src mesonFlags;
 
-            outputs = [ "out" "dev" ];
+            outputs = [ "out" "dev" "devdoc" ];
 
             enableParallelBuilding = true;
             nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass nodejs ];
