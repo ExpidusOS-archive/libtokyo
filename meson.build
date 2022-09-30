@@ -22,11 +22,18 @@ if git.found()
 	endif
 endif
 
-node = find_program('node', required: get_option('nodejs'))
+adwaita = dependency('libadwaita-1', required: get_option('gtk4'), version: '>= 1.1.0')
+use_nodejs = get_option('nodejs')
+
+if adwaita.found()
+  use_nodejs = true
+endif
+
+node = find_program('node', required: use_nodejs)
 sass = find_program('sass', './node_modules/.bin/sass', required: true)
 unbuild = find_program('unbuild', './node_modules/.bin/unbuild', required: node.found())
 
-sass_flags = ['-I' + join_paths(meson.project_source_root(), 'styling')]
+sass_flags = ['-I' + meson.project_source_root(), '-I' + meson.project_build_root()]
 if sass.full_path() != join_paths(meson.project_source_root(), 'node_modules', '.bin', 'sass')
   sass_flags += ['--default-encoding=UTF-8']
 endif
@@ -35,9 +42,7 @@ if node.found() and git.found()
   run_command([node, './scripts/update-package.js', shortver])
 endif
 
-adwaita = dependency('libadwaita-1', required: get_option('gtk4'), version: '>= 1.1.0')
 gresource = find_program('gresource', required: adwaita.found())
-grep = find_program('grep', required: gresource.found())
 
 handy = dependency('libhandy-1', required: get_option('gtk3'), version: '>= 1.6.0')
 ntk = dependency('ntk', required: get_option('ntk').enabled())

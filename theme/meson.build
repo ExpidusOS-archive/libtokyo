@@ -10,17 +10,17 @@ if adwaita.found()
 
   adwaita_extract = custom_target('adwaita-extract',
     input: adwaita_shlib,
-    output: 'adwaita-extracted.css',
+    output: 'adwaita-extracted.scss',
     capture: true,
     build_by_default: true,
     command: [gresource, 'extract', '@INPUT@', '/org/gnome/Adwaita/styles/base.css'])
 
-  adwaita_styles = custom_target('adwaita-styles',
+  adwaita_styles = custom_target('nodejs',
+    output: 'adwaita.scss',
     input: adwaita_extract,
-    output: 'adwaita.css',
-    capture: true,
+    build_always: true,
     build_by_default: true,
-    command: [grep, '--invert-match', 'define-color', '@INPUT@'])
+    command: [node, join_paths(meson.project_source_root(), 'scripts', 'patch-adwaita-styles.js'), '@INPUT@', '@OUTPUT@'])
 endif
 
 subdir('default')

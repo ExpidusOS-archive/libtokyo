@@ -9,3 +9,4 @@ configure_file(input: '../index.theme.in',
   install_dir: join_paths(datadir, 'themes', 'Tokyo-Night-Light'))
 
 subdir('gtk-3.0')
+subdir('gtk-4.0', if_found: [adwaita])
