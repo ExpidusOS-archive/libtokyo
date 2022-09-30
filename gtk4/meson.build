@@ -29,8 +29,11 @@ if adwaita.found()
     c_name: 'tokyo_gtk',
     dependencies: [gtk4_storm, gtk4_light, gtk4_default])
 
+  subdir('po')
+
   libtokyo_gtk4 = shared_library('tokyo-gtk4', [build_conf_gtk4, tokyo_gtk4_res, 'lib/application.vala', 'lib/applicationwindow.vala', 'lib/init.vala', 'lib/stylemanager.vala', 'lib/window.vala'],
-    c_args: ['-DG_LOG_DOMAIN="TokyoGtk"'],
+    c_args: ['-DG_LOG_DOMAIN="TokyoGtk"', '-DGETTEXT_PACKAGE="libtokyo-gtk4"'],
+    vala_args: ['--define=GETTEXT_PACKAGE="libtokyo-gtk4"'],
     vala_gir: 'TokyoGtk4-@0@.gir'.format(shortver.split('-')[0]),
     dependencies: [adwaita],
     version: shortver.split('-')[0],

@@ -1,6 +1,7 @@
 project('libtokyo', 'vala', 'c', license: 'GPL-3.0-only', version: '0.1.0-prealpha')
 
 gnome = import('gnome')
+i18n = import('i18n')
 pkg = import('pkgconfig')
 fs = import('fs')
 

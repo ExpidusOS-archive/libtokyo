@@ -130,3 +130,5 @@ compile_commands.json
 
 # nix
 result
+
+*.pot

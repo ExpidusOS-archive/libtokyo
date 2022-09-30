@@ -21,18 +21,18 @@ namespace TokyoGtk {
       var menu = new GLib.Menu();
 
       var appMenu = new GLib.Menu();
-      appMenu.append_item(new GLib.MenuItem("About", "app.about"));
-      appMenu.append_item(new GLib.MenuItem("Preferences", "app.preferences"));
+      appMenu.append_item(new GLib.MenuItem(N_("About"), "app.about"));
+      appMenu.append_item(new GLib.MenuItem(N_("Preferences"), "app.preferences"));
       menu.append_section(null, appMenu);
 
       var windowMenu = new GLib.Menu();
-      windowMenu.append_item(new GLib.MenuItem("Hide", "window.hide"));
-      windowMenu.append_item(new GLib.MenuItem("Hide Others", "window.hide.others"));
-      windowMenu.append_item(new GLib.MenuItem("Show All", "window.showall"));
+      windowMenu.append_item(new GLib.MenuItem(N_("Hide"), "window.hide"));
+      windowMenu.append_item(new GLib.MenuItem(N_("Hide Others"), "window.hide.others"));
+      windowMenu.append_item(new GLib.MenuItem(N_("Show All"), "window.showall"));
       menu.append_section(null, windowMenu);
 
       var otherMenu = new GLib.Menu();
-      otherMenu.append_item(new GLib.MenuItem("Quit Application", "app.quit"));
+      otherMenu.append_item(new GLib.MenuItem(N_("Quit Application"), "app.quit"));
       menu.append_section(null, otherMenu);
 
       this.set_menubar(menu);
