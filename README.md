@@ -6,17 +6,17 @@ The `libadwaita`-like library for ExpidusOS, includes GTK themes for both 3.0 an
 
 ### Host
 
-* `node` (**version** >= 16, **only if using `gtk4` option**)
-* `meson`
-* `gettext`
-* `pkg-config`
-* `sass` (**required if not using nodejs**)
-* `vala`
+- `node` (**version** >= 16, **only if using `gtk4` option**)
+- `meson`
+- `gettext`
+- `pkg-config`
+- `sass` (**required if not using nodejs**)
+- `vala`
 
 ### Target
 
-* `libadwaita-1` (**only if using `gtk4` option**)
-* `libhandy-1` (**only if using `gtk3` option**)
+- `libadwaita-1` (**only if using `gtk4` option**)
+- `libhandy-1` (**only if using `gtk3` option**)
 
 ## Building
 
