@@ -23,5 +23,5 @@ foreach asset : adwaita_assets
     output: asset_name,
     command: ['cp', '@INPUT@', '@OUTPUT@'],
     install: true,
-    install_dir: join_paths(datadir, 'themes', 'Tokyo-Night', 'gtk-4.0', 'assets'))
+    install_dir: join_paths(datadir, 'themes', 'Tokyo-Night-Storm', 'gtk-4.0', 'assets'))
 endforeach
