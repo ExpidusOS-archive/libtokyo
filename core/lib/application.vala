@@ -4,6 +4,7 @@ namespace Tokyo {
    */
   public interface ApplicationProvider : GLib.Object {
     public abstract void startup(GLib.Application app);
+    public abstract void shutdown(GLib.Application app);
   }
 
   /**
@@ -12,6 +13,8 @@ namespace Tokyo {
   public abstract class Application : GLib.Application {
     private uint _menu_dbus_id;
     private Provider? _provider;
+    private string? _provider_fn;
+    private string? _provider_lib;
 
     public Provider provider {
       get {
@@ -22,62 +25,20 @@ namespace Tokyo {
         this._provider = value;
       }
     }
-    
-    private int _command_line(GLib.ApplicationCommandLine cmdline) {
-      string? provider_fn = null;
-      string? provider_lib = null;
+
+    construct {
+      bind_i18n();
 
       GLib.OptionEntry[] options = {
-        { "libtokyo-provider-func", '\0', GLib.OptionFlags.NONE, GLib.OptionArg.STRING, ref provider_fn, N_("The GLib get_type function to use for the provider"), "FUNC" },
-        { "libtokyo-provider-lib", '\0', GLib.OptionFlags.NONE, GLib.OptionArg.FILENAME, ref provider_lib, N_("The path to the library to use for loading libtokyo"), "LIB" },
+        { "libtokyo-provider-func", '\0', GLib.OptionFlags.NONE, GLib.OptionArg.STRING, ref this._provider_fn, N_("The GLib get_type function to use for the provider"), "FUNC" },
+        { "libtokyo-provider-lib", '\0', GLib.OptionFlags.NONE, GLib.OptionArg.FILENAME, ref this._provider_lib, N_("The path to the library to use for loading libtokyo"), "LIB" },
         { null }
       };
 
-      string[] args = cmdline.get_arguments();
-      string*[] _args = new string[args.length];
-      for (int i = 0; i < args.length; i++) _args[i] = args[i];
-
-      try {
-        var group = new GLib.OptionGroup("libtokyo", N_("libtokyo Options"), N_("Show all options for the libtokyo library"));
-        group.add_entries(options);
-
-        var optctx = this.create_option_context();
-        optctx.add_group(group);
-
-        unowned string[] tmp = _args;
-        optctx.parse(ref tmp);
-      } catch (GLib.OptionError e) {
-        cmdline.printerr("%s: failed to handle arguments: %s:%d: %s", args[0], e.domain.to_string(), e.code, e.message);
-        return 1;
-      }
-
-      if (provider_lib != null) {
-        if (provider_fn == null) {
-          cmdline.printerr("%s: missing argument \"libtokyo-provider-func\"", args[0]);
-          return 1;
-        }
-
-        this._provider = Provider.load_from_path(provider_lib, provider_fn);
-        global_provider = this.provider;
-
-        if (this._provider == null) {
-          cmdline.printerr("%s: failed to load provider %s with %s", args[0], provider_lib, provider_fn);
-          return 1;
-        }
-      } else {
-        if (provider_fn != null) {
-          cmdline.printerr("%s: missing argument \"libtokyo-provider-lib\"", args[0]);
-          return 1;
-        }
-      }
-      return 0;
-    }
-
-    public override int command_line(GLib.ApplicationCommandLine cmdline) {
-      this.hold();
-      int res = this._command_line(cmdline);
-      this.release();
-      return res;
+      var self = this;
+      var group = new GLib.OptionGroup("libtokyo", N_("libtokyo Options"), N_("Show all options for the libtokyo library"));
+      group.add_entries(options);
+      this.add_option_group(group);
     }
 
     public override bool dbus_register(GLib.DBusConnection connection, string object_path) throws GLib.Error {
@@ -110,13 +71,30 @@ namespace Tokyo {
 
     public override void startup() {
       base.startup();
+
+      if (this._provider_lib != null) {
+        if (this._provider_fn == null) {
+          GLib.error("Missing argument \"libtokyo-provider-func\"");
+        }
+
+        this._provider = Provider.load_from_path(this._provider_lib, this._provider_fn);
+        global_provider = this.provider;
+
+        if (this._provider == null) {
+          GLib.error("Failed to load provider %s with %s", this._provider_lib, this._provider_fn);
+        }
+      } else {
+        if (this._provider_fn != null) {
+          GLib.error("Missing argument \"libtokyo-provider-lib\"");
+        }
+      }
+
       Tokyo.init();
+      this.provider.get_application_provider().startup(this);
     }
 
-    public virtual GLib.OptionContext create_option_context() {
-      var optctx = new GLib.OptionContext(null);
-      optctx.set_help_enabled(true);
-      return optctx;
+    public override void shutdown() {
+      base.shutdown();
     }
   }
 }

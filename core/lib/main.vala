@@ -14,8 +14,7 @@ namespace Tokyo {
 
     GLib.debug("Initializing Tokyo Core");
 
-    GLib.Intl.bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-    GLib.Intl.bindtextdomain(GETTEXT_PACKAGE, LOCALDIR);
+    bind_i18n();
 
     if (global_provider == null) {
       if (HAS_PROVIDER_GTK4) {
@@ -38,5 +37,10 @@ namespace Tokyo {
       _is_init = false;
       GLib.critical("Failed to load libtokyo provider, none found");
     }
+  }
+
+  internal void bind_i18n() {
+    GLib.Intl.bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+    GLib.Intl.bindtextdomain(GETTEXT_PACKAGE, LOCALDIR);
   }
 }
