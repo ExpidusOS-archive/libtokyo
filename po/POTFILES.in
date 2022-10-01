@@ -1,3 +1,8 @@
+core/lib/application.vala
+core/lib/main.vala
+core/lib/provider.vala
+core/lib/stylemanager.vala
+
 gtk3/lib/application.vala
 gtk3/lib/applicationwindow.vala
 gtk3/lib/init.vala

@@ -58,6 +58,9 @@ endif
 
 gresource = find_program('gresource', required: adwaita.found())
 
+vadi = dependency('vadi-0.0', required: true)
+gio = dependency('gio-2.0', required: true)
+gmodule = dependency('gmodule-2.0', required: true)
 handy = dependency('libhandy-1', required: get_option('gtk3'), version: '>= 1.6.0')
 ntk = dependency('ntk', required: get_option('ntk').enabled())
 has_ntk = ntk.found()
@@ -73,6 +76,7 @@ conf_data.set('DATADIR', datadir)
 conf_data.set('LIBDIR', libdir)
 conf_data.set('LIBEXECDIR', libexecdir)
 conf_data.set('VERSION', longver)
+conf_data.set('LOCALDIR', join_paths(datadir, 'locale'))
 conf_data.set('BUILDDIR', meson.current_build_dir())
 conf_data.set('SOURCEDIR', meson.current_source_dir())
 
@@ -90,5 +94,6 @@ endif
 subdir('po')
 subdir('build-tools')
 subdir('theme')
+subdir('core')
 subdir('gtk4', if_found: [adwaita])
 subdir('gtk3', if_found: [handy])

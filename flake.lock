@@ -34,7 +34,29 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
-        "ntk": "ntk"
+        "ntk": "ntk",
+        "vadi": "vadi"
+      }
+    },
+    "vadi": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1663630541,
+        "narHash": "sha256-yHEZ9DjhYmw7UV8AsvFsUHdGDa8ivu5hWNFo6Xp7fGI=",
+        "owner": "ExpidusOS",
+        "repo": "Vadi",
+        "rev": "4864ab757b0355498e6f888b6499d3ec86d1c368",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ExpidusOS",
+        "ref": "feat/nix",
+        "repo": "Vadi",
+        "type": "github"
       }
     }
   },

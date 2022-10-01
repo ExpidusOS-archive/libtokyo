@@ -5,7 +5,7 @@ namespace TokyoGTKExample {
     }
   }
 
-  public class MainApplication : TokyoGtk.Application {
+  public class MainApplication : Tokyo.Application {
     public MainApplication() {
       Object(application_id: "com.expidus.gtk3.tokyo.example", flags: GLib.ApplicationFlags.FLAGS_NONE);
     }
@@ -13,13 +13,13 @@ namespace TokyoGTKExample {
     public override void activate() {
       base.activate();
 
-      if (this.get_windows().length() == 0) {
+      /* if (this.get_windows().length() == 0) {
         var win = new MainWindow(this);
         this.add_window(win);
         win.show_all();
       } else {
         this.get_windows().nth_data(0).show();
-      }
+      } */
     }
   }
 }

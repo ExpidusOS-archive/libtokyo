@@ -1,12 +1,17 @@
 {
   description = "A libadwaita wrapper for ExpidusOS with Tokyo Night's styling";
 
+  inputs.vadi = {
+    url = github:ExpidusOS/Vadi/feat/nix;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   inputs.ntk = {
     url = path:subprojects/ntk;
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, ntk }:
+  outputs = { self, nixpkgs, vadi, ntk }:
     let
       supportedSystems = [
         "aarch64-linux"
@@ -23,6 +28,7 @@
       packages = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
+          vadi-pkg = vadi.packages.${system}.default;
           ntk-pkg = ntk.packages.${system}.default;
 
           mkDerivation = ({ name, buildInputs, mesonFlags ? [] }: pkgs.stdenv.mkDerivation rec {
@@ -43,31 +49,32 @@
           default = mkDerivation {
             name = "libtokyo";
             mesonFlags = ["-Dntk=enabled" "-Dgtk4=enabled" "-Dgtk3=enabled" "-Dnodejs=disabled"];
-            buildInputs = with pkgs; [ gtk3 libhandy gtk4 libadwaita ntk-pkg ];
+            buildInputs = with pkgs; [ vadi-pkg gtk3 libhandy gtk4 libadwaita ntk-pkg ];
           };
 
           gtk3 = mkDerivation {
             name = "libtokyo-gtk3";
             mesonFlags = ["-Dntk=disabled" "-Dgtk4=disabled" "-Dgtk3=enabled" "-Dnodejs=disabled"];
-            buildInputs = with pkgs; [ gtk3 libhandy ];
+            buildInputs = with pkgs; [ vadi-pkg gtk3 libhandy ];
           };
 
           gtk4 = mkDerivation {
             name = "libtokyo-gtk4";
             mesonFlags = ["-Dntk=disabled" "-Dgtk4=enabled" "-Dgtk3=disabled" "-Dnodejs=disabled"];
-            buildInputs = with pkgs; [ gtk4 libadwaita ];
+            buildInputs = with pkgs; [ vadi-pkg gtk4 libadwaita ];
           };
 
           ntk = mkDerivation {
             name = "libtokyo-ntk";
             mesonFlags = ["-Dntk=enabled" "-Dgtk4=disabled" "-Dgtk3=disabled" "-Dnodejs=disabled"];
-            buildInputs = with pkgs; [ ntk-pkg ];
+            buildInputs = with pkgs; [ vadi-pkg ntk-pkg ];
           };
         });
 
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
+          vadi-pkg = vadi.packages.${system}.default;
           ntk-pkg = ntk.packages.${system}.default;
         in
         {
@@ -87,6 +94,7 @@
               libadwaita
               libadwaita.dev
               libadwaita.devdoc
+              vadi-pkg
               ntk-pkg
               uncrustify
             ];

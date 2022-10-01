@@ -1,7 +1,6 @@
 conf_data_gtk4 = configuration_data()
 conf_data_gtk4.merge_from(conf_data)
 conf_data_gtk4.set('GTK_VERSION', '4')
-conf_data_gtk4.set('LOCALDIR', join_paths(datadir, 'locale'))
 
 build_conf_gtk4 = configure_file(input: 'lib/build.vala.in', output: 'build.vala',
  configuration: conf_data_gtk4)
@@ -45,11 +44,11 @@ libtokyo_gtk4 = shared_library('tokyo-gtk4', build_conf_gtk4, tokyo_gtk4_res, li
   c_args: ['-DG_LOG_DOMAIN="TokyoGtk"', '-DGETTEXT_PACKAGE="libtokyo"'],
   vala_args: ['--define=GETTEXT_PACKAGE="libtokyo"'],
   vala_gir: 'TokyoGtk4-@0@.gir'.format(shortver.split('-')[0]),
-  dependencies: [adwaita],
+  dependencies: [adwaita, libtokyo_core_dep],
   version: shortver.split('-')[0],
   install: true,
   install_dir: [true, true, true, true])
-libtokyo_gtk4_dep = declare_dependency(link_with: libtokyo_gtk4, dependencies: [adwaita])
+libtokyo_gtk4_dep = declare_dependency(link_with: libtokyo_gtk4, dependencies: [adwaita, libtokyo_core_dep])
 pkg.generate(libtokyo_gtk4,
   name: 'tokyo-gtk4',
   requires: ['libadwaita-1 >= 1.1.0'],

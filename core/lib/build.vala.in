@@ -1,0 +1,13 @@
+namespace Tokyo {
+  public const string LOCALDIR = "@LOCALDIR@";
+  public const string LIBDIR = "@LIBDIR@";
+
+  public const string VERSION = "@VERSION@";
+  public const string BUILD_USER = "@BUILD_USER@";
+
+  public const bool HAS_PROVIDER_GTK3 = @HAS_PROVIDER_GTK3@;
+  public const bool HAS_PROVIDER_GTK4 = @HAS_PROVIDER_GTK4@;
+  public const bool HAS_PROVIDER_NTK = @HAS_PROVIDER_NTK@;
+
+  internal const string GETTEXT_PACKAGE = "libtokyo";
+}
