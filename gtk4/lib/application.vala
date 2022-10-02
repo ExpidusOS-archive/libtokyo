@@ -1,4 +1,14 @@
 namespace TokyoGtk {
+  public class ApplicationProvider : GLib.Object, Tokyo.ApplicationProvider {
+    internal ApplicationProvider() {
+      Object();
+    }
+
+    public void startup(Tokyo.Application application) {}
+
+    public void shutdown(Tokyo.Application application) {}
+  }
+
   public class Application : Adw.Application {
     private Gtk.AboutDialog _about_window;
 
@@ -60,24 +70,6 @@ namespace TokyoGtk {
       this.add_action(quitAction);
 
       TokyoGtk.init();
-      this.init_styling();
-    }
-
-    private void update_stylesheet() {
-    }
-
-    private void init_styling() {
-      var style_manager = StyleManager.get_default();
-
-      style_manager.adw.notify["dark"].connect(() => {
-        this.update_stylesheet();
-      });
-
-      style_manager.adw.notify["high-contrast"].connect(() => {
-        this.update_stylesheet();
-      });
-
-      this.update_stylesheet();
     }
   }
 }
