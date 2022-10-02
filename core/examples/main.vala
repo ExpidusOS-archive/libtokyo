@@ -1,4 +1,4 @@
-namespace TokyoGTKExample {
+namespace TokyoExample {
   public class MainWindow : Tokyo.ApplicationWindow {
     public MainWindow(Tokyo.Application app) {
       Object(application: app);
@@ -25,5 +25,5 @@ namespace TokyoGTKExample {
 }
 
 public static int main(string[] args) {
-  return new TokyoGTKExample.MainApplication().run(args);
+  return new TokyoExample.MainApplication().run(args);
 }
