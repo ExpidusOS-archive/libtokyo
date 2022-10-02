@@ -35,7 +35,7 @@ namespace Tokyo {
 
     if (global_provider == null) {
       _is_init = false;
-      GLib.critical("Failed to load libtokyo provider, none found");
+      GLib.error("Failed to load libtokyo provider, none found");
     }
   }
 

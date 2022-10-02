@@ -3,8 +3,8 @@ namespace Tokyo {
    * Provider for Applications
    */
   public interface ApplicationProvider : GLib.Object {
-    public abstract void startup(GLib.Application app);
-    public abstract void shutdown(GLib.Application app);
+    public abstract void startup(Application app);
+    public abstract void shutdown(Application app);
   }
 
   /**

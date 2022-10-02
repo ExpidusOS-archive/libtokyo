@@ -2,12 +2,6 @@ namespace TokyoGtk {
   private StyleManager global_style_manager;
   private GLib.HashTable <Gdk.Display, StyleManager> display_style_managers;
 
-  public enum ColorScheme {
-    NIGHT = 0,
-    LIGHT,
-    STORM
-  }
-
   public sealed class StyleManager : GLib.Object {
     private Gtk.CssProvider _provider;
     private Adw.StyleManager _adw;
@@ -25,32 +19,32 @@ namespace TokyoGtk {
       }
     }
 
-    public ColorScheme color_scheme {
+    public Tokyo.ColorScheme color_scheme {
       get {
         var color = GLib.Environment.get_variable("TOKYO_COLOR");
         if (color != null) {
           if (color == "night" || color == "default") {
-            return ColorScheme.NIGHT;
+            return Tokyo.ColorScheme.NIGHT;
           }
           if (color == "light") {
-            return ColorScheme.LIGHT;
+            return Tokyo.ColorScheme.LIGHT;
           }
           if (color == "storm") {
-            return ColorScheme.STORM;
+            return Tokyo.ColorScheme.STORM;
           }
         }
 
         if (this.adw.high_contrast) {
-          return ColorScheme.STORM;
+          return Tokyo.ColorScheme.STORM;
         }
 
         switch (this.adw.color_scheme) {
         case Adw.ColorScheme.DEFAULT:
         case Adw.ColorScheme.FORCE_DARK:
         case Adw.ColorScheme.PREFER_DARK:
-          return ColorScheme.NIGHT;
+          return Tokyo.ColorScheme.NIGHT;
 
-        default: return ColorScheme.LIGHT;
+        default: return Tokyo.ColorScheme.LIGHT;
         }
       }
     }
@@ -133,15 +127,15 @@ namespace TokyoGtk {
     private void update_stylesheet() {
       if (this.provider != null) {
         switch (this.color_scheme) {
-        case ColorScheme.NIGHT:
+        case Tokyo.ColorScheme.NIGHT:
           this.provider.load_from_resource("/com/expidus/tokyogtk/gtk-default.css");
           break;
 
-        case ColorScheme.LIGHT:
+        case Tokyo.ColorScheme.LIGHT:
           this.provider.load_from_resource("/com/expidus/tokyogtk/gtk-light.css");
           break;
 
-        case ColorScheme.STORM:
+        case Tokyo.ColorScheme.STORM:
           this.provider.load_from_resource("/com/expidus/tokyogtk/gtk-storm.css");
           break;
         }

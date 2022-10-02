@@ -23,10 +23,11 @@ namespace Tokyo {
    * Provider for StyleManager
    */
   public interface StyleManagerProvider : GLib.Object {
-    public abstract StyleManager get_default();
+    public abstract unowned StyleManager? get_default();
     public abstract void ensure();
 
-    public abstract void init(StyleManager style_manager);
+    public abstract void create(StyleManager style_manager);
+    public abstract void destroy(StyleManager style_manager);
     public abstract ColorScheme get_color_scheme(StyleManager style_manager);
   }
 
@@ -74,11 +75,17 @@ namespace Tokyo {
     }
 
     construct {
-      this.provider.get_style_manager_provider().init(this);
+      this.provider.get_style_manager_provider().create(this);
     }
 
-    public static StyleManager? get_default() {
-      return Provider.get_global().get_style_manager_provider().get_default();
+    ~StyleManager() {
+      this.provider.get_style_manager_provider().destroy(this);
+    }
+
+    public static StyleManager get_default() {
+      var def = Provider.get_global().get_style_manager_provider().get_default();
+      assert(def != null);
+      return def;
     }
 
     public static void ensure() {

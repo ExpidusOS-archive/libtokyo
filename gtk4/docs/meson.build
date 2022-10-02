@@ -1,4 +1,5 @@
 libtokyo_gtk4_docs_devhelp = custom_target('gtk4-docs-devhelp',
+  depends: [libtokyo_core],
   input: libtokyo_gtk4_sources,
   output: 'devhelp',
   command: [valadoc, '-o', join_paths(meson.current_build_dir(), 'devhelp'),

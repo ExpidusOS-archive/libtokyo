@@ -116,14 +116,14 @@ namespace Tokyo {
       this.provider.get_window_provider().destroy(this);
     }
 
-    public bool dbus_register(GLib.DBusConnection connection, string object_path) throws GLib.Error {
+    internal bool dbus_register(GLib.DBusConnection connection, string object_path) throws GLib.Error {
       if (this._dbus_obj_id == 0) {
         this._dbus_obj_id = connection.register_object(object_path, this as BaseWindow);
       }
       return true;
     }
 
-    public void dbus_unregister(GLib.DBusConnection connection, string object_path) {
+    internal void dbus_unregister(GLib.DBusConnection connection, string object_path) {
       if (this._dbus_obj_id > 0) {
         connection.unregister_object(this._dbus_obj_id);
         this._dbus_obj_id = 0;

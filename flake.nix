@@ -97,6 +97,7 @@
               vadi-pkg
               ntk-pkg
               uncrustify
+              gdb
             ];
 
             shellHook = ''

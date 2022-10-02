@@ -34,7 +34,7 @@ run_target('core-prettier',
 
 libtokyo_core_sources += [build_conf_core]
 
-libtokyo_core_shlib = shared_library('tokyo', build_conf_core, libtokyo_core_rel_sources,
+libtokyo_core = shared_library('tokyo', build_conf_core, libtokyo_core_rel_sources,
   c_args: ['-DG_LOG_DOMAIN="Tokyo"', '-DGETTEXT_PACKAGE="libtokyo"'],
   vala_args: ['--define=GETTEXT_PACKAGE="libtokyo"'],
   vala_gir: 'Tokyo-@0@.gir'.format(shortver.split('-')[0]),
@@ -42,11 +42,11 @@ libtokyo_core_shlib = shared_library('tokyo', build_conf_core, libtokyo_core_rel
   version: shortver.split('-')[0],
   install: true,
   install_dir: [true, true, true, true])
-libtokyo_core_dep = declare_dependency(link_with: libtokyo_core_shlib, dependencies: [vadi, gio, gmodule],
+libtokyo_core_dep = declare_dependency(link_with: libtokyo_core, dependencies: [vadi, gio, gmodule],
   compile_args: ['-I' + join_paths(meson.project_build_root(), 'core')])
-pkg.generate(libtokyo_core_shlib,
+pkg.generate(libtokyo_core,
   name: 'tokyo',
-  requires: ['vadi'],
+  requires: ['gio-2.0', 'vadi-0.0'],
   description: 'A common type library used for loading libtokyo',
   url: 'https://github.com/ExpidusOS/libtokyo',
   version: longver)

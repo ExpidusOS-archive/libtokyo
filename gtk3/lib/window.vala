@@ -3,12 +3,6 @@ namespace TokyoGtk {
     private Hdy.HeaderBar _header;
     private Gtk.Box _content;
 
-    public unowned StyleManager style_manager {
-      get {
-        return StyleManager.get_for_display(this.get_display());
-      }
-    }
-
     public Hdy.HeaderBar header {
       get {
         return this.header;
@@ -19,8 +13,6 @@ namespace TokyoGtk {
     }
 
     construct {
-      this.get_style_context().add_provider(this.style_manager.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
       this._content = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
       this._header  = new Hdy.HeaderBar();
       this._header.show_close_button = true;
@@ -42,24 +34,6 @@ namespace TokyoGtk {
       base.map();
 
       TokyoGtk.init();
-      this.init_styling();
-    }
-
-    private void update_stylesheet() {
-    }
-
-    private void init_styling() {
-      var style_manager = StyleManager.get_default();
-
-      style_manager.hdy.notify["dark"].connect(() => {
-        this.update_stylesheet();
-      });
-
-      style_manager.hdy.notify["high-contrast"].connect(() => {
-        this.update_stylesheet();
-      });
-
-      this.update_stylesheet();
     }
   }
 }

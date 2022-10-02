@@ -7,7 +7,7 @@ namespace TokyoGTKExample {
 
   public class MainApplication : Tokyo.Application {
     public MainApplication() {
-      Object(application_id: "com.expidus.gtk3.tokyo.example", flags: GLib.ApplicationFlags.FLAGS_NONE);
+      Object(application_id: "com.expidus.tokyo.example", flags: GLib.ApplicationFlags.FLAGS_NONE);
     }
 
     public override void activate() {

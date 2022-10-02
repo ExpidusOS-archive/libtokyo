@@ -24,6 +24,7 @@ namespace Tokyo {
       ProviderTypeFunc type_fn = (ProviderTypeFunc)type_fn_ptr;
       return_val_if_fail(type_fn != null, null);
 
+      module.make_resident();
       return GLib.Object.@new(type_fn()) as Provider;
     }
 
@@ -38,9 +39,17 @@ namespace Tokyo {
       return global_provider;
     }
 
+    public static void set_global(Provider? provider) {
+      global_provider = provider;
+    }
+
     construct {
       this._container = new Vdi.Container();
       this.init(this._container);
+
+      var style_manager_provider = this.get_style_manager_provider();
+      style_manager_provider.ensure();
+      assert(style_manager_provider.get_default() != null);
     }
 
     /**
@@ -48,15 +57,15 @@ namespace Tokyo {
      */
     public abstract void init(Vdi.Container container);
 
-    public ApplicationProvider get_application_provider() {
+    public ApplicationProvider? get_application_provider() {
       return this._container.get(typeof (ApplicationProvider)) as ApplicationProvider;
     }
 
-    public WindowProvider get_window_provider() {
+    public WindowProvider? get_window_provider() {
       return this._container.get(typeof (WindowProvider)) as WindowProvider;
     }
 
-    public StyleManagerProvider get_style_manager_provider() {
+    public StyleManagerProvider? get_style_manager_provider() {
       return this._container.get(typeof (StyleManagerProvider)) as StyleManagerProvider;
     }
   }
