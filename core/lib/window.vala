@@ -116,48 +116,42 @@ namespace Tokyo {
       this.provider.get_window_provider().destroy(this);
     }
 
-    internal bool dbus_register(GLib.DBusConnection connection, string object_path) throws GLib.Error {
+    internal virtual bool dbus_register(GLib.DBusConnection connection, string object_path) throws GLib.Error {
       if (this._dbus_obj_id == 0) {
         this._dbus_obj_id = connection.register_object(object_path, this as BaseWindow);
       }
       return true;
     }
 
-    internal void dbus_unregister(GLib.DBusConnection connection, string object_path) {
+    internal virtual void dbus_unregister(GLib.DBusConnection connection, string object_path) {
       if (this._dbus_obj_id > 0) {
         connection.unregister_object(this._dbus_obj_id);
         this._dbus_obj_id = 0;
       }
     }
 
-    public void map() {
+    public virtual void map() {
       if (this._map_mutex.trylock()) {
         this.provider.get_window_provider().map(this);
         this._map_mutex.unlock();
       }
     }
 
-    public void unmap() {
+    public virtual void unmap() {
       if (this._unmap_mutex.trylock()) {
         this.provider.get_window_provider().unmap(this);
-
-        var app_win = this as ApplicationWindow;
-        if (app_win != null && app_win.application != null) {
-          app_win.application.remove_window(this);
-        }
-
         this._unmap_mutex.unlock();
       }
     }
 
-    public void show() {
+    public virtual void show() {
       if (this._show_mutex.trylock()) {
         this.provider.get_window_provider().show(this);
         this._show_mutex.unlock();
       }
     }
 
-    public void hide() {
+    public virtual void hide() {
       if (this._hide_mutex.trylock()) {
         this.provider.get_window_provider().hide(this);
         this._hide_mutex.unlock();

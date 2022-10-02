@@ -28,28 +28,6 @@ namespace TokyoGtk {
     public override void startup() {
       base.startup();
 
-      var aboutAction = new GLib.SimpleAction("about", null);
-      aboutAction.activate.connect(() => {
-        if (this.about_window != null) {
-          this.about_window.set_application(this);
-          this.about_window.set_modal(true);
-          this.about_window.set_transient_for(this.get_active_window());
-
-          if (this.about_window.get_visible()) {
-            this.about_window.hide();
-          }else{
-            this.about_window.show_all();
-          }
-        }
-      });
-      this.add_action(aboutAction);
-
-      var quitAction = new GLib.SimpleAction("quit", null);
-      quitAction.activate.connect(() => {
-        this.quit();
-      });
-      this.add_action(quitAction);
-
       TokyoGtk.init();
 
       var style_manager_provider = Tokyo.Provider.get_global().get_style_manager_provider() as StyleManagerProvider;

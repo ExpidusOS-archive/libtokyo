@@ -28,47 +28,6 @@ namespace TokyoGtk {
     public override void startup() {
       base.startup();
 
-      var menu = new GLib.Menu();
-
-      var appMenu = new GLib.Menu();
-      appMenu.append_item(new GLib.MenuItem(N_("About"), "app.about"));
-      appMenu.append_item(new GLib.MenuItem(N_("Preferences"), "app.preferences"));
-      menu.append_section(null, appMenu);
-
-      var windowMenu = new GLib.Menu();
-      windowMenu.append_item(new GLib.MenuItem(N_("Hide"), "window.hide"));
-      windowMenu.append_item(new GLib.MenuItem(N_("Hide Others"), "window.hide.others"));
-      windowMenu.append_item(new GLib.MenuItem(N_("Show All"), "window.showall"));
-      menu.append_section(null, windowMenu);
-
-      var otherMenu = new GLib.Menu();
-      otherMenu.append_item(new GLib.MenuItem(N_("Quit Application"), "app.quit"));
-      menu.append_section(null, otherMenu);
-
-      this.set_menubar(menu);
-
-      var aboutAction = new GLib.SimpleAction("about", null);
-      aboutAction.activate.connect(() => {
-        if (this.about_window != null) {
-          this.about_window.set_application(this);
-          this.about_window.set_modal(true);
-          this.about_window.set_transient_for(this.get_active_window());
-
-          if (this.about_window.get_visible()) {
-            this.about_window.hide();
-          }else{
-            this.about_window.show();
-          }
-        }
-      });
-      this.add_action(aboutAction);
-
-      var quitAction = new GLib.SimpleAction("quit", null);
-      quitAction.activate.connect(() => {
-        this.quit();
-      });
-      this.add_action(quitAction);
-
       TokyoGtk.init();
     }
   }

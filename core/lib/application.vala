@@ -87,9 +87,7 @@ namespace Tokyo {
       return this._windows;
     }
 
-    public override bool dbus_register(GLib.DBusConnection connection, string object_path) throws GLib.Error {
-      return_val_if_fail(base.dbus_register(connection, object_path), false);
-
+    internal GLib.Menu get_menu() {
       var menu = new GLib.Menu();
 
       var appMenu = new GLib.Menu();
@@ -106,8 +104,13 @@ namespace Tokyo {
       var otherMenu = new GLib.Menu();
       otherMenu.append_item(new GLib.MenuItem(N_("Quit Application"), "app.quit"));
       menu.append_section(null, otherMenu);
+      return menu;
+    }
 
-      this._menu_dbus_id = connection.export_menu_model(object_path, menu);
+    public override bool dbus_register(GLib.DBusConnection connection, string object_path) throws GLib.Error {
+      return_val_if_fail(base.dbus_register(connection, object_path), false);
+
+      this._menu_dbus_id = connection.export_menu_model(object_path, this.get_menu());
 
       foreach (var win in this._windows) {
         return_val_if_fail(win.dbus_register(connection, "%s/windows/%lu".printf(object_path, win.id)), false);
