@@ -7,6 +7,7 @@ namespace TokyoGtk {
       container.bind_factory(typeof (Tokyo.StyleManagerProvider), () => {
         return new TokyoGtk.StyleManagerProvider(this);
       });
+      container.bind_type(typeof (Tokyo.WindowProvider), typeof (TokyoGtk.WindowProvider));
     }
   }
 }

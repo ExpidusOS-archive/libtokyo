@@ -1,52 +1,41 @@
 namespace TokyoGtk {
-  public class ApplicationWindow : Hdy.ApplicationWindow {
+  public class ApplicationWindow : Hdy.ApplicationWindow, BaseWindow {
     private Hdy.HeaderBar _header;
     private Gtk.Box _content;
+    private uint _id;
+    private Provider? _provider;
 
-    public Hdy.HeaderBar header {
+    public uint id {
       get {
-        return this.header;
+        if (this._id == 0) this._id = next_window_id++;
+        return this._id;
+      }
+    }
+    
+    public Provider? provider {
+      get {
+        return this._provider;
+      }
+      construct {
+        this._provider = value;
       }
     }
 
-    public ApplicationWindow(Gtk.Application ?app) {
+    public Hdy.HeaderBar header {
+      get {
+        return this._header;
+      }
+    }
+
+    public ApplicationWindow(Gtk.Application? app) {
       Object(application: app);
     }
 
     construct {
-      if (this.title == null || this.title.length == 0) {
-        if (this.application != null) {
-          this.title = this.application.application_id;
-        }else{
-          this.title = "libtokyo-gtk3-application-window";
-        }
-      }
-
-      var style_manager_provider = Tokyo.Provider.get_global().get_style_manager_provider() as StyleManagerProvider;
-      assert(style_manager_provider != null);
-
-      var style_manager = style_manager_provider.get_for_display(this.get_display());
-      assert(style_manager != null);
-
-      var style_manager_data = style_manager_provider._managers.get(style_manager);
-      assert(style_manager_data != null);
-
-      this.get_style_context().add_provider(style_manager_data.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
       this._content = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
       this._header  = new Hdy.HeaderBar();
-      this._header.show_close_button = true;
-      this._content.pack_start(this._header, false, true, 0);
 
-      this._header.title = this.title;
-      this.bind_property("title", this._header, "title", GLib.BindingFlags.SYNC_CREATE | GLib.BindingFlags.BIDIRECTIONAL);
-
-      this.reset_content();
-      this._content.show_all();
-
-      this.set_position(Gtk.WindowPosition.MOUSE);
-      this.set_gravity(Gdk.Gravity.CENTER);
-      this.set_default_size(300, 300);
+      this.init();
     }
 
     public void reset_content() {
