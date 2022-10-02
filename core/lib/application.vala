@@ -152,7 +152,16 @@ namespace Tokyo {
       base.shutdown();
     }
 
-    public virtual signal void window_added(Window win) {}
-    public virtual signal void window_removed(Window win) {}
+    public virtual signal void window_added(Window win) {
+      GLib.debug("Added window %lu", win.id);
+      this.hold();
+    }
+
+    public virtual signal void window_removed(Window win) {
+      GLib.debug("Removed window %lu", win.id);
+      if (this._windows.length() == 0) {
+        this.release();
+      }
+    }
   }
 }

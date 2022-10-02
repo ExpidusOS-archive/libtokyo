@@ -140,6 +140,12 @@ namespace Tokyo {
     public void unmap() {
       if (this._unmap_mutex.trylock()) {
         this.provider.get_window_provider().unmap(this);
+
+        var app_win = this as ApplicationWindow;
+        if (app_win != null && app_win.application != null) {
+          app_win.application.remove_window(this);
+        }
+
         this._unmap_mutex.unlock();
       }
     }

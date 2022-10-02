@@ -20,8 +20,6 @@ namespace TokyoGTKExample {
       } else {
         this.get_windows().nth_data(0).show();
       }
-
-      this.hold();
     }
   }
 }
