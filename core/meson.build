@@ -22,7 +22,7 @@ endif
 build_conf_core = configure_file(input: 'lib/build.vala.in', output: 'build.vala',
  configuration: conf_data_core)
 
-libtokyo_core_rel_sources = ['lib/application.vala', 'lib/main.vala', 'lib/provider.vala', 'lib/stylemanager.vala']
+libtokyo_core_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala', 'lib/main.vala', 'lib/provider.vala', 'lib/stylemanager.vala', 'lib/window.vala']
 libtokyo_core_sources = []
 
 foreach src : libtokyo_core_rel_sources
@@ -50,6 +50,9 @@ pkg.generate(libtokyo_core_shlib,
   description: 'A common type library used for loading libtokyo',
   url: 'https://github.com/ExpidusOS/libtokyo',
   version: longver)
+
+executable('tokyo-core-example', ['examples/main.vala'],
+  dependencies: [libtokyo_core_dep])
 
 subdir('docs', if_found: [valadoc])
 

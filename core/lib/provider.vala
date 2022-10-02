@@ -52,6 +52,10 @@ namespace Tokyo {
       return this._container.get(typeof (ApplicationProvider)) as ApplicationProvider;
     }
 
+    public WindowProvider get_window_provider() {
+      return this._container.get(typeof (WindowProvider)) as WindowProvider;
+    }
+
     public StyleManagerProvider get_style_manager_provider() {
       return this._container.get(typeof (StyleManagerProvider)) as StyleManagerProvider;
     }

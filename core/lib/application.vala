@@ -15,6 +15,7 @@ namespace Tokyo {
     private Provider? _provider;
     private string? _provider_fn;
     private string? _provider_lib;
+    private GLib.List<Window> _windows;
 
     public Provider provider {
       get {
@@ -41,6 +42,51 @@ namespace Tokyo {
       this.add_option_group(group);
     }
 
+    public void add_window(Window win) {
+      if (this.get_window_by_id(win.id) == null) {
+        this._windows.append(win);
+        this.window_added(win);
+
+        var dbus_conn = this.get_dbus_connection();
+        var dbus_path = this.get_dbus_object_path();
+
+        try {
+          if (dbus_conn != null && dbus_path != null) {
+            win.dbus_register(dbus_conn, "%s/windows/%lu".printf(dbus_path, win.id));
+          }
+        } catch (GLib.Error e) {
+          this._windows.remove(win);
+          GLib.error("Failed to register window %lu to DBus: %s:%d: %s", win.id, e.domain.to_string(), e.code, e.message);
+        }
+      }
+    }
+
+    public void remove_window(Window win) {
+      var fwin = this.get_window_by_id(win.id);
+      if (fwin != null) {
+        this._windows.remove(fwin);
+        this.window_removed(fwin);
+
+        var dbus_conn = this.get_dbus_connection();
+        var dbus_path = this.get_dbus_object_path();
+
+        if (dbus_conn != null && dbus_path != null) {
+          win.dbus_unregister(dbus_conn, "%s/windows/%lu".printf(dbus_path, win.id));
+        }
+      }
+    }
+
+    public unowned Window? get_window_by_id(uint id) {
+      unowned var item = this._windows.search(id, (win, wid) => {
+        return (int)(win.id - ((uint)wid));
+      });
+      return item == null ? null : item.data;
+    }
+
+    public unowned GLib.List<Window> get_windows() {
+      return this._windows;
+    }
+
     public override bool dbus_register(GLib.DBusConnection connection, string object_path) throws GLib.Error {
       return_val_if_fail(base.dbus_register(connection, object_path), false);
 
@@ -62,11 +108,19 @@ namespace Tokyo {
       menu.append_section(null, otherMenu);
 
       this._menu_dbus_id = connection.export_menu_model(object_path, menu);
+
+      foreach (var win in this._windows) {
+        return_val_if_fail(win.dbus_register(connection, "%s/windows/%lu".printf(object_path, win.id)), false);
+      }
       return true;
     }
 
     public override void dbus_unregister(DBusConnection connection, string object_path) {
       connection.unexport_menu_model(this._menu_dbus_id);
+
+      foreach (var win in this._windows) {
+        win.dbus_unregister(connection, "%s/windows/%lu".printf(object_path, win.id));
+      }
     }
 
     public override void startup() {
@@ -94,7 +148,11 @@ namespace Tokyo {
     }
 
     public override void shutdown() {
+      this.provider.get_application_provider().shutdown(this);
       base.shutdown();
     }
+
+    public virtual signal void window_added(Window win) {}
+    public virtual signal void window_removed(Window win) {}
   }
 }

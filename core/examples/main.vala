@@ -1,11 +1,11 @@
 namespace TokyoGTKExample {
-  public class MainWindow : TokyoGtk.ApplicationWindow {
-    public MainWindow(Gtk.Application app) {
+  public class MainWindow : Tokyo.ApplicationWindow {
+    public MainWindow(Tokyo.Application app) {
       Object(application: app);
     }
   }
 
-  public class MainApplication : TokyoGtk.Application {
+  public class MainApplication : Tokyo.Application {
     public MainApplication() {
       Object(application_id: "com.expidus.gtk3.tokyo.example", flags: GLib.ApplicationFlags.FLAGS_NONE);
     }
@@ -16,10 +16,12 @@ namespace TokyoGTKExample {
       if (this.get_windows().length() == 0) {
         var win = new MainWindow(this);
         this.add_window(win);
-        win.show_all();
+        win.show();
       } else {
         this.get_windows().nth_data(0).show();
       }
+
+      this.hold();
     }
   }
 }
