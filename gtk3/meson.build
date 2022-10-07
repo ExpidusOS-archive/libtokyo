@@ -19,8 +19,10 @@ foreach src : libtokyo_gtk3_rel_sources
   libtokyo_gtk3_sources += [join_paths(meson.current_source_dir(), src)]
 endforeach
 
-run_target('gtk3-prettier',
-  command: [uncrustify, '-c', join_paths(meson.project_source_root(), 'uncrustify.cfg'), '--no-backup', libtokyo_gtk3_sources])
+if uncrustify.found()
+  run_target('gtk3-prettier',
+    command: [uncrustify, '--no-backup', libtokyo_gtk3_sources])
+endif
 
 libtokyo_gtk3_sources += [build_conf_gtk3]
 

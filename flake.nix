@@ -11,7 +11,12 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, vadi, ntk }:
+  inputs.expidus-sdk = {
+    url = github:ExpidusOS/sdk;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = { self, nixpkgs, vadi, ntk, expidus-sdk }:
     let
       supportedSystems = [
         "aarch64-linux"
@@ -30,6 +35,7 @@
           pkgs = nixpkgsFor.${system};
           vadi-pkg = vadi.packages.${system}.default;
           ntk-pkg = ntk.packages.${system}.default;
+          expidus-sdk-pkg = expidus-sdk.packages.${system}.default;
 
           mkDerivation = ({ name, buildInputs, mesonFlags ? [] }: pkgs.stdenv.mkDerivation rec {
             inherit name buildInputs src mesonFlags;
@@ -37,7 +43,7 @@
             outputs = [ "out" "dev" "devdoc" ];
 
             enableParallelBuilding = true;
-            nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass nodejs uncrustify ];
+            nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass nodejs expidus-sdk-pkg ];
 
             meta = with pkgs.lib; {
               homepage = "https://github.com/ExpidusOS/libtokyo";
@@ -76,6 +82,7 @@
           pkgs = nixpkgsFor.${system};
           vadi-pkg = vadi.packages.${system}.default;
           ntk-pkg = ntk.packages.${system}.default;
+          expidus-sdk-pkg = expidus-sdk.packages.${system}.default;
         in
         {
           default = pkgs.mkShell {
@@ -98,6 +105,7 @@
               ntk-pkg
               uncrustify
               gdb
+              expidus-sdk-pkg
             ];
 
             shellHook = ''

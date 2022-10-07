@@ -41,7 +41,9 @@ if adwaita.found()
   use_nodejs = true
 endif
 
-uncrustify = find_program('uncrustify', native: true, required: false)
+sdk = dependency('expidus-sdk', native: false, required: false, include_type: 'system', method: 'pkg-config')
+uncrustify = find_program('uncrustify', sdk.get_variable('bindir'), required: sdk.found())
+
 valadoc = find_program('valadoc', required: get_option('docs'), native: true)
 node = find_program('node', required: use_nodejs, native: true)
 sass = find_program('sass', dirs: [join_paths(meson.project_source_root(), 'node_modules', '.bin')], required: true, native: true)

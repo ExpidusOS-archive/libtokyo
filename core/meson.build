@@ -29,8 +29,10 @@ foreach src : libtokyo_core_rel_sources
   libtokyo_core_sources += [join_paths(meson.current_source_dir(), src)]
 endforeach
 
-run_target('core-prettier',
-  command: [uncrustify, '-c', join_paths(meson.project_source_root(), 'uncrustify.cfg'), '--no-backup', libtokyo_core_sources])
+if uncrustify.found()
+  run_target('core-prettier',
+    command: [uncrustify, '--no-backup', libtokyo_core_sources])
+endif
 
 libtokyo_core_sources += [build_conf_core]
 
