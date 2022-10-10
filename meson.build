@@ -42,7 +42,11 @@ if adwaita.found()
 endif
 
 sdk = dependency('expidus-sdk', native: false, required: false, include_type: 'system', method: 'pkg-config')
-uncrustify = find_program('uncrustify', sdk.get_variable('bindir'), required: sdk.found())
+if sdk.found()
+  uncrustify = find_program('uncrustify', sdk.get_variable('bindir'))
+else
+  uncrustify = disabler()
+endif
 
 valadoc = find_program('valadoc', required: get_option('docs'), native: true)
 node = find_program('node', required: use_nodejs, native: true)
