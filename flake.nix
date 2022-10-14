@@ -36,7 +36,7 @@
           vadi-pkg = vadi.packages.${system}.default;
           ntk-pkg = ntk.packages.${system}.default;
           expidus-sdk-pkg = expidus-sdk.packages.${system}.default;
-        in with pkgs; {
+        in with pkgs; rec {
           nativeBuildInputs = [ meson ninja pkg-config vala glib sass nodejs expidus-sdk-pkg ];
           buildInputs = [ vadi-pkg ];
           buildInputsGtk3 = [ gtk3 libhandy ];
