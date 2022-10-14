@@ -21,6 +21,10 @@ endif
 
 build_conf_core = configure_file(input: 'lib/build.vala.in', output: 'build.vala',
  configuration: conf_data_core)
+configure_file(input: 'lib/tokyo.deps.in', output: 'tokyo.deps',
+  configuration: conf_data_core,
+  install: true,
+  install_dir: join_paths(datadir, 'vala', 'vapi'))
 
 libtokyo_core_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala', 'lib/main.vala', 'lib/provider.vala', 'lib/stylemanager.vala', 'lib/window.vala']
 libtokyo_core_sources = []

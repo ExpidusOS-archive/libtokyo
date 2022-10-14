@@ -4,6 +4,10 @@ conf_data_gtk3.set('GTK_VERSION', '3')
 
 build_conf_gtk3 = configure_file(input: 'lib/build.vala.in', output: 'build.vala',
  configuration: conf_data_gtk3)
+configure_file(input: 'lib/tokyo-gtk3.deps.in', output: 'tokyo-gtk3.deps',
+  configuration: conf_data_core,
+  install: true,
+  install_dir: join_paths(datadir, 'vala', 'vapi'))
 
 build_res_gtk3 = configure_file(input: 'data/tokyo-gtk.gresource.xml.in', output: 'tokyo-gtk3.gresource.xml',
   configuration: conf_data_gtk3)

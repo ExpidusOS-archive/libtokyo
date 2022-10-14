@@ -4,6 +4,10 @@ conf_data_gtk4.set('GTK_VERSION', '4')
 
 build_conf_gtk4 = configure_file(input: 'lib/build.vala.in', output: 'build.vala',
  configuration: conf_data_gtk4)
+configure_file(input: 'lib/tokyo-gtk4.deps.in', output: 'tokyo-gtk4.deps',
+  configuration: conf_data_core,
+  install: true,
+  install_dir: join_paths(datadir, 'vala', 'vapi'))
 
 build_res_gtk4 = configure_file(input: 'data/tokyo-gtk.gresource.xml.in', output: 'tokyo-gtk4.gresource.xml',
   configuration: conf_data_gtk4)
