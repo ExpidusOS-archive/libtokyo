@@ -52,7 +52,7 @@
           pkgs = nixpkgsFor.${system};
 
           mkDerivation = ({ name, buildInputs ? [], propagatedBuildInputs ? [], mesonFlags ? [] }: pkgs.stdenv.mkDerivation rec {
-            inherit name buildInputs src mesonFlags;
+            inherit name buildInputs propagatedBuildInputs src mesonFlags;
 
             outputs = [ "out" "dev" "devdoc" ];
 
