@@ -7,7 +7,7 @@
   };
 
   inputs.ntk = {
-    url = path:subprojects/ntk;
+    url = path:./subprojects/ntk;
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
