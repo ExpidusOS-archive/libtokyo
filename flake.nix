@@ -28,14 +28,28 @@
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
       src = self // { submodules = true; };
+
+      packagesFor = forAllSystems (system:
+        let
+          pkgs = nixpkgsFor.${system};
+
+          vadi-pkg = vadi.packages.${system}.default;
+          ntk-pkg = ntk.packages.${system}.default;
+          expidus-sdk-pkg = expidus-sdk.packages.${system}.default;
+        in with pkgs; {
+          nativeBuildInputs = [ meson ninja pkg-config vala glib sass nodejs expidus-sdk-pkg ];
+          buildInputs = [ vadi-pkg ];
+          buildInputsGtk3 = [ gtk3 libhandy ];
+          buildInputsGtk4 = [ gtk4 libadwaita ];
+          buildInputsNtk = [ ntk-pkg ];
+          buildInputsFull = buildInputs ++ buildInputsGtk3 ++ buildInputsGtk4 ++ buildInputsNtk;
+        });
     in
     {
       packages = forAllSystems (system:
         let
+          packages = packagesFor.${system};
           pkgs = nixpkgsFor.${system};
-          vadi-pkg = vadi.packages.${system}.default;
-          ntk-pkg = ntk.packages.${system}.default;
-          expidus-sdk-pkg = expidus-sdk.packages.${system}.default;
 
           mkDerivation = ({ name, buildInputs, mesonFlags ? [] }: pkgs.stdenv.mkDerivation rec {
             inherit name buildInputs src mesonFlags;
@@ -43,7 +57,7 @@
             outputs = [ "out" "dev" "devdoc" ];
 
             enableParallelBuilding = true;
-            nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala glib sass nodejs expidus-sdk-pkg ];
+            inherit (packages) nativeBuildInputs;
 
             meta = with pkgs.lib; {
               homepage = "https://github.com/ExpidusOS/libtokyo";
@@ -55,58 +69,36 @@
           default = mkDerivation {
             name = "libtokyo";
             mesonFlags = ["-Dntk=enabled" "-Dgtk4=enabled" "-Dgtk3=enabled" "-Dnodejs=disabled"];
-            buildInputs = with pkgs; [ vadi-pkg gtk3 libhandy gtk4 libadwaita ntk-pkg ];
+            buildInputs = packages.buildInputsFull;
           };
 
           gtk3 = mkDerivation {
             name = "libtokyo-gtk3";
             mesonFlags = ["-Dntk=disabled" "-Dgtk4=disabled" "-Dgtk3=enabled" "-Dnodejs=disabled"];
-            buildInputs = with pkgs; [ vadi-pkg gtk3 libhandy ];
+            buildInputs = packages.buildInputs ++ packages.buildInputsGtk4;
           };
 
           gtk4 = mkDerivation {
             name = "libtokyo-gtk4";
             mesonFlags = ["-Dntk=disabled" "-Dgtk4=enabled" "-Dgtk3=disabled" "-Dnodejs=disabled"];
-            buildInputs = with pkgs; [ vadi-pkg gtk4 libadwaita ];
+            buildInputs = packages.buildInputs ++ packages.buildInputsGtk4;
           };
 
           ntk = mkDerivation {
             name = "libtokyo-ntk";
             mesonFlags = ["-Dntk=enabled" "-Dgtk4=disabled" "-Dgtk3=disabled" "-Dnodejs=disabled"];
-            buildInputs = with pkgs; [ vadi-pkg ntk-pkg ];
+            buildInputs = packages.buildInputs ++ packages.buildInputsNtk;
           };
         });
 
       devShells = forAllSystems (system:
         let
+          packages = packagesFor.${system};
           pkgs = nixpkgsFor.${system};
-          vadi-pkg = vadi.packages.${system}.default;
-          ntk-pkg = ntk.packages.${system}.default;
-          expidus-sdk-pkg = expidus-sdk.packages.${system}.default;
         in
         {
           default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              meson
-              ninja
-              pkg-config
-              vala
-              nodejs
-              gcc
-              gtk3
-              gtk4
-              libhandy
-              libhandy.dev
-              libhandy.devdoc
-              libadwaita
-              libadwaita.dev
-              libadwaita.devdoc
-              vadi-pkg
-              ntk-pkg
-              uncrustify
-              gdb
-              expidus-sdk-pkg
-            ];
+            packages = packages.nativeBuildInputs ++ packages.buildInputsFull;
 
             shellHook = ''
               export PATH="$PWD/node_modules/.bin/:$PATH"
