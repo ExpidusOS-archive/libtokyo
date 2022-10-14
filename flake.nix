@@ -69,24 +69,28 @@
           default = mkDerivation {
             name = "libtokyo";
             mesonFlags = ["-Dntk=enabled" "-Dgtk4=enabled" "-Dgtk3=enabled" "-Dnodejs=disabled"];
+            buildInputs = packages.buildInputsFull;
             propagatedBuildInputs = packages.buildInputsFull;
           };
 
           gtk3 = mkDerivation {
             name = "libtokyo-gtk3";
             mesonFlags = ["-Dntk=disabled" "-Dgtk4=disabled" "-Dgtk3=enabled" "-Dnodejs=disabled"];
-            propagatedBuildInputs = packages.buildInputs ++ packages.buildInputsGtk4;
+            buildInputs = packages.buildInputs ++ packages.buildInputsGtk3;
+            propagatedBuildInputs = packages.buildInputs ++ packages.buildInputsGtk3;
           };
 
           gtk4 = mkDerivation {
             name = "libtokyo-gtk4";
             mesonFlags = ["-Dntk=disabled" "-Dgtk4=enabled" "-Dgtk3=disabled" "-Dnodejs=disabled"];
+            buildInputs = packages.buildInputs ++ packages.buildInputsGtk4;
             propagatedBuildInputs = packages.buildInputs ++ packages.buildInputsGtk4;
           };
 
           ntk = mkDerivation {
             name = "libtokyo-ntk";
             mesonFlags = ["-Dntk=enabled" "-Dgtk4=disabled" "-Dgtk3=disabled" "-Dnodejs=disabled"];
+            buildInputs = packages.buildInputs ++ packages.buildInputsNtk;
             propagatedBuildInputs = packages.buildInputs ++ packages.buildInputsNtk;
           };
         });
