@@ -8,6 +8,9 @@ namespace TokyoGtk {
 
     public Tokyo.StyleManager style_manager {
       get {
+        var provider = this.provider != null ? this.provider : Tokyo.Provider.get_global();
+        assert(provider != null);
+
         var style_manager_provider = provider.get_style_manager_provider() as StyleManagerProvider;
         assert(style_manager_provider != null);
         return style_manager_provider.get_for_display(this.get_display());
@@ -21,10 +24,7 @@ namespace TokyoGtk {
       var style_manager_provider = provider.get_style_manager_provider() as StyleManagerProvider;
       assert(style_manager_provider != null);
 
-      var style_manager = style_manager_provider.get_for_display(this.get_display());
-      assert(style_manager != null);
-
-      var style_manager_data = style_manager_provider._managers.get(style_manager);
+      var style_manager_data = style_manager_provider._managers.get(this.style_manager);
       assert(style_manager_data != null);
 
       this.get_style_context().add_provider(style_manager_data.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
