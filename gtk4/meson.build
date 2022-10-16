@@ -16,16 +16,19 @@ gtk4_default = custom_target('styling-gtk4-default',
   output: 'gtk-default.css',
   input: 'styling/default.scss',
   build_always: true,
+  build_by_default: true,
   command: [sass, '@INPUT@', '@OUTPUT@', sass_flags])
 gtk4_light = custom_target('styling-gtk4-light',
   output: 'gtk-light.css',
   input: 'styling/light.scss',
   build_always: true,
+  build_by_default: true,
   command: [sass, '@INPUT@', '@OUTPUT@', sass_flags])
 gtk4_storm = custom_target('styling-gtk4-storm',
   output: 'gtk-storm.css',
   input: 'styling/storm.scss',
   build_always: true,
+  build_by_default: true,
   command: [sass, '@INPUT@', '@OUTPUT@', sass_flags])
 
 libtokyo_gtk4_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala', 'lib/init.vala', 'lib/provider.vala', 'lib/stylemanager.vala', 'lib/window.vala']

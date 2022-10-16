@@ -2,6 +2,7 @@ theme_gtk3_default = custom_target('theme-gtk3-default',
   output: 'gtk.css',
   input: join_paths(meson.project_source_root(), 'gtk3', 'styling', 'default.scss'),
   build_always: true,
+  build_by_default: true,
   command: [sass, '@INPUT@', '@OUTPUT@', sass_flags],
   install: true,
   install_dir: join_paths(datadir, 'themes', 'Tokyo-Night', 'gtk-3.0'))

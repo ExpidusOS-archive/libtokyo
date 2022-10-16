@@ -91,6 +91,7 @@ if unbuild.found() and node.found()
     output: 'output',
     input: 'styling/index.ts',
     build_always: true,
+    build_by_default: true,
     env: {
       'OUTDIR': '@0@/output'.format(meson.current_build_dir())
     },

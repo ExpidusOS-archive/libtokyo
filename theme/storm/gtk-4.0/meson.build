@@ -11,6 +11,7 @@ theme_gtk4_storm = custom_target('theme-gtk4-default',
   output: 'gtk.css',
   input: theme_gtk4_storm_scss,
   build_always: true,
+  build_by_default: true,
   command: [sass, '@INPUT@', '@OUTPUT@', sass_flags],
   install: true,
   install_dir: join_paths(datadir, 'themes', 'Tokyo-Night-Storm', 'gtk-4.0'))
