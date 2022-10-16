@@ -6,6 +6,15 @@ namespace TokyoGtk {
     public abstract Provider? provider { get; construct; }
     public abstract Hdy.HeaderBar header { get; }
 
+    public Tokyo.StyleManager style_manager {
+      get {
+        var style_manager_provider = provider.get_style_manager_provider() as StyleManagerProvider;
+        assert(style_manager_provider != null);
+
+        return style_manager_provider.get_for_display(this.get_display());
+      }
+    }
+
     internal void init() {
       if (this.title == null || this.title.length == 0) {
         if (this.application != null) {

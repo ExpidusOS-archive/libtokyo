@@ -1,22 +1,12 @@
 {
   description = "A libadwaita wrapper for ExpidusOS with Tokyo Night's styling";
 
-  inputs.vadi = {
-    url = github:ExpidusOS/Vadi/feat/nix;
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
-  inputs.ntk = {
-    url = path:./subprojects/ntk;
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   inputs.expidus-sdk = {
     url = github:ExpidusOS/sdk;
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, vadi, ntk, expidus-sdk }:
+  outputs = { self, nixpkgs, expidus-sdk }:
     let
       supportedSystems = [
         "aarch64-linux"
@@ -26,22 +16,20 @@
         "x86_64-darwin"
       ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-      nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
+      nixpkgsFor = forAllSystems (system: import expidus-sdk { inherit system; });
       src = self // { submodules = true; };
 
       packagesFor = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
 
-          vadi-pkg = vadi.packages.${system}.default;
-          ntk-pkg = ntk.packages.${system}.default;
           expidus-sdk-pkg = expidus-sdk.packages.${system}.default;
         in with pkgs; rec {
           nativeBuildInputs = [ meson ninja pkg-config vala glib sass nodejs expidus-sdk-pkg gobject-introspection ];
-          buildInputs = [ vadi-pkg ];
+          buildInputs = [ vadi ];
           buildInputsGtk3 = [ gtk3 libhandy ];
           buildInputsGtk4 = [ gtk4 libadwaita ];
-          buildInputsNtk = [ ntk-pkg ];
+          buildInputsNtk = [ ntk ];
           buildInputsFull = buildInputs ++ buildInputsGtk3 ++ buildInputsGtk4 ++ buildInputsNtk;
         });
     in

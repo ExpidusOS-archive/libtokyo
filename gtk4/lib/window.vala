@@ -6,6 +6,14 @@ namespace TokyoGtk {
     public abstract Provider? provider { get; construct; }
     public abstract Adw.HeaderBar header { get; }
 
+    public Tokyo.StyleManager style_manager {
+      get {
+        var style_manager_provider = provider.get_style_manager_provider() as StyleManagerProvider;
+        assert(style_manager_provider != null);
+        return style_manager_provider.get_for_display(this.get_display());
+      }
+    }
+
     internal void init() {
       var provider = this.provider != null ? this.provider : Tokyo.Provider.get_global();
       assert(provider != null);

@@ -29,6 +29,8 @@ namespace Tokyo {
     public abstract void create(StyleManager style_manager);
     public abstract void destroy(StyleManager style_manager);
     public abstract ColorScheme get_color_scheme(StyleManager style_manager);
+
+    public signal void color_scheme_change();
   }
 
   /**
@@ -76,6 +78,7 @@ namespace Tokyo {
 
     construct {
       this.provider.get_style_manager_provider().create(this);
+      this.provider.get_style_manager_provider().color_scheme_change.connect(() => this.notify_property("color_scheme"));
     }
 
     ~StyleManager() {

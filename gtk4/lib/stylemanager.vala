@@ -98,6 +98,8 @@ namespace TokyoGtk {
       if (this.get_for_display(display) == null) {
         var data = new StyleManagerData(display);
         var key = new Tokyo.StyleManager.with_provider(this.provider);
+        data.adw.notify["high-contrast"].connect(() => this.color_scheme_change());
+        data.adw.notify["color-scheme"].connect(() => this.color_scheme_change());
         this._managers.insert(key, data);
       }
     }
