@@ -1,0 +1,4 @@
+[wrap-git]
+directory=ntk
+url=https://github.com/ExpidusOS/ntk.git
+revision=master
