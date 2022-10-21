@@ -101,3 +101,9 @@ label {
 @define-color dark_3 #{"" + map-get($colors, 'grey-medium')};
 @define-color dark_4 #{"" + map-get($colors, 'grey-dark')};
 @define-color dark_5 #{"" + map-get($colors, 'black')};
+
+.genesis-shell-panel {
+  border-style: none;
+  border-width: 0;
+  border-radius: 3px;
+}
