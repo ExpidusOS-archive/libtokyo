@@ -31,11 +31,11 @@ label {
 @define-color view_bg_color #{"" + map-get($colors, 'background')};
 @define-color view_fg_color #{"" + map-get($colors, 'accent-text')};
 
-@define-color headerbar_bg_color #{"" + map-get($colors, 'secondary-background')};
-@define-color headerbar_fg_color #{"" + map-get($colors, 'secondary-text')};
-@define-color headerbar_border_color #{"" + map-get($colors, 'secondary-background-border')};
-@define-color headerbar_backdrop_color #{"" + map-get($colors, 'secondary-background')};
-@define-color headerbar_shade_color #{"" + map-get($colors, 'secondary-background-border')};
+@define-color headerbar_bg_color #{"" + map-get($colors, 'background')};
+@define-color headerbar_fg_color #{"" + map-get($colors, 'text')};
+@define-color headerbar_border_color #{"" + map-get($colors, 'background-border')};
+@define-color headerbar_backdrop_color #{"" + map-get($colors, 'background')};
+@define-color headerbar_shade_color #{"" + map-get($colors, 'background-border')};
 
 @define-color card_bg_color #{"" + mix(map-get($colors, 'background'), map-get($colors, 'secondary-background'), 50%)};
 @define-color card_fg_color #{"" + map-get($colors, 'text')};

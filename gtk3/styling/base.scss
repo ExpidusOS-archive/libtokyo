@@ -28,11 +28,11 @@ $window_fg_color: map-get($colors, 'accent-text');
 $view_bg_color: map-get($colors, 'background');
 $view_fg_color: map-get($colors, 'accent-text');
 
-$headerbar_bg_color: map-get($colors, 'secondary-background');
-$headerbar_fg_color: map-get($colors, 'secondary-text');
-$headerbar_border_color: map-get($colors, 'secondary-background-border');
-$headerbar_backdrop_color: map-get($colors, 'secondary-background');
-$headerbar_shade_color: map-get($colors, 'secondary-background-border');
+$headerbar_bg_color: map-get($colors, 'background');
+$headerbar_fg_color: map-get($colors, 'text');
+$headerbar_border_color: map-get($colors, 'background-border');
+$headerbar_backdrop_color: map-get($colors, 'background');
+$headerbar_shade_color: map-get($colors, 'background-border');
 
 $card_bg_color: mix(map-get($colors, 'background'), map-get($colors, 'secondary-background'), 50%);
 $card_fg_color: map-get($colors, 'text');
