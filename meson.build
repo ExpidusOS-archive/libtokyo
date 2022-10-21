@@ -18,6 +18,8 @@ git = find_program('git', native: true, required: false)
 conf_data = configuration_data()
 i18n_args = ['--package-version=@0@'.format(longver), '--copyright-holder=Midstall Software']
 
+add_project_arguments(['--hide-internal'], language: 'vala')
+
 if git.found()
   git_commit = run_command([git, 'rev-parse', '--short', 'HEAD'])
   git_branch = run_command([git, 'rev-parse', '--abbrev-ref', 'HEAD'])
@@ -47,6 +49,8 @@ if sdk.found()
 else
   uncrustify = disabler()
 endif
+
+libintl = meson.get_compiler('c').find_library('intl', required: false)
 
 valadoc = find_program('valadoc', required: get_option('docs'), native: true)
 node = find_program('node', required: use_nodejs, native: true)
