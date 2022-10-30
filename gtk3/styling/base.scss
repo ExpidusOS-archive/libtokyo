@@ -111,7 +111,7 @@ $dark_5: map-get($colors, 'black');
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_phosh';
 
 .genesis-shell-panel {
-  border-radius: $window_radius;
+  border-radius: 12px;
   padding-left: 3px;
   padding-right: 3px;
   padding-top: 5px;
