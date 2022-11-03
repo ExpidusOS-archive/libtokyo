@@ -1,10 +1,14 @@
 namespace TokyoGTKExample {
   public class MainWindow : TokyoGtk.ApplicationWindow {
+    public TokyoGtk.CalendarEvents calevents { get; }
+
     public MainWindow(Gtk.Application app) {
       Object(application: app);
     }
 
     construct {
+      this._calevents = new TokyoGtk.CalendarEvents();
+      this.get_box().append(this._calevents);
     }
   }
 

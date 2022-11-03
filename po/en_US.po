@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libtokyo 0.1.0-prealpha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-02 14:53-0700\n"
-"PO-Revision-Date: 2022-10-02 14:53-0700\n"
+"POT-Creation-Date: 2022-11-03 15:08-0700\n"
+"PO-Revision-Date: 2022-11-03 15:08-0700\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_US\n"
@@ -56,3 +56,12 @@ msgstr "Show All"
 #: core/lib/application.vala:105
 msgid "Quit Application"
 msgstr "Quit Application"
+
+#: gtk3/lib/calendar-events.vala:23 gtk3/lib/calendar-events.vala:37
+#: gtk4/lib/calendar-events.vala:23 gtk4/lib/calendar-events.vala:37
+msgid "Calendar"
+msgstr "Calendar"
+
+#: gtk3/lib/calendar-events.vala:43 gtk4/lib/calendar-events.vala:43
+msgid "Events"
+msgstr "Events"

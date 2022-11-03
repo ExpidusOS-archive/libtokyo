@@ -7,12 +7,14 @@ core/lib/window.vala
 
 gtk3/lib/application.vala
 gtk3/lib/applicationwindow.vala
+gtk3/lib/calendar-events.vala
 gtk3/lib/init.vala
 gtk3/lib/stylemanager.vala
 gtk3/lib/window.vala
 
 gtk4/lib/application.vala
 gtk4/lib/applicationwindow.vala
+gtk4/lib/calendar-events.vala
 gtk4/lib/init.vala
 gtk4/lib/stylemanager.vala
 gtk4/lib/window.vala

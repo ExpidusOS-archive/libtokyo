@@ -5,6 +5,18 @@ label {
   opacity: 0.9;
 }
 
+.genesis-shell-panel {
+  border-radius: 6px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+viewswitcher button:not(:checked) {
+  background-color: map-get($colors, "grey");
+}
+
 @define-color accent_color #{"" + scale-color(map-get($colors, 'blue'), $lightness: -10%)};
 @define-color accent_bg_color #{"" + map-get($colors, 'blue')};
 @define-color accent_fg_color #{"" + map-get($colors, 'neutral-text')};
@@ -101,9 +113,3 @@ label {
 @define-color dark_3 #{"" + map-get($colors, 'grey-medium')};
 @define-color dark_4 #{"" + map-get($colors, 'grey-dark')};
 @define-color dark_5 #{"" + map-get($colors, 'black')};
-
-.genesis-shell-panel {
-  border-style: none;
-  border-width: 0;
-  border-radius: 3px;
-}

@@ -103,17 +103,11 @@ $dark_5: map-get($colors, 'black');
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_colors';
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_drawing';
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_common';
+
+$window_radius: 6px;
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_colors-public';
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_custom';
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_libhandy';
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_granite';
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_apps';
 @import '../deps/adw-gtk3/gtk/src/adw-gtk3/gtk-3.0/_phosh';
-
-.genesis-shell-panel {
-  border-radius: 12px;
-  padding-left: 3px;
-  padding-right: 3px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}

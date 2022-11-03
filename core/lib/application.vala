@@ -37,7 +37,7 @@ namespace Tokyo {
       };
 
       var self = this;
-      var group = new GLib.OptionGroup("libtokyo", N_("libtokyo Options"), N_("Show all options for the libtokyo library"));
+      var group = new GLib.OptionGroup("libtokyo", _("libtokyo Options"), _("Show all options for the libtokyo library"));
       group.add_entries(options);
       this.add_option_group(group);
     }
@@ -91,18 +91,18 @@ namespace Tokyo {
       var menu = new GLib.Menu();
 
       var appMenu = new GLib.Menu();
-      appMenu.append_item(new GLib.MenuItem(N_("About"), "app.about"));
-      appMenu.append_item(new GLib.MenuItem(N_("Preferences"), "app.preferences"));
+      appMenu.append_item(new GLib.MenuItem(_("About"), "app.about"));
+      appMenu.append_item(new GLib.MenuItem(_("Preferences"), "app.preferences"));
       menu.append_section(null, appMenu);
 
       var windowMenu = new GLib.Menu();
-      windowMenu.append_item(new GLib.MenuItem(N_("Hide"), "window.hide"));
-      windowMenu.append_item(new GLib.MenuItem(N_("Hide Others"), "window.hide.others"));
-      windowMenu.append_item(new GLib.MenuItem(N_("Show All"), "window.showall"));
+      windowMenu.append_item(new GLib.MenuItem(_("Hide"), "window.hide"));
+      windowMenu.append_item(new GLib.MenuItem(_("Hide Others"), "window.hide.others"));
+      windowMenu.append_item(new GLib.MenuItem(_("Show All"), "window.showall"));
       menu.append_section(null, windowMenu);
 
       var otherMenu = new GLib.Menu();
-      otherMenu.append_item(new GLib.MenuItem(N_("Quit Application"), "app.quit"));
+      otherMenu.append_item(new GLib.MenuItem(_("Quit Application"), "app.quit"));
       menu.append_section(null, otherMenu);
       return menu;
     }
