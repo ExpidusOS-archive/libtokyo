@@ -17,7 +17,7 @@ tokyo_gtk3_res = gnome.compile_resources('tokyo-gtk3-resources', build_res_gtk3,
   dependencies: [theme_gtk3_default, theme_gtk3_light, theme_gtk3_storm])
 
 libtokyo_gtk3_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala',
-  'lib/calendar-events.vala', 'lib/init.vala', 'lib/provider.vala', 'lib/stylemanager.vala', 'lib/window.vala']
+  'lib/calendarevents.vala', 'lib/init.vala', 'lib/provider.vala', 'lib/stylemanager.vala', 'lib/window.vala']
 libtokyo_gtk3_sources = []
 
 foreach src : libtokyo_gtk3_rel_sources

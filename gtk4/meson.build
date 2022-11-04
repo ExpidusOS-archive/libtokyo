@@ -31,7 +31,7 @@ gtk4_storm = custom_target('styling-gtk4-storm',
   build_by_default: true,
   command: [sass, '@INPUT@', '@OUTPUT@', sass_flags])
 
-libtokyo_gtk4_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala', 'lib/calendar-events.vala', 'lib/init.vala', 'lib/provider.vala', 'lib/stylemanager.vala', 'lib/window.vala']
+libtokyo_gtk4_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala', 'lib/calendarevents.vala', 'lib/init.vala', 'lib/provider.vala', 'lib/stylemanager.vala', 'lib/window.vala']
 libtokyo_gtk4_sources = []
 
 foreach src : libtokyo_gtk4_rel_sources
