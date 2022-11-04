@@ -9,6 +9,27 @@ namespace TokyoGTKExample {
     construct {
       this._calevents = new TokyoGtk.CalendarEvents();
       this.get_box().add(this._calevents);
+
+      var list = new GLib.ListStore(typeof (ICal.Component));
+
+      list.append(new ICal.Component.from_string("""
+BEGIN:VEVENT
+DTSTART:20970714T170000Z
+DTEND:20970715T035959Z
+SUMMARY:Hello, world
+DESCRIPTION:An event is in the calendar.
+END:VEVENT
+"""));
+
+      list.append(new ICal.Component.from_string("""
+BEGIN:VEVENT
+DTSTART:19970714T170000Z
+DTEND:19970715T035959Z
+SUMMARY:Bastille Day Party
+END:VEVENT
+"""));
+
+      this._calevents.events_list.bind_model(list);
     }
   }
 

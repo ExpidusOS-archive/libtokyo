@@ -26,7 +26,8 @@ configure_file(input: 'lib/tokyo.deps.in', output: 'tokyo.deps',
   install: true,
   install_dir: join_paths(datadir, 'vala', 'vapi'))
 
-libtokyo_core_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala', 'lib/main.vala', 'lib/provider.vala', 'lib/stylemanager.vala', 'lib/window.vala']
+libtokyo_core_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala',
+  'lib/main.vala', 'lib/provider.vala', 'lib/stylemanager.vala', 'lib/window.vala']
 libtokyo_core_sources = []
 
 foreach src : libtokyo_core_rel_sources

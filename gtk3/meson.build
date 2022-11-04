@@ -17,7 +17,8 @@ tokyo_gtk3_res = gnome.compile_resources('tokyo-gtk3-resources', build_res_gtk3,
   dependencies: [theme_gtk3_default, theme_gtk3_light, theme_gtk3_storm])
 
 libtokyo_gtk3_rel_sources = ['lib/application.vala', 'lib/applicationwindow.vala',
-  'lib/calendarevents.vala', 'lib/init.vala', 'lib/provider.vala', 'lib/stylemanager.vala', 'lib/window.vala']
+  'lib/calendar.vala', 'lib/calendarevents.vala', 'lib/events.vala', 'lib/eventslist.vala',
+  'lib/init.vala', 'lib/provider.vala', 'lib/stylemanager.vala', 'lib/window.vala']
 libtokyo_gtk3_sources = []
 
 foreach src : libtokyo_gtk3_rel_sources
@@ -30,16 +31,17 @@ if uncrustify.found()
 endif
 
 libtokyo_gtk3_sources += [build_conf_gtk3]
+libtokyo_gtk3_deps = [handy, libical, libtokyo_core_dep]
 
 libtokyo_gtk3 = shared_library('tokyo-gtk3', build_conf_gtk3, tokyo_gtk3_res, libtokyo_gtk3_rel_sources,
-  c_args: ['-DG_LOG_DOMAIN="TokyoGtk"', '-DGETTEXT_PACKAGE="libtokyo"'],
+  c_args: ['-DG_LOG_DOMAIN="TokyoGtk"', '-DGETTEXT_PACKAGE="libtokyo"', '-DLIBICAL_GLIB_UNSTABLE_API=1'],
   vala_args: ['--define=GETTEXT_PACKAGE="libtokyo"'],
   vala_gir: 'TokyoGtk3-@0@.gir'.format(shortver.split('-')[0]),
-  dependencies: [handy, libtokyo_core_dep],
+  dependencies: libtokyo_gtk3_deps,
   version: shortver.split('-')[0],
   install: true,
   install_dir: [true, true, true, true])
-libtokyo_gtk3_dep = declare_dependency(link_with: libtokyo_gtk3, dependencies: [handy, libtokyo_core_dep])
+libtokyo_gtk3_dep = declare_dependency(link_with: libtokyo_gtk3, dependencies: libtokyo_gtk3_deps)
 pkg.generate(libtokyo_gtk3,
   name: 'tokyo-gtk3',
   requires: ['libhandy-1 >= 1.6.0'],
@@ -48,6 +50,7 @@ pkg.generate(libtokyo_gtk3,
   version: longver)
 
 executable('tokyo-gtk3-example', ['examples/main.vala'],
+  c_args: ['-DLIBICAL_GLIB_UNSTABLE_API=1'],
   dependencies: [libtokyo_gtk3_dep])
 
 subdir('docs', if_found: [valadoc])

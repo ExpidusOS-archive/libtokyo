@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libtokyo 0.1.0-prealpha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-03 15:08-0700\n"
+"POT-Creation-Date: 2022-11-04 11:22-0700\n"
 "PO-Revision-Date: 2022-11-03 15:08-0700\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -57,11 +57,35 @@ msgstr "Show All"
 msgid "Quit Application"
 msgstr "Quit Application"
 
-#: gtk3/lib/calendar-events.vala:23 gtk3/lib/calendar-events.vala:37
-#: gtk4/lib/calendar-events.vala:23 gtk4/lib/calendar-events.vala:37
+#: gtk3/lib/calendarevents.vala:27 gtk3/lib/calendarevents.vala:42
+#: gtk4/lib/calendarevents.vala:23 gtk4/lib/calendarevents.vala:37
 msgid "Calendar"
 msgstr "Calendar"
 
-#: gtk3/lib/calendar-events.vala:43 gtk4/lib/calendar-events.vala:43
+#: gtk3/lib/calendarevents.vala:49 gtk4/lib/calendarevents.vala:43
 msgid "Events"
 msgstr "Events"
+
+#: gtk3/lib/events.vala:86 gtk3/lib/events.vala:88 gtk3/lib/events.vala:90
+#: gtk3/lib/events.vala:92
+#, c-format
+msgid "%s - %s"
+msgstr ""
+
+#: gtk3/lib/events.vala:88
+#, c-format
+msgid "%a %d %X"
+msgstr ""
+
+#: gtk3/lib/events.vala:90
+msgid "%b, %a %d %X"
+msgstr ""
+
+#: gtk3/lib/events.vala:92
+msgid "%Y %b, %a %d %X"
+msgstr ""
+
+#: gtk3/lib/eventslist.vala:32 gtk3/lib/eventslist.vala:39
+#, c-format
+msgid "You have no events for %s."
+msgstr ""

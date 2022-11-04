@@ -51,6 +51,7 @@ else
 endif
 
 libintl = meson.get_compiler('c').find_library('intl', required: false)
+libical = dependency('libical-glib', required: true)
 
 valadoc = find_program('valadoc', required: get_option('docs'), native: true)
 node = find_program('node', required: use_nodejs, native: true)
