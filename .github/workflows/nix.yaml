@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          submodules: true
       - name: Install Nix
         uses: cachix/install-nix-action@v18
         with:
@@ -28,7 +30,7 @@ jobs:
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
           extraPullNames: nix-community
       - name: Build Flake
-        run: nix build -L
+        run: nix build -L '.?submodules=1'
       - name: Check Flake
         run: nix flake check
       - name: Bundle Flake
