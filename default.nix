@@ -6,5 +6,6 @@
   src = builtins.fetchGit {
     url = ./.;
     submodules = true;
+    shallow = true;
   };
 }).defaultNix.legacyPackages.${builtins.currentSystem}.libtokyo
