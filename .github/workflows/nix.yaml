@@ -35,7 +35,7 @@ jobs:
         run: nix flake check
       - name: Bundle Flake
         if: github.event_name != 'pull_request'
-        run: nix bundle
+        run: nix bundle '.?submodules=1'
   legacy:
     strategy:
       matrix:
