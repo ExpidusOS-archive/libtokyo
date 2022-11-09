@@ -63,6 +63,7 @@ pkg.generate(libtokyo_gtk4,
   requires: ['libadwaita-1 >= 1.1.0'],
   description: 'A libadwaita wrapper for ExpidusOS with Tokyo Night\'s styling',
   url: 'https://github.com/ExpidusOS/libtokyo',
+  extra_cflags: ['-DLIBICAL_GLIB_UNSTABLE_API=1'],
   version: longver)
 
 executable('tokyo-gtk4-example', ['examples/main.vala'],

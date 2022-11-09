@@ -47,6 +47,7 @@ pkg.generate(libtokyo_gtk3,
   requires: ['libhandy-1 >= 1.6.0'],
   description: 'A libhandy wrapper for ExpidusOS with Tokyo Night\'s styling',
   url: 'https://github.com/ExpidusOS/libtokyo',
+  extra_cflags: ['-DLIBICAL_GLIB_UNSTABLE_API=1'],
   version: longver)
 
 executable('tokyo-gtk3-example', ['examples/main.vala'],
