@@ -5,5 +5,5 @@
     url = github:ExpidusOS/sdk;
   };
 
-  outputs = { self, expidus-sdk }: expidus-sdk.libExpidus.mkFlake { inherit self; name = "libtokyo"; };
+  outputs = { self, expidus-sdk }: expidus-sdk.lib.expidus.flake.makeOverride { inherit self; name = "libtokyo"; };
 }
