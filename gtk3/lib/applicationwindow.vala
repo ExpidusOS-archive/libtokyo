@@ -1,5 +1,5 @@
 namespace TokyoGtk {
-  public class ApplicationWindow : Hdy.ApplicationWindow, BaseWindow {
+  public class ApplicationWindow : Hdy.ApplicationWindow, BaseWindow, Gtk.Buildable {
     private Hdy.HeaderBar _header;
     private Gtk.Box _content;
     private uint _id;
@@ -44,6 +44,14 @@ namespace TokyoGtk {
 
     public Gtk.Box get_box() {
       return this._content;
+    }
+
+    public void add_child(Gtk.Builder builder, GLib.Object child, string? type) {
+      if (type == null) {
+        this.get_box().add_child(builder, child, null);
+      } else if (type == "header") {
+        this.header.add_child(builder, child, null);
+      }
     }
   }
 }
