@@ -3,11 +3,11 @@
     "adw-gtk3": {
       "flake": false,
       "locked": {
-        "lastModified": 1669729362,
-        "narHash": "sha256-JttlzNf1r6eKtADD7Ac7vYA6r8kVK4g2aWbp9U+vucQ=",
+        "lastModified": 1671874395,
+        "narHash": "sha256-3K2Sdae3HdoawFH5xr5jEczxFAB8td0+XYDXo14pW2g=",
         "owner": "lassekongo83",
         "repo": "adw-gtk3",
-        "rev": "baf87b51caea92b9b01992fb6bb58e6ea440e90d",
+        "rev": "caf20cdf10f1fcbe076f22670bc0887a28201dbe",
         "type": "github"
       },
       "original": {
@@ -18,11 +18,11 @@
     },
     "expidus-sdk": {
       "locked": {
-        "lastModified": 1670019159,
-        "narHash": "sha256-25KqDJSIxbN8vU1BgYI1ehej2dv4ypHL2fTJf1zw9KQ=",
+        "lastModified": 1671774006,
+        "narHash": "sha256-QtOYpQRA9crZF9M8pQfc8KgDx4p/OKQ2kigzrANPc2M=",
         "owner": "ExpidusOS",
         "repo": "sdk",
-        "rev": "35a5e63e7a506c5935727e3a1c4c66d80cdf6d1f",
+        "rev": "b39926ed8f49ddf2878efcd313614d06b34215d8",
         "type": "github"
       },
       "original": {
