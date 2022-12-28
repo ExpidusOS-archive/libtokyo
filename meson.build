@@ -102,7 +102,7 @@ conf_data.set('BUILDDIR', meson.current_build_dir())
 conf_data.set('SOURCEDIR', meson.current_source_dir())
 
 if unbuild.found() and node.found()
-  custom_target('nodejs',
+  node_target = custom_target('nodejs',
     output: 'output',
     input: 'styling/index.ts',
     build_always: true,
