@@ -55,8 +55,8 @@ libical = dependency('libical-glib', required: true)
 
 valadoc = find_program('valadoc', required: get_option('docs'), native: true)
 node = find_program('node', required: use_nodejs, native: true)
-sass = find_program('sass', dirs: [join_paths(meson.project_source_root(), 'node_modules', '.bin')], required: true, native: true)
-unbuild = find_program('unbuild', './node_modules/.bin/unbuild', required: get_option('nodejs'), native: true)
+sass = find_program('sass', dirs: [get_option('sass'), join_paths(meson.project_source_root(), 'node_modules', '.bin')], required: true, native: true)
+unbuild = find_program('unbuild', dirs: [get_option('unbuild'), join_paths(meson.project_source_root(), 'node_modules', '.bin')], required: get_option('nodejs'), native: true)
 
 sass_flags = ['-I' + meson.project_source_root(), '-I' + meson.project_build_root()]
 if sass.full_path() != join_paths(meson.project_source_root(), 'node_modules', '.bin', 'sass')
