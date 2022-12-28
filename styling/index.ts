@@ -21,7 +21,7 @@ function createPrism(colors: Record<string, string>, name: string): object {
       fadeColor: colors.background
     },
     name: name,
-    widgets: "Fusion"
+    widgets: "adwaita"
   };
 }
 
