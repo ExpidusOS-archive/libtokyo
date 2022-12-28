@@ -2,19 +2,10 @@
   "name": "libtokyo",
   "version": "0.1.0-prealpha-dd5c395",
   "description": "A libadwaita wrapper for ExpidusOS with Tokyo Night's styling",
-  "main": "./builddir/output/styling.cjs",
-  "exports": {
-    ".": {
-      "import": "./builddir/output/styling.mjs",
-      "require": "./builddir/output/styling.cjs"
-    }
-  },
-  "files": [
-    "builddir/output"
-  ],
   "scripts": {
     "configure": "meson . builddir",
     "build": "ninja -C builddir",
+    "minibuild": "unbuild",
     "tailwind-config-viewer": "tailwind-config-viewer -o"
   },
   "devDependencies": {
