@@ -2,6 +2,7 @@
   "name": "libtokyo",
   "version": "0.1.0-prealpha-1855eba",
   "description": "A libadwaita wrapper for ExpidusOS with Tokyo Night's styling",
+  "private": true,
   "scripts": {
     "configure": "meson . builddir",
     "build": "ninja -C builddir",

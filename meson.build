@@ -102,15 +102,29 @@ conf_data.set('BUILDDIR', meson.current_build_dir())
 conf_data.set('SOURCEDIR', meson.current_source_dir())
 
 if unbuild.found() and node.found()
+  nodedir = join_paths(libdir, 'node_modules', 'libtokyo')
   node_target = custom_target('nodejs',
     output: 'output',
     input: 'styling/index.ts',
+    install: true,
+    install_dir: nodedir,
     build_always: true,
     build_by_default: true,
     env: {
       'OUTDIR': '@0@/output'.format(meson.current_build_dir())
     },
     command: [unbuild, meson.current_source_dir()])
+
+  package_export = custom_target('export-package',
+    output: 'package.json',
+    input: join_paths(meson.project_source_root(), 'package.json'),
+    install: true,
+    install_dir: nodedir,
+    build_always: true,
+    build_by_default: true,
+    command: [node, join_paths(meson.project_source_root(), 'scripts', 'export-package.js'), '@OUTPUT@', shortver]) 
+
+  install_data('README.md', install_dir: nodedir)
 endif
 
 subdir('po')
