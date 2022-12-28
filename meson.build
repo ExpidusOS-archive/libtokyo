@@ -125,6 +125,10 @@ if unbuild.found() and node.found()
     command: [node, join_paths(meson.project_source_root(), 'scripts', 'export-package.js'), '@OUTPUT@', shortver]) 
 
   install_data('README.md', install_dir: nodedir)
+  install_data('LICENSE', install_dir: nodedir)
+  install_data('tsconfig.json', install_dir: nodedir)
+  install_data('package-lock.json', install_dir: nodedir)
+  install_data('tailwind.config.js', install_dir: nodedir)
 endif
 
 subdir('po')

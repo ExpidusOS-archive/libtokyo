@@ -22,6 +22,7 @@ pkg.exports = {
   }
 };
 delete pkg.private;
+delete pkg.scripts;
 fs.writeFileSync(
   process.argv[2],
   JSON.stringify(pkg, null, 2)
