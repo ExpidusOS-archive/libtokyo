@@ -1,6 +1,6 @@
 {
   "name": "libtokyo",
-  "version": "0.1.0-prealpha-dd5c395",
+  "version": "0.1.0-prealpha-1855eba",
   "description": "A libadwaita wrapper for ExpidusOS with Tokyo Night's styling",
   "scripts": {
     "configure": "meson . builddir",

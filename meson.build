@@ -50,13 +50,23 @@ else
   uncrustify = disabler()
 endif
 
+sass_optpath = get_option('sass')
+if not fs.is_absolute(sass_optpath)
+  sass_optpath = join_paths(meson.project_source_root(), get_option('sass'))
+endif
+
+unbuild_optpath = get_option('unbuild')
+if not fs.is_absolute(unbuild_optpath)
+  unbuild_optpath = join_paths(meson.project_source_root(), get_option('unbuild'))
+endif
+
 libintl = meson.get_compiler('c').find_library('intl', required: false)
 libical = dependency('libical-glib', required: true)
 
 valadoc = find_program('valadoc', required: get_option('docs'), native: true)
 node = find_program('node', required: use_nodejs, native: true)
-sass = find_program('sass', dirs: [get_option('sass'), join_paths(meson.project_source_root(), 'node_modules', '.bin')], required: true, native: true)
-unbuild = find_program('unbuild', dirs: [get_option('unbuild'), join_paths(meson.project_source_root(), 'node_modules', '.bin')], required: get_option('nodejs'), native: true)
+sass = find_program('sass', dirs: [sass_optpath, join_paths(meson.project_source_root(), 'node_modules', '.bin')], required: true, native: true)
+unbuild = find_program('unbuild', dirs: [unbuild_optpath, join_paths(meson.project_source_root(), 'node_modules', '.bin')], required: get_option('nodejs'), native: true)
 
 sass_flags = ['-I' + meson.project_source_root(), '-I' + meson.project_build_root()]
 if sass.full_path() != join_paths(meson.project_source_root(), 'node_modules', '.bin', 'sass')
