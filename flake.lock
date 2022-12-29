@@ -17,12 +17,18 @@
       }
     },
     "expidus-sdk": {
+      "inputs": {
+        "home-manager": "home-manager",
+        "mobile-nixos": "mobile-nixos",
+        "nixpkgs": "nixpkgs",
+        "utils": "utils"
+      },
       "locked": {
-        "lastModified": 1672253283,
-        "narHash": "sha256-H1QsN1ZDV/EttYAOmX/kgpJV2AEs1VqaiYkV7Na81rk=",
+        "lastModified": 1672349717,
+        "narHash": "sha256-jX3nM7Y18Ve4H7jndzH/Y/mogTblxI+g1sPLs0CCBeQ=",
         "owner": "ExpidusOS",
         "repo": "sdk",
-        "rev": "8347c0fcfd6733c36f551404d597990e9e5122af",
+        "rev": "c1aa062873df48fae30143ccd31b72c8ed8538c1",
         "type": "github"
       },
       "original": {
@@ -31,10 +37,75 @@
         "type": "github"
       }
     },
+    "home-manager": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1672244468,
+        "narHash": "sha256-xaZb8AZqoXRCSqPusCk4ouf+fUNP8UJdafmMTF1Ltlw=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "89a8ba0b5b43b3350ff2e3ef37b66736b2ef8706",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-22.11",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "mobile-nixos": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1670131242,
+        "narHash": "sha256-T/o1/3gffr010fsqgNshs1NJJjsnUYvQnUZgm6hilsY=",
+        "owner": "NixOS",
+        "repo": "mobile-nixos",
+        "rev": "5ee45cc1f8e43f4af14ee17ccef9156b0db8cd77",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "mobile-nixos",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1671883564,
+        "narHash": "sha256-C15oAtyupmLB3coZY7qzEHXjhtUx/+77olVdqVMruAg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "dac57a4eccf1442e8bf4030df6fcbb55883cb682",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "adw-gtk3": "adw-gtk3",
         "expidus-sdk": "expidus-sdk"
+      }
+    },
+    "utils": {
+      "locked": {
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
       }
     }
   },
