@@ -42,11 +42,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1672774987,
-        "narHash": "sha256-K3HJyNNKVgPU90+XnWXGQy6WNJXrlnq6dRRzQCK2bug=",
+        "lastModified": 1672781528,
+        "narHash": "sha256-mvu5cwHWl/+OAWpnz0gLlTK7WiCvDsC3B0pPBku+PiI=",
         "owner": "ExpidusOS",
         "repo": "sdk",
-        "rev": "66f4693b63ada21d18b8e9c82469256a291f27c1",
+        "rev": "39c4fc7c14ea8270f037f0ea0a2847d0771e2119",
         "type": "github"
       },
       "original": {
