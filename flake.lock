@@ -3,11 +3,11 @@
     "adw-gtk3": {
       "flake": false,
       "locked": {
-        "lastModified": 1672249954,
-        "narHash": "sha256-28hxqpXL8M+pVns/plmNLcC14e/tVXtGyi5u8sFlZGA=",
+        "lastModified": 1672559464,
+        "narHash": "sha256-y6cIniJn3Cg9WDEEetN3HNeRM9Z1pA4Umi+L4rsxdHA=",
         "owner": "lassekongo83",
         "repo": "adw-gtk3",
-        "rev": "ace011ed855c2eb8e21fbe8a8ddedd8df7a10596",
+        "rev": "071f645b5c1ea8c7c794ab70c014298ee0aaf5ce",
         "type": "github"
       },
       "original": {
@@ -16,19 +16,37 @@
         "type": "github"
       }
     },
+    "disko": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1672774957,
+        "narHash": "sha256-/R12pgiPd06G4RPjkyi2LfQmwAM4OJCGZqFLTe69Xxg=",
+        "owner": "RossComputerGuy",
+        "repo": "disko",
+        "rev": "ab33709297267ff18502f7fd3de3bccb807cc43a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "RossComputerGuy",
+        "ref": "fix/option-descriptions",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "expidus-sdk": {
       "inputs": {
+        "disko": "disko",
         "home-manager": "home-manager",
         "mobile-nixos": "mobile-nixos",
         "nixpkgs": "nixpkgs",
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1672360755,
-        "narHash": "sha256-iTj5/aPZUOLcWuIPMqRTK280jdhxEskiVUQV1gGo3cg=",
+        "lastModified": 1672774987,
+        "narHash": "sha256-K3HJyNNKVgPU90+XnWXGQy6WNJXrlnq6dRRzQCK2bug=",
         "owner": "ExpidusOS",
         "repo": "sdk",
-        "rev": "d97161c8ec6106c4ed2a6bf4db0727e9099286dc",
+        "rev": "66f4693b63ada21d18b8e9c82469256a291f27c1",
         "type": "github"
       },
       "original": {
@@ -73,11 +91,11 @@
     "nixpkgs": {
       "flake": false,
       "locked": {
-        "lastModified": 1671883564,
-        "narHash": "sha256-C15oAtyupmLB3coZY7qzEHXjhtUx/+77olVdqVMruAg=",
+        "lastModified": 1672616430,
+        "narHash": "sha256-e18rRwDUaW/Uw1tBmtsVueJ2SVI5DLhrEGwhkIo+c50=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "dac57a4eccf1442e8bf4030df6fcbb55883cb682",
+        "rev": "0bf3109eeb61780965c27f4a0a4affdcd0cd4d3d",
         "type": "github"
       },
       "original": {
