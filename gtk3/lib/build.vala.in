@@ -1,6 +1,0 @@
-namespace TokyoGtk {
-  public const string LOCALDIR = "@LOCALDIR@";
-  public const string VERSION = "@VERSION@";
-  public const string BUILD_USER = "@BUILD_USER@";
-  internal const string GETTEXT_PACKAGE = "libtokyo";
-}

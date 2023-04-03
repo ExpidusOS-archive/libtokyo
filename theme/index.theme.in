@@ -1,6 +1,0 @@
-[X-GNOME-Metatheme]
-Name=Tokyo-Night@VARIANT@
-Type=X-GNOME-Metatheme
-Comment=Tokyo Night@VARIANT_NAME@ theme
-Encoding=UTF-8
-GtkTheme=Tokyo@VARIANT@
