@@ -6,7 +6,7 @@ jobs:
       matrix:
         arch: [x64]
         channel: [stable]
-        target: [linux, windows, macos, web]
+        target: [linux, windows, macos, web, android]
         os: [ubuntu-latest, windows-latest, macos-latest]
         exclude:
             - os: ubuntu-latest
@@ -21,6 +21,10 @@ jobs:
               target: windows
             - os: macos-latest
               target: linux
+            - os: windows-latest
+              target: android
+            - os: macos-latest
+              target: android
     runs-on: ${{ matrix.os }}
     continue-on-error: true
     steps:
@@ -30,20 +34,31 @@ jobs:
           cache: true
           channel: ${{ matrix.channel }}
           architecture: ${{ matrix.arch }}
-      - run: flutter doctor
+      - if: ${{ matrix.target == 'android' }}
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
       - if: ${{ matrix.target == 'linux' }}
         name: Install host dependencies
         run: |
           sudo apt-get update -y
           sudo apt-get install -y ninja-build libgtk-3-dev
+      - run: flutter doctor
       - name: Download dependencies
         run: flutter pub get
-      - if: ${{ matrix.target != 'web' }}
+      - if: ${{ matrix.target != 'web' && matrix.target != 'android' }}
         name: Build desktop
         run: |
           flutter config --enable-${{ matrix.target }}-desktop
           cd example
           flutter build ${{ matrix.target }}
+      - if: ${{ matrix.target == 'android' }}
+        name: Build for Android
+        run: |
+          cd example
+          flutter build apk
+          flutter build appbundle
       - if: ${{ matrix.target == 'web' }}
         name: Build for the web
         run: |
