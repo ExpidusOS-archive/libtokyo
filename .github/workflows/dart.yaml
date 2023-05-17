@@ -1,0 +1,23 @@
+name: Dart
+on: push
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        arch: [x64]
+        sdk: [stable]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.sdk }}
+      - name: Test libtokyo
+        run: |
+          pushd packages/libtokyo
+          dart pub get
+          dart test --reporter=github
+          popd
