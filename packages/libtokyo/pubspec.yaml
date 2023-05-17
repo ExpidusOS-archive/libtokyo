@@ -1,0 +1,8 @@
+name: libtokyo
+description: ExpidusOS's UX/UI design language based around the Tokyo Night colorscheme.
+version: 0.1.0
+homepage: https://github.com/ExpidusOS/libtokyo
+issue_tracker: https://github.com/ExpidusOS/libtokyo/issues
+
+environment:
+  sdk: '>=2.18.4 <3.0.0'

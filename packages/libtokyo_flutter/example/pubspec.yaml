@@ -9,8 +9,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  libtokyo:
+  libtokyo_flutter:
     path: ../
+
+dependency_overrides:
+  libtokyo:
+    path: ../../libtokyo
 
 dev_dependencies:
   flutter_test:

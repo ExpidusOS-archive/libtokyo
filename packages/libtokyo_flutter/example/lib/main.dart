@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:libtokyo/libtokyo.dart';
+import 'package:libtokyo_flutter/libtokyo.dart';
 
 void main() {
   runApp(MyApp());

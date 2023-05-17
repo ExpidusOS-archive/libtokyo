@@ -52,7 +52,7 @@ jobs:
         name: Build desktop
         run: |
           flutter config --enable-${{ matrix.target }}-desktop
-          cd example
+          cd packages/libtokyo_flutter/example
           flutter build ${{ matrix.target }}
       - if: ${{ matrix.target == 'android' }}
         name: Build for Android

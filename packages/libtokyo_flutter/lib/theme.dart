@@ -1,4 +1,4 @@
-import 'package:libtokyo/theme/styles.dart';
+import 'package:libtokyo_flutter/theme/styles.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;

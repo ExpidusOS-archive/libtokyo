@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
 import 'dart:ui' show Brightness;
 
-import 'package:libtokyo/theme/factory.dart';
+import 'package:libtokyo_flutter/theme/factory.dart';
 
 MaterialColor createMaterialColor(Color color) {
   final strengths = <double>[.05];
