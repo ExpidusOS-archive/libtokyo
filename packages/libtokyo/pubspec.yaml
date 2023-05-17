@@ -6,3 +6,6 @@ issue_tracker: https://github.com/ExpidusOS/libtokyo/issues
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
+
+dev_dependencies:
+  test: ^1.24.3

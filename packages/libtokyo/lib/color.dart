@@ -15,7 +15,7 @@ class Color {
   final double blue;
   final double alpha;
 
-  String _toStringChannel(int i) => ((this[i] * 255) as int).toRadixString(16);
+  String _toStringChannel(int i) => ((this[i] * 255).round()).toRadixString(16);
 
   @override
   String toString() => "#${_toStringChannel(0)}${_toStringChannel(1)}${_toStringChannel(2)}${_toStringChannel(3)}";
@@ -53,11 +53,11 @@ class Color {
   static double _parseChannel(String str) => _parseChannelToInt(str) / 255;
 
   static Color fromString(String str) {
-    if (str.length == 5 || str.length == 7) {
+    if (str[0] == '#') {
       return Color.fromString(str.substring(1, str.length));
     }
 
-    assert(str.length <= 6 && str.isNotEmpty);
+    assert(str.length % 2 == 0);
 
     final channelCount = str.length / 2;
     var channels = List<double>.filled(4, 0);
