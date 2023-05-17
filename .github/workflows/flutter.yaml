@@ -57,11 +57,11 @@ jobs:
       - if: ${{ matrix.target == 'android' }}
         name: Build for Android
         run: |
-          cd example
+          cd packages/libtokyo_flutter/example
           flutter build apk
           flutter build appbundle
       - if: ${{ matrix.target == 'web' }}
         name: Build for the web
         run: |
-          cd example
+          cd packages/libtokyo_flutter/example
           flutter build ${{ matrix.target }}
