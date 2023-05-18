@@ -2,21 +2,23 @@ import 'package:libtokyo/widgets.dart' as libtokyo;
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart' show MaterialScrollBehavior, MaterialApp, Colors;
 
-class TokyoApp extends StatefulWidget with libtokyo.TokyoApp<Widget> {
+class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Widget> {
   const TokyoApp({
     super.key,
-    super.home,
-    super.title,
+    this.home,
+    this.title = '',
     this.scrollBehavior,
   });
 
+  final Widget? home;
+  final String title;
   final ScrollBehavior? scrollBehavior;
 
   @override
   State<TokyoApp> createState() => _TokyoAppState();
 }
 
-class _TokyoAppState extends State<TokyoApp> {
+class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Widget> {
   late HeroController _heroController;
 
   @override

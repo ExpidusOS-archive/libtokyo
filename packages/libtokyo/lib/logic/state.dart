@@ -2,9 +2,9 @@
   * Based on https://github.com/flutter/flutter/blob/d3d8effc68/packages/flutter/lib/src/material/material_state.dart
  */
 
-import 'package:color/color.dart';
 import 'package:meta/meta.dart';
 import 'change_notifier.dart';
+import 'color.dart';
 
 enum TokyoState {
   hovered,
@@ -29,32 +29,11 @@ abstract class TokyoStateColor extends Color implements TokyoStateProperty<Color
 }
 
 class _TokyoStateColor extends TokyoStateColor {
-  _TokyoStateColor(this._resolve) : super(_resolve(_defaultStates));
+  _TokyoStateColor(this._resolve) : super(_resolve(_defaultStates).value);
 
   final TokyoPropertyResolver<Color> _resolve;
 
   static const Set<TokyoState> _defaultStates = <TokyoState>{};
-
-  @override
-  CielabColor toCielabColor() => _resolve(_defaultStates).toCielabColor();
-
-  @override
-  HexColor toHexColor() => _resolve(_defaultStates).toHexColor();
-
-  @override
-  HslColor toHslColor() => _resolve(_defaultStates).toHslColor();
-
-  @override
-  HsvColor toHsvColor() => _resolve(_defaultStates).toHsvColor();
-
-  @override
-  Map<String, num> toMap() => _resolve(_defaultStates).toMap();
-
-  @override
-  RgbColor toRgbColor() => _resolve(_defaultStates).toRgbColor();
-
-  @override
-  XyzColor toXyzColor() => _resolve(_defaultStates).toXyzColor();
 
   @override
   Color resolve(Set<TokyoState> states) => _resolve(states);
