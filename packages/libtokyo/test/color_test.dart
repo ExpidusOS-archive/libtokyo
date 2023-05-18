@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:libtokyo/color.dart';
+import 'package:libtokyo/logic/color.dart';
 
 final String _TEST_COLOR = 'a1b2c3d4';
 
@@ -16,7 +16,7 @@ void testColor(Color color, double red, double green, double blue, double alpha,
   expect(() => color[4], throwsA(isRangeError));
 
   expect(color.toString(), equals(str));
-  expect(color, equals(Color(red, green, blue, alpha)));
+  expect(color, equals(Color.rgba(red, green, blue, alpha)));
 }
 
 void main() {
