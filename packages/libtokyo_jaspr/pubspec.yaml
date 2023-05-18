@@ -1,5 +1,5 @@
-name: libtokyo
-description: ExpidusOS's UX/UI design language based around the Tokyo Night colorscheme.
+name: libtokyo_jaspr
+description: ExpidusOS's UX/UI design language for Jaspr.
 version: 0.1.0
 homepage: https://github.com/ExpidusOS/libtokyo
 issue_tracker: https://github.com/ExpidusOS/libtokyo/issues
@@ -7,9 +7,5 @@ issue_tracker: https://github.com/ExpidusOS/libtokyo/issues
 environment:
   sdk: '>=3.0.0-0 <4.0.0'
 
-dev_dependencies:
-  test: ^1.24.3
-
 dependencies:
-  color: ^3.0.0
-  meta: 1.9.1
+  jaspr: ^0.3.0

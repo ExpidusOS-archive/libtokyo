@@ -4,3 +4,5 @@ enum ColorScheme {
   moon,
   day,
 }
+
+typedef VoidCallback = void Function();
