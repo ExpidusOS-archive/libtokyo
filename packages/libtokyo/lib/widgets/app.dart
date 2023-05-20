@@ -19,19 +19,19 @@ abstract class TokyoApp<Key, Widget extends Object, Route extends Object> {
 }
 
 abstract mixin class TokyoAppState<Key, Widget extends Object, Route extends Object> {
-  late final ThemeData theme;
+  ThemeData? theme = null;
   TokyoApp<Key, Widget, Route> get tokyoWidget;
 
   ColorScheme get colorScheme => tokyoWidget.theme != null ? tokyoWidget.theme!.colorScheme : (tokyoWidget.colorScheme != null ? tokyoWidget.colorScheme! : ColorScheme.night);
 
   Future<String> loadThemeJSON(ColorScheme colorScheme);
 
-  Future<void> updateTheme() async {
+  Future<ThemeData> updateTheme() async {
     theme = ThemeData.json(
       package: 'libtokyo',
       colorScheme: colorScheme,
       json: await loadThemeJSON(colorScheme),
     );
-    print(theme);
+    return theme!;
   }
 }

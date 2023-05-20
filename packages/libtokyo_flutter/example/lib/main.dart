@@ -1,4 +1,5 @@
 import 'package:libtokyo_flutter/libtokyo.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,5 +28,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) =>
-    Container();
+    Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter Demo'),
+      ),
+    );
 }

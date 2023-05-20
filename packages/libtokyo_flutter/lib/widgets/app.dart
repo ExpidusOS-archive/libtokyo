@@ -1,8 +1,9 @@
 import 'package:libtokyo/libtokyo.dart' as libtokyo;
+import 'package:libtokyo_flutter/logic.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/material.dart' show MaterialApp;
+import 'package:flutter/material.dart' show ColorScheme, MaterialApp, ThemeData, ThemeMode;
 
 class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, Route> {
   const TokyoApp({
@@ -40,7 +41,11 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
   void initState() {
     super.initState();
 
-    updateTheme().catchError((err) =>
+    updateTheme().then((value) {
+      setState(() {
+        theme = value;
+      });
+    }).catchError((err) =>
       FlutterError.reportError(FlutterErrorDetails(
         exception: err,
         library: 'libtokyo_flutter',
@@ -59,5 +64,11 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
 
   @override
   Widget build(BuildContext context) =>
-    MaterialApp();
+    MaterialApp(
+      color: theme != null ? convertColor(theme!.backgroundColor) : null,
+      theme: theme != null ? convertThemeData(theme!) : null,
+      darkTheme: theme != null ? convertThemeData(theme!, Brightness.dark) : null,
+      title: widget.title,
+      home: widget.home,
+    );
 }
