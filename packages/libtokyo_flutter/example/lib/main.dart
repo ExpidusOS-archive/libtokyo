@@ -1,5 +1,6 @@
 import 'package:libtokyo_flutter/libtokyo.dart';
 import 'package:flutter/material.dart';
+import 'dart:io' show exit;
 
 void main() {
   runApp(MyApp());
@@ -29,8 +30,40 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) =>
     Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter Demo'),
+      appBar: PreferredSize(
+        child: Column(
+          children: [
+            WindowBar(
+              leading: Image.asset('imgs/icon.png'),
+              title: const Text('libtokyo_example'),
+            ),
+            AppBar(
+              title: const Text('Flutter Demo'),
+            ),
+          ],
+        ),
+        preferredSize: Size.fromHeight(AppBar.preferredHeightFor(context, Size.fromHeight(kToolbarHeight)) * 1.5),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+              ),
+              child: Text('Hello, world'),
+            ),
+            ListTile(
+              title: const Text('Item 1'),
+              onTap: () {},
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {},
+            ),
+          ],
+        ),
       ),
     );
 }

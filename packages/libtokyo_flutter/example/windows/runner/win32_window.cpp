@@ -236,7 +236,7 @@ void Win32Window::SetQuitOnClose(bool quit_on_close) {
 }
 
 bool Win32Window::OnCreate() {
-  // No-op; provided for subclasses.
+  SetWindowLong(window, GWL_STYLE, 0);
   return true;
 }
 
