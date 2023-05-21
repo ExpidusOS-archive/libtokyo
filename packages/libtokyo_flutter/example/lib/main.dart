@@ -1,5 +1,5 @@
 import 'package:libtokyo_flutter/libtokyo.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Scaffold;
 import 'dart:io' show exit;
 
 void main() {
@@ -30,19 +30,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) =>
     Scaffold(
-      appBar: PreferredSize(
-        child: Column(
-          children: [
-            WindowBar(
-              leading: Image.asset('imgs/icon.png'),
-              title: const Text('libtokyo_example'),
-            ),
-            AppBar(
-              title: const Text('Flutter Demo'),
-            ),
-          ],
-        ),
-        preferredSize: Size.fromHeight(AppBar.preferredHeightFor(context, Size.fromHeight(kToolbarHeight)) * 1.5),
+      windowBar: WindowBar(
+        leading: Image.asset('imgs/icon.png'),
+        title: const Text('libtokyo_example'),
+      ),
+      appBar: AppBar(
+        title: const Text('Flutter Demo'),
       ),
       drawer: Drawer(
         child: ListView(

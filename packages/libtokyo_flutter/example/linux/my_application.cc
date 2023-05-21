@@ -1,6 +1,7 @@
 #include "my_application.h"
 
 #include <flutter_linux/flutter_linux.h>
+#include <cairo.h>
 #ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #endif
@@ -13,6 +14,15 @@ struct _MyApplication {
 };
 
 G_DEFINE_TYPE(MyApplication, my_application, GTK_TYPE_APPLICATION)
+
+gboolean window_draw(GtkWidget* widget, cairo_t* cr, gpointer data) {
+  cairo_save(cr);
+  cairo_set_source_rgba(cr, 0, 0, 0, 0);
+  cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
+  cairo_paint(cr);
+  cairo_restore(cr);
+  return FALSE;
+}
 
 // Implements GApplication::activate.
 static void my_application_activate(GApplication* application) {
@@ -30,7 +40,18 @@ static void my_application_activate(GApplication* application) {
   gtk_window_set_title(window, "libtokyo_example");
 
   gtk_window_set_default_size(window, 1280, 720);
+  gtk_widget_set_app_paintable(GTK_WIDGET(window), TRUE);
   gtk_widget_show(GTK_WIDGET(window));
+
+  GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(window));
+  g_assert(screen != NULL);
+
+  GdkVisual* visual = gdk_screen_get_rgba_visual(screen);
+  if (visual != NULL && gdk_screen_is_composited(screen)) {
+    gtk_widget_set_visual(GTK_WIDGET(window), visual);
+  }
+
+  g_signal_connect(G_OBJECT(window), "draw", G_CALLBACK(window_draw), NULL);
 
   g_autoptr(FlDartProject) project = fl_dart_project_new();
   fl_dart_project_set_dart_entrypoint_arguments(project, self->dart_entrypoint_arguments);

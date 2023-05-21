@@ -6,7 +6,7 @@ class MainFlutterWindow: NSWindow {
     let flutterViewController = FlutterViewController.init()
     let windowFrame = self.frame
     self.contentViewController = flutterViewController
-    self.titleVisibility = .Hidden
+    self.titleVisibility = .hidden
     self.titlebarAppearsTransparent = true
     self.setFrame(windowFrame, display: true)
 

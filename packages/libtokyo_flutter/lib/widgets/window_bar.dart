@@ -1,7 +1,7 @@
 import 'package:libtokyo/libtokyo.dart' as libtokyo;
 import 'package:flutter/material.dart';
 
-class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widget> {
+class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widget>, PreferredSizeWidget {
   const WindowBar({
     super.key,
     this.leading,
@@ -18,6 +18,9 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
   final VoidCallback? onClose;
 
   @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight / 2);
+
+  @override
   Widget build(BuildContext context) {
     final height = AppBar.preferredHeightFor(context, Size.fromHeight(kToolbarHeight)) / 2;
     final iconSize = ((IconTheme.of(context).size ?? 24) / height) * 15;
@@ -25,14 +28,21 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Theme.of(context).colorScheme.onSurface,
-      leading: leading != null ?
-        Padding(
-          padding: EdgeInsets.all((height - iconSize) / 4),
-          child: leading!,
-        ) : null,
+      leading: leading != null ? Padding(
+        padding: EdgeInsets.all(iconSize * 0.25),
+        child: leading!,
+      ) : null,
+      leadingWidth: leading != null ? iconSize * 1.5 : null,
+      titleSpacing: 0.0,
       title: title,
       titleTextStyle: Theme.of(context).textTheme.labelMedium,
       toolbarHeight: height,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        ),
+      ),
       actions: [
         IconButton(
           icon: const Icon(Icons.minimize),
