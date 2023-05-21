@@ -126,6 +126,7 @@ bool Win32Window::CreateAndShow(const std::wstring& title,
     return false;
   }
 
+  SetWindowLong(window, GWL_STYLE, 0);
   return OnCreate();
 }
 
@@ -236,7 +237,6 @@ void Win32Window::SetQuitOnClose(bool quit_on_close) {
 }
 
 bool Win32Window::OnCreate() {
-  SetWindowLong(window, GWL_STYLE, 0);
   return true;
 }
 
