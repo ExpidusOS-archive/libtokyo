@@ -10,6 +10,8 @@ abstract class FileBrowser extends StatefulWidget implements libtokyo.FileBrowse
     super.key,
     this.allowMultipleSelections = false,
     this.allowBrowsingUp = false,
+    this.recursive = false,
+    this.followLinks = true,
     this.mode = libtokyo.FileBrowserMode.async,
     required this.directory,
     this.createLoadingWidget,
@@ -22,6 +24,8 @@ abstract class FileBrowser extends StatefulWidget implements libtokyo.FileBrowse
 
   final bool allowMultipleSelections;
   final bool allowBrowsingUp;
+  final bool recursive;
+  final bool followLinks;
   final libtokyo.FileBrowserMode mode;
   final io.Directory directory;
   final libtokyo.FileBrowserCreateLoadingWidget<Widget, BuildContext>? createLoadingWidget;
@@ -64,7 +68,7 @@ abstract class FileBrowserState extends State<FileBrowser> with libtokyo.FileBro
     return createFileBrowserLoadingWidget(context);
   }
 
-  Widget createFileBrowserWidget(BuildContext context, io.Directory? dir, { bool recursive = false, bool followLinks = true }) {
+  Widget createFileBrowserWidget(BuildContext context, io.Directory? dir, { bool? recursive, bool? followLinks }) {
     switch (widget.mode) {
       case libtokyo.FileBrowserMode.sync:
         if (kDebugMode) {

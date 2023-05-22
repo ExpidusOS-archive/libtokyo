@@ -22,6 +22,8 @@ abstract class FileBrowser<Key, Widget extends Object, BuildContext> {
     this.key,
     this.allowMultipleSelections = false,
     this.allowBrowsingUp = false,
+    this.recursive = false,
+    this.followLinks = true,
     this.mode = FileBrowserMode.async,
     required this.directory,
     this.createLoadingWidget,
@@ -35,6 +37,8 @@ abstract class FileBrowser<Key, Widget extends Object, BuildContext> {
   final Key? key;
   final bool allowMultipleSelections;
   final bool allowBrowsingUp;
+  final bool recursive;
+  final bool followLinks;
   final FileBrowserMode mode;
   final io.Directory directory;
   final FileBrowserCreateLoadingWidget<Widget, BuildContext>? createLoadingWidget;
@@ -80,20 +84,20 @@ abstract mixin class FileBrowserState<Key, Widget extends Object, BuildContext> 
     })(e);
 
   @protected
-  Stream<Widget> buildFileBrowserWidgetsStream(io.Directory? dir, { bool recursive = false, bool followLinks = true }) =>
+  Stream<Widget> buildFileBrowserWidgetsStream(io.Directory? dir, { bool? recursive, bool? followLinks }) =>
     dir == null ? buildFileBrowserWidgetsStream(
         currentDirectory,
         recursive: recursive,
         followLinks: followLinks
       )
     : dir!.list(
-        recursive: recursive,
-        followLinks: followLinks,
+        recursive: recursive ?? fileBrowserWidget.recursive,
+        followLinks: followLinks ?? fileBrowserWidget.followLinks,
       ).where(filterFileBrowser)
        .map<Widget>((entry) => createFileBrowserEntryWidget(entry));
 
   @protected
-  Future<List<Widget>> buildFileBrowserWidgetsAsync(io.Directory? dir, { bool recursive = false, bool followLinks = true }) =>
+  Future<List<Widget>> buildFileBrowserWidgetsAsync(io.Directory? dir, { bool? recursive, bool? followLinks }) =>
     dir == null ? buildFileBrowserWidgetsAsync(
         currentDirectory,
         recursive: recursive,
@@ -106,18 +110,18 @@ abstract mixin class FileBrowserState<Key, Widget extends Object, BuildContext> 
       ).toList();
 
   @protected
-  List<Widget> buildFileBrowserWidgetsSync(io.Directory? dir, { bool recursive = false, bool followLinks = true }) =>
+  List<Widget> buildFileBrowserWidgetsSync(io.Directory? dir, { bool? recursive, bool? followLinks }) =>
     dir == null ? buildFileBrowserWidgetsSync(
         currentDirectory,
         recursive: recursive,
         followLinks: followLinks,
       )
     : dir!.listSync(
-        recursive: recursive,
-        followLinks: followLinks,
+        recursive: recursive ?? fileBrowserWidget.recursive,
+        followLinks: followLinks ?? fileBrowserWidget.followLinks,
       ).where(filterFileBrowser)
        .map<Widget>((entry) => createFileBrowserEntryWidget(entry)).toList();
 
   @protected
-  Widget createFileBrowserWidget(BuildContext context, io.Directory? dir, { bool recursive = false, bool followLinks = true });
+  Widget createFileBrowserWidget(BuildContext context, io.Directory? dir, { bool? recursive, bool? followLinks });
 }
