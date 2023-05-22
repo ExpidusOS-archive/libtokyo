@@ -1,14 +1,16 @@
 import 'package:libtokyo/libtokyo.dart' as libtokyo;
 import 'package:libtokyo_flutter/logic.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' as io;
+import 'dart:developer' show log;
 
 abstract class FileBrowser extends StatefulWidget implements libtokyo.FileBrowser<Key, Widget, BuildContext> {
   const FileBrowser({
     super.key,
     this.allowMultipleSelections = false,
     this.allowBrowsingUp = false,
-    this.useStream = false,
+    this.mode = libtokyo.FileBrowserMode.async,
     required this.directory,
     this.createLoadingWidget,
     this.createEntryWidget,
@@ -20,7 +22,7 @@ abstract class FileBrowser extends StatefulWidget implements libtokyo.FileBrowse
 
   final bool allowMultipleSelections;
   final bool allowBrowsingUp;
-  final bool useStream;
+  final libtokyo.FileBrowserMode mode;
   final io.Directory directory;
   final libtokyo.FileBrowserCreateLoadingWidget<Widget, BuildContext>? createLoadingWidget;
   final libtokyo.FileBrowserCreateEntryWidget<Widget>? createEntryWidget;
@@ -62,39 +64,60 @@ abstract class FileBrowserState extends State<FileBrowser> with libtokyo.FileBro
     return createFileBrowserLoadingWidget(context);
   }
 
-  Widget createFileBrowserWidget(BuildContext context, io.Directory? dir, { bool recursive = false, bool followLinks = true }) =>
-    widget.useStream ?
-      StreamBuilder<Widget>(
-        stream: buildFileBrowserWidgetsStream(
-          dir,
-          recursive: recursive,
-          followLinks: followLinks,
-        ),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) return createFileBrowserErrorWidget(snapshot.error! as Error);
+  Widget createFileBrowserWidget(BuildContext context, io.Directory? dir, { bool recursive = false, bool followLinks = true }) {
+    switch (widget.mode) {
+      case libtokyo.FileBrowserMode.sync:
+        if (kDebugMode) {
+          log('It is recommended to not use FileBrowserMode.sync as it can cause performance issues.',
+            level: 900,
+            name: 'libtokyo_flutter',
+            stackTrace: StackTrace.current);
+        }
 
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              _streamedWidgets = <Widget>[];
-            case ConnectionState.waiting:
-              return createFileBrowserLoadingWidget(context);
-            case ConnectionState.active:
-              _streamedWidgets!.add(snapshot.data!);
-            case ConnectionState.done:
-              return buildFileBrowser(context, AsyncSnapshot<List<Widget>>.withData(snapshot.connectionState, _streamedWidgets!));
-          }
+        try {
+          return buildFileBrowser(context, AsyncSnapshot<List<Widget>>.withData(ConnectionState.done, buildFileBrowserWidgetsSync(
+            dir,
+            recursive: recursive,
+            followLinks: followLinks,
+          )));
+        } catch (e) {
+          return createFileBrowserErrorWidget(e as Error);
+        }
+      case libtokyo.FileBrowserMode.async:
+        return FutureBuilder<List<Widget>>(
+          future: buildFileBrowserWidgetsAsync(
+            dir,
+            recursive: recursive,
+            followLinks: followLinks,
+          ),
+          builder: buildFileBrowser,
+        );
+      case libtokyo.FileBrowserMode.stream:
+        return StreamBuilder<Widget>(
+          stream: buildFileBrowserWidgetsStream(
+            dir,
+            recursive: recursive,
+            followLinks: followLinks,
+          ),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) return createFileBrowserErrorWidget(snapshot.error! as Error);
 
-          return createFileBrowserLoadingWidget(context);
-        },
-      )
-    : FutureBuilder<List<Widget>>(
-        future: buildFileBrowserWidgetsAsync(
-          dir,
-          recursive: recursive,
-          followLinks: followLinks,
-        ),
-        builder: buildFileBrowser,
-      );
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                _streamedWidgets = <Widget>[];
+              case ConnectionState.waiting:
+                return createFileBrowserLoadingWidget(context);
+              case ConnectionState.active:
+                _streamedWidgets!.add(snapshot.data!);
+              case ConnectionState.done:
+                return buildFileBrowser(context, AsyncSnapshot<List<Widget>>.withData(snapshot.connectionState, _streamedWidgets ?? <Widget>[]));
+            }
+
+            return createFileBrowserLoadingWidget(context);
+          },
+        );
+    }
+  }
 
   @override
   Widget build(BuildContext context) => createFileBrowserWidget(context, null);

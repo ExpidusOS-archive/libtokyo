@@ -10,13 +10,19 @@ typedef FileBrowserCreateErrorWidget<Widget extends Object> = Widget Function(Er
 typedef FileBrowserOnSelection = void Function(io.FileSystemEntity entity);
 typedef FileBrowserOnDeselection = void Function(io.FileSystemEntity entity);
 
+enum FileBrowserMode {
+  sync,
+  async,
+  stream,
+}
+
 @immutable
 abstract class FileBrowser<Key, Widget extends Object, BuildContext> {
   const FileBrowser({
     this.key,
     this.allowMultipleSelections = false,
     this.allowBrowsingUp = false,
-    this.useStream = false,
+    this.mode = FileBrowserMode.async,
     required this.directory,
     this.createLoadingWidget,
     this.createEntryWidget,
@@ -29,7 +35,7 @@ abstract class FileBrowser<Key, Widget extends Object, BuildContext> {
   final Key? key;
   final bool allowMultipleSelections;
   final bool allowBrowsingUp;
-  final bool useStream;
+  final FileBrowserMode mode;
   final io.Directory directory;
   final FileBrowserCreateLoadingWidget<Widget, BuildContext>? createLoadingWidget;
   final FileBrowserCreateEntryWidget<Widget>? createEntryWidget;

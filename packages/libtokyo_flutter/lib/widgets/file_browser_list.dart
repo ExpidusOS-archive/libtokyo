@@ -7,7 +7,7 @@ class FileBrowserList extends FileBrowser {
     super.key,
     super.allowMultipleSelections,
     super.allowBrowsingUp,
-    super.useStream,
+    super.mode,
     required super.directory,
     super.createLoadingWidget,
     super.createEntryWidget,
