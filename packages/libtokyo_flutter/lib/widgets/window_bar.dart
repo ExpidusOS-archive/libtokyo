@@ -1,5 +1,6 @@
 import 'package:libtokyo/libtokyo.dart' as libtokyo;
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 final _LEADING_ICON_PADDING_SIZE_MULT = 1.0;
 final _ICON_PADDING_SIZE_MULT = 0.25;
@@ -19,6 +20,21 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
   final VoidCallback? onMinimize;
   final VoidCallback? onMaximize;
   final VoidCallback? onClose;
+
+  static bool shouldShow(BuildContext context) {
+    final theme = Theme.of(context);
+
+    switch (theme.platform) {
+      case TargetPlatform.android:
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.iOS:
+        return false;
+      case TargetPlatform.linux:
+      case TargetPlatform.macOS:
+      case TargetPlatform.windows:
+        return true;
+    }
+  }
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight / 2);

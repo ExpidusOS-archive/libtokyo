@@ -1,6 +1,6 @@
 import 'package:libtokyo_flutter/libtokyo.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Scaffold;
-import 'dart:io' show exit;
 
 void main() {
   runApp(MyApp());
@@ -30,10 +30,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) =>
     Scaffold(
-      windowBar: WindowBar(
+      windowBar: WindowBar.shouldShow(context) && !kIsWeb ? WindowBar(
         leading: Image.asset('imgs/icon.png'),
         title: const Text('libtokyo_example'),
-      ),
+      ) : null,
       appBar: AppBar(
         title: const Text('Flutter Demo'),
       ),
