@@ -4,18 +4,23 @@ import 'package:meta/meta.dart';
 import 'dart:io' as io;
 
 typedef FileBrowserFilter = bool Function(io.FileSystemEntity entity);
+typedef FileBrowserCreateLoadingWidget<Widget extends Object, BuildContext> = Widget Function(BuildContext context);
 typedef FileBrowserCreateEntryWidget<Widget extends Object> = Widget Function(io.FileSystemEntity entity);
+typedef FileBrowserCreateErrorWidget<Widget extends Object> = Widget Function(Error e);
 typedef FileBrowserOnSelection = void Function(io.FileSystemEntity entity);
 typedef FileBrowserOnDeselection = void Function(io.FileSystemEntity entity);
 
 @immutable
-abstract class FileBrowser<Key, Widget extends Object> {
+abstract class FileBrowser<Key, Widget extends Object, BuildContext> {
   const FileBrowser({
     this.key,
     this.allowMultipleSelections = false,
     this.allowBrowsingUp = false,
+    this.useStream = false,
     required this.directory,
+    this.createLoadingWidget,
     this.createEntryWidget,
+    this.createErrorWidget,
     this.filter,
     this.onSelection,
     this.onDeselection,
@@ -24,31 +29,51 @@ abstract class FileBrowser<Key, Widget extends Object> {
   final Key? key;
   final bool allowMultipleSelections;
   final bool allowBrowsingUp;
+  final bool useStream;
   final io.Directory directory;
+  final FileBrowserCreateLoadingWidget<Widget, BuildContext>? createLoadingWidget;
   final FileBrowserCreateEntryWidget<Widget>? createEntryWidget;
+  final FileBrowserCreateErrorWidget<Widget>? createErrorWidget;
   final FileBrowserFilter? filter;
   final FileBrowserOnSelection? onSelection;
   final FileBrowserOnDeselection? onDeselection;
 }
 
-abstract mixin class FileBrowserState<Key, Widget extends Object> {
-  FileBrowser<Key, Widget> get fileBrowserWidget;
+@immutable
+abstract mixin class FileBrowserState<Key, Widget extends Object, BuildContext> {
+  FileBrowser<Key, Widget, BuildContext> get fileBrowserWidget;
 
   late List<io.FileSystemEntity> selections;
   late io.Directory currentDirectory;
 
+  @protected
   void initFileBrowserState() {
     selections = <io.FileSystemEntity>[];
     currentDirectory = fileBrowserWidget.directory;
   }
 
+  @protected
   bool filterFileBrowser(io.FileSystemEntity entry) => (fileBrowserWidget.filter ?? (entry) => true)(entry);
 
+  @protected
+  Widget createFileBrowserLoadingWidget(BuildContext context) =>
+    (fileBrowserWidget.createLoadingWidget ?? (context) {
+      throw UnimplementedError("FileBrowserState.createLoadingWidget is not implemented and createLoadingWidget is not set in widget.");
+    })(context);
+
+  @protected
   Widget createFileBrowserEntryWidget(io.FileSystemEntity entry) =>
     (fileBrowserWidget.createEntryWidget ?? (entry) {
       throw UnimplementedError("FileBrowserState.createFileBrowserEntryWidget is not implemented and createEntryWidget is not set in widget.");
     })(entry);
 
+  @protected
+  Widget createFileBrowserErrorWidget(Error e) =>
+    (fileBrowserWidget.createErrorWidget ?? (entry) {
+      throw UnimplementedError("FileBrowserState.createFileBrowserErrorWidget is not implemented and createErrorWidget is not set in widget.");
+    })(e);
+
+  @protected
   Stream<Widget> buildFileBrowserWidgetsStream(io.Directory? dir, { bool recursive = false, bool followLinks = true }) =>
     dir == null ? buildFileBrowserWidgetsStream(
         currentDirectory,
@@ -61,6 +86,7 @@ abstract mixin class FileBrowserState<Key, Widget extends Object> {
       ).where(filterFileBrowser)
        .map<Widget>((entry) => createFileBrowserEntryWidget(entry));
 
+  @protected
   Future<List<Widget>> buildFileBrowserWidgetsAsync(io.Directory? dir, { bool recursive = false, bool followLinks = true }) =>
     dir == null ? buildFileBrowserWidgetsAsync(
         currentDirectory,
@@ -73,6 +99,7 @@ abstract mixin class FileBrowserState<Key, Widget extends Object> {
         followLinks: followLinks,
       ).toList();
 
+  @protected
   List<Widget> buildFileBrowserWidgetsSync(io.Directory? dir, { bool recursive = false, bool followLinks = true }) =>
     dir == null ? buildFileBrowserWidgetsSync(
         currentDirectory,
@@ -84,4 +111,7 @@ abstract mixin class FileBrowserState<Key, Widget extends Object> {
         followLinks: followLinks,
       ).where(filterFileBrowser)
        .map<Widget>((entry) => createFileBrowserEntryWidget(entry)).toList();
+
+  @protected
+  Widget createFileBrowserWidget(BuildContext context, io.Directory? dir, { bool recursive = false, bool followLinks = true });
 }

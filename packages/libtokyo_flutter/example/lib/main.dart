@@ -1,6 +1,7 @@
 import 'package:libtokyo_flutter/libtokyo.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Scaffold;
+import 'dart:io' as io;
 
 void main() {
   runApp(MyApp());
@@ -57,6 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+      ),
+      body: FileBrowserList(
+        directory: io.Directory.current,
       ),
     );
 }
