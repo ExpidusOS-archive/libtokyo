@@ -12,7 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
   material_theme_builder: ^1.0.4
-  libtokyo: ^0.1.0
+  libtokyo:
+    git:
+      url: https://github.com/ExpidusOS/libtokyo.git
+      ref: feat/packages
+      path: packages/libtokyo
   path: ^1.8.3
   intl: ^0.18.1
   filesize: ^2.0.1
