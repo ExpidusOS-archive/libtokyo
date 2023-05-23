@@ -10,7 +10,7 @@ class FileBrowserEntry extends StatelessWidget implements libtokyo.FileBrowserEn
     this.showIcon = true,
     this.iconSize,
     this.direction = Axis.vertical,
-    required this.entry
+    required this.entry,
   });
 
   final bool showIcon;

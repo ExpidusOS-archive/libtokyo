@@ -9,32 +9,32 @@ import 'file_browser_entry.dart';
 abstract class FileBrowser extends StatefulWidget implements libtokyo.FileBrowser<Key, Widget, BuildContext> {
   const FileBrowser({
     super.key,
-    this.allowMultipleSelections = false,
-    this.allowBrowsingUp = false,
     this.recursive = false,
     this.followLinks = true,
+    this.showHidden = false,
     this.mode = libtokyo.FileBrowserMode.async,
     required this.directory,
     this.createLoadingWidget,
     this.createEntryWidget,
     this.createErrorWidget,
     this.filter,
-    this.onSelection,
-    this.onDeselection,
+    this.sort,
+    this.onTap,
+    this.onLongPress,
   });
 
-  final bool allowMultipleSelections;
-  final bool allowBrowsingUp;
   final bool recursive;
   final bool followLinks;
+  final bool showHidden;
   final libtokyo.FileBrowserMode mode;
   final io.Directory directory;
   final libtokyo.FileBrowserCreateLoadingWidget<Widget, BuildContext>? createLoadingWidget;
   final libtokyo.FileBrowserCreateEntryWidget<Widget>? createEntryWidget;
   final libtokyo.FileBrowserCreateErrorWidget<Widget>? createErrorWidget;
   final libtokyo.FileBrowserFilter? filter;
-  final libtokyo.FileBrowserOnSelection? onSelection;
-  final libtokyo.FileBrowserOnDeselection? onDeselection;
+  final libtokyo.FileBrowserSort? sort;
+  final libtokyo.FileBrowserOnTap<Widget>? onTap;
+  final libtokyo.FileBrowserOnLongPress<Widget>? onLongPress;
 }
 
 @immutable

@@ -1,14 +1,16 @@
 import 'package:libtokyo/logic.dart';
 import 'package:libtokyo/types.dart';
 import 'package:meta/meta.dart';
+import 'package:path/path.dart' as path;
 import 'dart:io' as io;
 
 typedef FileBrowserFilter = bool Function(io.FileSystemEntity entity);
+typedef FileBrowserSort = int Function(io.FileSystemEntity a, io.FileSystemEntity b);
 typedef FileBrowserCreateLoadingWidget<Widget extends Object, BuildContext> = Widget Function(BuildContext context);
 typedef FileBrowserCreateEntryWidget<Widget extends Object> = Widget Function(io.FileSystemEntity entity);
 typedef FileBrowserCreateErrorWidget<Widget extends Object> = Widget Function(Error e);
-typedef FileBrowserOnSelection = void Function(io.FileSystemEntity entity);
-typedef FileBrowserOnDeselection = void Function(io.FileSystemEntity entity);
+typedef FileBrowserOnTap<Widget extends Object> = void Function(io.FileSystemEntity entity);
+typedef FileBrowserOnLongPress<Widget extends Object> = void Function(io.FileSystemEntity entity);
 
 enum FileBrowserMode {
   sync,
@@ -20,33 +22,33 @@ enum FileBrowserMode {
 abstract class FileBrowser<Key, Widget extends Object, BuildContext> {
   const FileBrowser({
     this.key,
-    this.allowMultipleSelections = false,
-    this.allowBrowsingUp = false,
     this.recursive = false,
     this.followLinks = true,
+    this.showHidden = false,
     this.mode = FileBrowserMode.async,
     required this.directory,
     this.createLoadingWidget,
     this.createEntryWidget,
     this.createErrorWidget,
     this.filter,
-    this.onSelection,
-    this.onDeselection,
+    this.sort,
+    this.onTap,
+    this.onLongPress,
   });
 
   final Key? key;
-  final bool allowMultipleSelections;
-  final bool allowBrowsingUp;
   final bool recursive;
   final bool followLinks;
+  final bool showHidden;
   final FileBrowserMode mode;
   final io.Directory directory;
   final FileBrowserCreateLoadingWidget<Widget, BuildContext>? createLoadingWidget;
   final FileBrowserCreateEntryWidget<Widget>? createEntryWidget;
   final FileBrowserCreateErrorWidget<Widget>? createErrorWidget;
   final FileBrowserFilter? filter;
-  final FileBrowserOnSelection? onSelection;
-  final FileBrowserOnDeselection? onDeselection;
+  final FileBrowserSort? sort;
+  final FileBrowserOnTap<Widget>? onTap;
+  final FileBrowserOnLongPress<Widget>? onLongPress;
 }
 
 @immutable
@@ -63,7 +65,20 @@ abstract mixin class FileBrowserState<Key, Widget extends Object, BuildContext> 
   }
 
   @protected
-  bool filterFileBrowser(io.FileSystemEntity entry) => (fileBrowserWidget.filter ?? (entry) => true)(entry);
+  bool filterFileBrowser(io.FileSystemEntity entry) {
+    if (path.basename(entry.path).startsWith('.')) {
+      return fileBrowserWidget.showHidden;
+    }
+
+    return (fileBrowserWidget.filter ?? (entry) => true)(entry);
+  }
+
+  @protected
+  int sortFileBrowser(io.FileSystemEntity a, io.FileSystemEntity b) {
+    final pathCompare = a.path.compareTo(b.path);
+    final typeCompare = a.statSync().type.toString().compareTo(b.statSync().type.toString());
+    return typeCompare == 0 ? pathCompare : typeCompare;
+  }
 
   @protected
   Widget createFileBrowserLoadingWidget(BuildContext context) =>
@@ -90,11 +105,20 @@ abstract mixin class FileBrowserState<Key, Widget extends Object, BuildContext> 
         recursive: recursive,
         followLinks: followLinks
       )
-    : dir!.list(
+    : Stream<Widget>.multi((controller) =>
+      dir!.list(
         recursive: recursive ?? fileBrowserWidget.recursive,
         followLinks: followLinks ?? fileBrowserWidget.followLinks,
-      ).where(filterFileBrowser)
-       .map<Widget>((entry) => createFileBrowserEntryWidget(entry));
+      ).where(filterFileBrowser).toList().then((entries) {
+        entries.sort(sortFileBrowser);
+
+        final widgets = entries.map<Widget>((entry) => createFileBrowserEntryWidget(entry)).toList();
+        for (var widget in widgets) {
+          controller.add(widget);
+        }
+
+        controller.close();
+      }).catchError((e) => controller.addError(e)));
 
   @protected
   Future<List<Widget>> buildFileBrowserWidgetsAsync(io.Directory? dir, { bool? recursive, bool? followLinks }) =>
@@ -116,10 +140,11 @@ abstract mixin class FileBrowserState<Key, Widget extends Object, BuildContext> 
         recursive: recursive,
         followLinks: followLinks,
       )
-    : dir!.listSync(
+    : (dir!.listSync(
         recursive: recursive ?? fileBrowserWidget.recursive,
         followLinks: followLinks ?? fileBrowserWidget.followLinks,
-      ).where(filterFileBrowser)
+      ).where(filterFileBrowser).toList()
+       ..sort(sortFileBrowser))
        .map<Widget>((entry) => createFileBrowserEntryWidget(entry)).toList();
 
   @protected
