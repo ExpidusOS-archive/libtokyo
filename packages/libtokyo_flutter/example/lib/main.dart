@@ -1,7 +1,6 @@
 import 'package:libtokyo/libtokyo.dart' show FileBrowserMode;
 import 'package:libtokyo_flutter/libtokyo.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' hide Scaffold;
 import 'dart:io' as io;
 
 void main() {

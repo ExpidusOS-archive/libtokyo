@@ -27,7 +27,7 @@ class FileBrowserGrid extends FileBrowser {
 
 class _FileBrowserGridState extends FileBrowserState {
   @override
-  Widget createFileBrowserEntryWidget(io.FileSystemEntity entry) {
+  Widget createFileBrowserEntryWidget(BuildContext context, io.FileSystemEntity entry) {
     if (widget.createEntryWidget != null) {
       return widget.createEntryWidget!(entry);
     }

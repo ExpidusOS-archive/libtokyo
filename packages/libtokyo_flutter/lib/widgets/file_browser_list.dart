@@ -24,7 +24,7 @@ class FileBrowserList extends FileBrowser {
 
 class _FileBrowserListState extends FileBrowserState {
   @override
-  Widget createFileBrowserEntryWidget(io.FileSystemEntity entry) {
+  Widget createFileBrowserEntryWidget(BuildContext context, io.FileSystemEntity entry) {
     if (widget.createEntryWidget != null) {
       return widget.createEntryWidget!(entry);
     }

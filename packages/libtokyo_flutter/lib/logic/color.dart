@@ -16,3 +16,10 @@ MaterialColor convertColorMaterial(List<Color> sources) => MaterialColor(
     convertColor(value)
   ))
 );
+
+Color convertFromColor(ui.Color source) => Color.rgba(
+  source.red / 255,
+  source.green / 255,
+  source.blue / 255,
+  source.alpha / 255,
+);

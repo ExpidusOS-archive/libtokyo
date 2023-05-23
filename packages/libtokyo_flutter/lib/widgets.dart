@@ -1,4 +1,7 @@
+export 'package:flutter/material.dart' hide Scaffold;
+
 export 'widgets/app.dart';
+export 'widgets/basic_card.dart';
 export 'widgets/file_browser.dart';
 export 'widgets/file_browser_entry.dart';
 export 'widgets/file_browser_list_entry.dart';

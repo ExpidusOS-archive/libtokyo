@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' as io;
 import 'dart:developer' show log;
+import 'basic_card.dart';
 import 'file_browser_entry.dart';
 
 abstract class FileBrowser extends StatefulWidget implements libtokyo.FileBrowser<Key, Widget, BuildContext> {
@@ -47,12 +48,16 @@ abstract class FileBrowserState extends State<FileBrowser> with libtokyo.FileBro
     (widget.createLoadingWidget ?? (context) => CircularProgressIndicator())(context);
 
   @override
-  Widget createFileBrowserEntryWidget(io.FileSystemEntity entry) =>
+  Widget createFileBrowserEntryWidget(BuildContext context, io.FileSystemEntity entry) =>
     (widget.createEntryWidget ?? (entry) => FileBrowserEntry(entry: entry))(entry);
 
   @override
-  Widget createFileBrowserErrorWidget(Error e) =>
-    (widget.createErrorWidget ?? (e) => Text(e.toString()))(e);
+  Widget createFileBrowserErrorWidget(BuildContext context, Error e) =>
+    (widget.createErrorWidget ?? (e) => BasicCard(
+      color: convertFromColor(Theme.of(context).colorScheme.onError),
+      title: 'Failed to list files',
+      message: e.toString()
+    ))(e);
 
   @mustCallSuper
   void initState() {
@@ -62,7 +67,7 @@ abstract class FileBrowserState extends State<FileBrowser> with libtokyo.FileBro
 
   @mustCallSuper
   Widget buildFileBrowser(BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
-    if (snapshot.hasError) return createFileBrowserErrorWidget(snapshot.error! as Error);
+    if (snapshot.hasError) return createFileBrowserErrorWidget(context, snapshot.error! as Error);
     if (snapshot.hasData) {
       throw UnimplementedError("FileBrowserState.buildFileBrowser is not implemented to handle ready data.");
     }
@@ -81,17 +86,17 @@ abstract class FileBrowserState extends State<FileBrowser> with libtokyo.FileBro
 
         try {
           return buildFileBrowser(context, AsyncSnapshot<List<Widget>>.withData(ConnectionState.done, buildFileBrowserWidgetsSync(
-            dir,
+            context, dir,
             recursive: recursive,
             followLinks: followLinks,
           )));
         } catch (e) {
-          return createFileBrowserErrorWidget(e as Error);
+          return createFileBrowserErrorWidget(context, e as Error);
         }
       case libtokyo.FileBrowserMode.async:
         return FutureBuilder<List<Widget>>(
           future: buildFileBrowserWidgetsAsync(
-            dir,
+            context, dir,
             recursive: recursive,
             followLinks: followLinks,
           ),
@@ -100,12 +105,12 @@ abstract class FileBrowserState extends State<FileBrowser> with libtokyo.FileBro
       case libtokyo.FileBrowserMode.stream:
         return StreamBuilder<Widget>(
           stream: buildFileBrowserWidgetsStream(
-            dir,
+            context, dir,
             recursive: recursive,
             followLinks: followLinks,
           ),
           builder: (context, snapshot) {
-            if (snapshot.hasError) return createFileBrowserErrorWidget(snapshot.error! as Error);
+            if (snapshot.hasError) return createFileBrowserErrorWidget(context, snapshot.error! as Error);
 
             switch (snapshot.connectionState) {
               case ConnectionState.none:
