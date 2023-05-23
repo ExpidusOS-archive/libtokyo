@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' as io;
 import 'dart:developer' show log;
+import 'file_browser_entry.dart';
 
 abstract class FileBrowser extends StatefulWidget implements libtokyo.FileBrowser<Key, Widget, BuildContext> {
   const FileBrowser({
@@ -47,7 +48,7 @@ abstract class FileBrowserState extends State<FileBrowser> with libtokyo.FileBro
 
   @override
   Widget createFileBrowserEntryWidget(io.FileSystemEntity entry) =>
-    (widget.createEntryWidget ?? (entry) => Text(entry.toString()))(entry);
+    (widget.createEntryWidget ?? (entry) => FileBrowserEntry(entry: entry))(entry);
 
   @override
   Widget createFileBrowserErrorWidget(Error e) =>

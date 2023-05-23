@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   material_theme_builder: ^1.0.4
   libtokyo: ^0.1.0
+  path: ^1.8.3
 
 dev_dependencies:
   flutter_test:
