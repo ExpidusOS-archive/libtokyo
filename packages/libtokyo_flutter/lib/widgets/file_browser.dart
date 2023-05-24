@@ -52,7 +52,7 @@ abstract class FileBrowserState extends State<FileBrowser> with libtokyo.FileBro
     (widget.createEntryWidget ?? (entry) => FileBrowserEntry(entry: entry))(entry);
 
   @override
-  Widget createFileBrowserErrorWidget(BuildContext context, Error e) =>
+  Widget createFileBrowserErrorWidget(BuildContext context, Object e) =>
     (widget.createErrorWidget ?? (e) => BasicCard(
       color: convertFromColor(Theme.of(context).colorScheme.onError),
       title: 'Failed to list files',
@@ -67,7 +67,7 @@ abstract class FileBrowserState extends State<FileBrowser> with libtokyo.FileBro
 
   @mustCallSuper
   Widget buildFileBrowser(BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
-    if (snapshot.hasError) return createFileBrowserErrorWidget(context, snapshot.error! as Error);
+    if (snapshot.hasError) return createFileBrowserErrorWidget(context, snapshot.error!);
     if (snapshot.hasData) {
       throw UnimplementedError("FileBrowserState.buildFileBrowser is not implemented to handle ready data.");
     }

@@ -8,7 +8,7 @@ typedef FileBrowserFilter = bool Function(io.FileSystemEntity entity);
 typedef FileBrowserSort = int Function(io.FileSystemEntity a, io.FileSystemEntity b);
 typedef FileBrowserCreateLoadingWidget<Widget extends Object, BuildContext> = Widget Function(BuildContext context);
 typedef FileBrowserCreateEntryWidget<Widget extends Object> = Widget Function(io.FileSystemEntity entity);
-typedef FileBrowserCreateErrorWidget<Widget extends Object> = Widget Function(Error e);
+typedef FileBrowserCreateErrorWidget<Widget extends Object> = Widget Function(Object e);
 typedef FileBrowserOnTap<Widget extends Object> = void Function(io.FileSystemEntity entity);
 typedef FileBrowserOnLongPress<Widget extends Object> = void Function(io.FileSystemEntity entity);
 
@@ -93,7 +93,7 @@ abstract mixin class FileBrowserState<Key, Widget extends Object, BuildContext> 
     })(entry);
 
   @protected
-  Widget createFileBrowserErrorWidget(BuildContext context, Error e) =>
+  Widget createFileBrowserErrorWidget(BuildContext context, Object e) =>
     (fileBrowserWidget.createErrorWidget ?? (entry) {
       throw UnimplementedError("FileBrowserState.createFileBrowserErrorWidget is not implemented and createErrorWidget is not set in widget.");
     })(e);
