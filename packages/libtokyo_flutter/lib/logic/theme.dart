@@ -43,6 +43,9 @@ ThemeData convertThemeData(libtokyo.ThemeData source, [Brightness brightness = B
       titleTextStyle: typography.englishLike.titleLarge,
       toolbarTextStyle: typography.englishLike.titleLarge,
     ),
+    iconTheme: IconThemeData(
+      color: convertColor(source.foregroundColor),
+    ),
     primaryTextTheme: typography.englishLike,
     typography: typography,
   );
