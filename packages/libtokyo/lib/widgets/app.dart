@@ -2,13 +2,14 @@ import 'package:libtokyo/logic.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-abstract class TokyoApp<Key, Widget extends Object, Route extends Object> {
+abstract class TokyoApp<Key, Widget extends Object, Route extends Object, BuildContext> {
   const TokyoApp({
     this.theme,
     this.colorScheme,
     this.key,
     this.title = '',
-    this.home
+    this.home,
+    required this.routes,
   });
 
   final ThemeData? theme;
@@ -16,11 +17,12 @@ abstract class TokyoApp<Key, Widget extends Object, Route extends Object> {
   final Key? key;
   final String title;
   final Widget? home;
+  final Map<String, Widget Function(BuildContext context)> routes;
 }
 
-abstract mixin class TokyoAppState<Key, Widget extends Object, Route extends Object> {
+abstract mixin class TokyoAppState<Key, Widget extends Object, Route extends Object, BuildContext> {
   ThemeData? theme = null;
-  TokyoApp<Key, Widget, Route> get tokyoWidget;
+  TokyoApp<Key, Widget, Route, BuildContext> get tokyoWidget;
 
   ColorScheme get colorScheme => tokyoWidget.theme != null ? tokyoWidget.theme!.colorScheme : (tokyoWidget.colorScheme != null ? tokyoWidget.colorScheme! : ColorScheme.night);
 

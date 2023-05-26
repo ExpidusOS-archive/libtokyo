@@ -3,9 +3,9 @@ import 'package:libtokyo_flutter/logic.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/material.dart' show ColorScheme, MaterialApp, ThemeData, ThemeMode;
+import 'package:flutter/material.dart' show ColorScheme, MaterialApp, ThemeData, ThemeMode, CircularProgressIndicator;
 
-class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, Route> {
+class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, Route, BuildContext> {
   const TokyoApp({
     super.key,
     this.title = '',
@@ -16,6 +16,7 @@ class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, 
     this.routerDelegate,
     this.builder,
     this.scrollBehavior,
+    this.routes = const <String, WidgetBuilder>{},
   });
 
   final libtokyo.ThemeData? theme;
@@ -26,32 +27,17 @@ class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, 
   final RouterDelegate<Object>? routerDelegate;
   final TransitionBuilder? builder;
   final ScrollBehavior? scrollBehavior;
+  final Map<String, WidgetBuilder> routes;
 
   @override
   State<TokyoApp> createState() => _TokyoAppState();
 }
 
-class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Widget, Route> {
-  libtokyo.TokyoApp<Key, Widget, Route> get tokyoWidget => widget;
+class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Widget, Route, BuildContext> {
+  libtokyo.TokyoApp<Key, Widget, Route, BuildContext> get tokyoWidget => widget;
 
   Future<String> loadThemeJSON(libtokyo.ColorScheme colorScheme) =>
     rootBundle.loadString("packages/libtokyo/data/themes/${colorScheme.name}.json");
-
-  @override
-  void initState() {
-    super.initState();
-
-    updateTheme().then((value) {
-      setState(() {
-        theme = value;
-      });
-    }).catchError((err) =>
-      FlutterError.reportError(FlutterErrorDetails(
-        exception: err,
-        library: 'libtokyo_flutter',
-        context: ErrorSummary('Failed to update theme'),
-      )));
-  }
 
   Widget _tokyoBuilder(BuildContext context, Widget? child) {
     return DefaultSelectionStyle(
@@ -64,11 +50,29 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
 
   @override
   Widget build(BuildContext context) =>
-    MaterialApp(
-      color: theme != null ? convertColor(theme!.backgroundColor) : null,
-      theme: theme != null ? convertThemeData(theme!) : null,
-      darkTheme: theme != null ? convertThemeData(theme!, Brightness.dark) : null,
-      title: widget.title,
-      home: widget.home,
+    FutureBuilder(
+      future: updateTheme(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          FlutterError.reportError(FlutterErrorDetails(
+            exception: snapshot.error!,
+            library: 'libtokyo_flutter',
+            context: ErrorSummary('Failed to update theme'),
+          ));
+        }
+
+        if (snapshot.hasData) {
+          return MaterialApp(
+            routes: widget.routes,
+            color: convertColor(snapshot.data!.backgroundColor),
+            theme: convertThemeData(snapshot.data!),
+            darkTheme: convertThemeData(snapshot.data!, Brightness.dark),
+            title: widget.title,
+            home: widget.home,
+          );
+        }
+
+        return CircularProgressIndicator();
+      },
     );
 }
