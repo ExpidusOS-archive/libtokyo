@@ -9,6 +9,7 @@ abstract class TokyoApp<Key, Widget extends Object, Route extends Object, BuildC
     this.key,
     this.title = '',
     this.home,
+    this.onGenerateTitle,
     required this.routes,
   });
 
@@ -17,6 +18,7 @@ abstract class TokyoApp<Key, Widget extends Object, Route extends Object, BuildC
   final Key? key;
   final String title;
   final Widget? home;
+  final String Function(BuildContext context)? onGenerateTitle;
   final Map<String, Widget Function(BuildContext context)> routes;
 }
 

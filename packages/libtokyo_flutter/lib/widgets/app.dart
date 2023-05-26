@@ -17,6 +17,13 @@ class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, 
     this.builder,
     this.scrollBehavior,
     this.routes = const <String, WidgetBuilder>{},
+    this.onGenerateTitle,
+    this.navigatorObservers,
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
+    this.locale,
+    this.localizationsDelegates,
+    this.localeListResolutionCallback,
+    this.localeResolutionCallback,
   });
 
   final libtokyo.ThemeData? theme;
@@ -28,6 +35,13 @@ class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, 
   final TransitionBuilder? builder;
   final ScrollBehavior? scrollBehavior;
   final Map<String, WidgetBuilder> routes;
+  final GenerateAppTitle? onGenerateTitle;
+  final List<NavigatorObserver>? navigatorObservers;
+  final Iterable<Locale> supportedLocales;
+  final Locale? locale;
+  final Iterable<LocalizationsDelegate>? localizationsDelegates;
+  final LocaleListResolutionCallback? localeListResolutionCallback;
+  final LocaleResolutionCallback? localeResolutionCallback;
 
   @override
   State<TokyoApp> createState() => _TokyoAppState();
@@ -63,12 +77,20 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
 
         if (snapshot.hasData) {
           return MaterialApp(
-            routes: widget.routes,
             color: convertColor(snapshot.data!.backgroundColor),
             theme: convertThemeData(snapshot.data!),
             darkTheme: convertThemeData(snapshot.data!, Brightness.dark),
             title: widget.title,
+            onGenerateTitle: widget.onGenerateTitle,
             home: widget.home,
+            builder: widget.builder,
+            routes: widget.routes,
+            navigatorObservers: widget.navigatorObservers ?? [],
+            supportedLocales: widget.supportedLocales,
+            locale: widget.locale,
+            localizationsDelegates: widget.localizationsDelegates,
+            localeListResolutionCallback: widget.localeListResolutionCallback,
+            localeResolutionCallback: widget.localeResolutionCallback,
           );
         }
 
