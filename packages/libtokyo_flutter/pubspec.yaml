@@ -18,7 +18,7 @@ dependencies:
       ref: feat/packages
       path: packages/libtokyo
   path: ^1.8.3
-  intl: ^0.18.1
+  intl: ^0.18.0
   filesize: ^2.0.1
 
 dev_dependencies:
