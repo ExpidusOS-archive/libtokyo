@@ -11,6 +11,7 @@ class FileBrowserListEntry extends StatelessWidget implements libtokyo.FileBrows
     super.key,
     this.showIcon = true,
     this.iconSize,
+    this.icon,
     required this.entry,
     this.enabled = true,
     this.selected = false,
@@ -20,6 +21,7 @@ class FileBrowserListEntry extends StatelessWidget implements libtokyo.FileBrows
 
   final bool showIcon;
   final double? iconSize;
+  final Widget? icon;
   final io.FileSystemEntity entry;
   final bool enabled;
   final bool selected;
@@ -30,21 +32,25 @@ class FileBrowserListEntry extends StatelessWidget implements libtokyo.FileBrows
   Widget build(BuildContext context) {
     Widget? iconWidget = null;
     if (showIcon) {
-      if (entry is io.File) {
-        iconWidget = Icon(
-          Icons.text_snippet,
-          size: iconSize,
-        );
-      } else if (entry is io.Directory) {
-        iconWidget = Icon(
-          Icons.folder,
-          size: iconSize,
-        );
-      } else if (entry is io.Link) {
-        iconWidget = Icon(
-          Icons.attachment,
-          size: iconSize,
-        );
+      if (icon == null) {
+        if (entry is io.File) {
+          iconWidget = Icon(
+            Icons.text_snippet,
+            size: iconSize,
+          );
+        } else if (entry is io.Directory) {
+          iconWidget = Icon(
+            Icons.folder,
+            size: iconSize,
+          );
+        } else if (entry is io.Link) {
+          iconWidget = Icon(
+            Icons.attachment,
+            size: iconSize,
+          );
+        }
+      } else {
+        iconWidget = icon!;
       }
     }
 
@@ -56,15 +62,18 @@ class FileBrowserListEntry extends StatelessWidget implements libtokyo.FileBrows
         if (snapshot.hasData) {
           final data = snapshot.data!;
 
-          return ListTile(
-            leading: iconWidget,
-            title: Text(path.basename(entry.path)),
-            subtitle: Text(DateFormat.yMd().add_jm().format(data.changed)),
-            trailing: entry is io.File ? Text(filesize(data.size)) : null,
-            enabled: enabled,
-            selected: selected,
+          return InkWell(
+            child: ListTile(
+              leading: iconWidget,
+              title: Text(path.basename(entry.path)),
+              subtitle: Text(DateFormat.yMd().add_jm().format(data.changed)),
+              trailing: entry is io.File ? Text(filesize(data.size)) : null,
+              enabled: enabled,
+              selected: selected,
+            ),
             onTap: onTap,
             onLongPress: onLongPress,
+            onSecondaryTap: onLongPress,
           );
         }
         return CircularProgressIndicator();

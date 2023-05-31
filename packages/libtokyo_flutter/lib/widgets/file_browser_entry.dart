@@ -10,12 +10,14 @@ class FileBrowserEntry extends StatelessWidget implements libtokyo.FileBrowserEn
     this.showIcon = true,
     this.iconSize,
     this.direction = Axis.vertical,
+    this.icon,
     required this.entry,
   });
 
   final bool showIcon;
   final double? iconSize;
   final Axis direction;
+  final Widget? icon;
   final io.FileSystemEntity entry;
 
   @override
@@ -23,21 +25,25 @@ class FileBrowserEntry extends StatelessWidget implements libtokyo.FileBrowserEn
     var children = <Widget>[];
 
     if (showIcon) {
-      if (entry is io.File) {
-        children.add(Icon(
-          Icons.text_snippet,
-          size: iconSize,
-        ));
-      } else if (entry is io.Directory) {
-        children.add(Icon(
-          Icons.folder,
-          size: iconSize,
-        ));
-      } else if (entry is io.Link) {
-        children.add(Icon(
-          Icons.attachment,
-          size: iconSize,
-        ));
+      if (icon == null) {
+        if (entry is io.File) {
+          children.add(Icon(
+            Icons.text_snippet,
+            size: iconSize,
+          ));
+        } else if (entry is io.Directory) {
+          children.add(Icon(
+            Icons.folder,
+            size: iconSize,
+          ));
+        } else if (entry is io.Link) {
+          children.add(Icon(
+            Icons.attachment,
+            size: iconSize,
+          ));
+        }
+      } else {
+        children.add(icon!);
       }
     }
 

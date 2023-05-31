@@ -9,6 +9,7 @@ abstract class FileBrowserGridEntry<Key, Widget extends Object> extends FileBrow
     super.key,
     super.showIcon,
     super.iconSize,
+    super.icon,
     required super.entry,
     this.enabled = true,
     this.selected = false,

@@ -11,6 +11,7 @@ class FileBrowserGridEntry extends StatelessWidget implements libtokyo.FileBrows
     super.key,
     this.showIcon = true,
     this.iconSize,
+    this.icon,
     required this.entry,
     this.enabled = true,
     this.selected = false,
@@ -20,6 +21,7 @@ class FileBrowserGridEntry extends StatelessWidget implements libtokyo.FileBrows
 
   final bool showIcon;
   final double? iconSize;
+  final Widget? icon;
   final io.FileSystemEntity entry;
   final bool enabled;
   final bool selected;
@@ -31,21 +33,25 @@ class FileBrowserGridEntry extends StatelessWidget implements libtokyo.FileBrows
     var children = <Widget>[];
 
     if (showIcon) {
-      if (entry is io.File) {
-        children.add(Icon(
-          Icons.text_snippet,
-          size: iconSize,
-        ));
-      } else if (entry is io.Directory) {
-        children.add(Icon(
-          Icons.folder,
-          size: iconSize,
-        ));
-      } else if (entry is io.Link) {
-        children.add(Icon(
-          Icons.attachment,
-          size: iconSize,
-        ));
+      if (icon == null) {
+        if (entry is io.File) {
+          children.add(Icon(
+            Icons.text_snippet,
+            size: iconSize,
+          ));
+        } else if (entry is io.Directory) {
+          children.add(Icon(
+            Icons.folder,
+            size: iconSize,
+          ));
+        } else if (entry is io.Link) {
+          children.add(Icon(
+            Icons.attachment,
+            size: iconSize,
+          ));
+        }
+      } else {
+        children.add(icon!);
       }
     }
 
@@ -53,6 +59,7 @@ class FileBrowserGridEntry extends StatelessWidget implements libtokyo.FileBrows
     return InkWell(
       onTap: onTap,
       onLongPress: onLongPress,
+      onSecondaryTap: onLongPress,
       child: GridTile(
         child: Column(
           children: children,
