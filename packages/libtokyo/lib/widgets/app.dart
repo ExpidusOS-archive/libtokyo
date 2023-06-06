@@ -8,6 +8,7 @@ abstract class TokyoApp<Key, Widget extends Object, Route extends Object, BuildC
     this.colorScheme,
     this.key,
     this.title = '',
+    this.initialRoute = '/',
     this.home,
     this.onGenerateTitle,
     required this.routes,
@@ -17,6 +18,7 @@ abstract class TokyoApp<Key, Widget extends Object, Route extends Object, BuildC
   final ColorScheme? colorScheme;
   final Key? key;
   final String title;
+  final String initialRoute;
   final Widget? home;
   final String Function(BuildContext context)? onGenerateTitle;
   final Map<String, Widget Function(BuildContext context)> routes;

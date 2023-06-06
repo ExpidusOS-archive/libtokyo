@@ -9,6 +9,7 @@ class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, 
   const TokyoApp({
     super.key,
     this.title = '',
+    this.initialRoute = '/',
     this.theme,
     this.colorScheme,
     this.home,
@@ -29,6 +30,7 @@ class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, 
   final libtokyo.ThemeData? theme;
   final libtokyo.ColorScheme? colorScheme;
   final String title;
+  final String initialRoute;
   final Widget? home;
   final RouterConfig? routerConfig;
   final RouterDelegate<Object>? routerDelegate;
@@ -81,6 +83,7 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
             theme: convertThemeData(snapshot.data!, Brightness.dark),
             darkTheme: convertThemeData(snapshot.data!, Brightness.dark),
             title: widget.title,
+            initialRoute: widget.initialRoute,
             onGenerateTitle: widget.onGenerateTitle,
             home: widget.home,
             builder: widget.builder,
