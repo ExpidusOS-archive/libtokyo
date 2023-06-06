@@ -78,7 +78,7 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
         if (snapshot.hasData) {
           return MaterialApp(
             color: convertColor(snapshot.data!.backgroundColor),
-            theme: convertThemeData(snapshot.data!),
+            theme: convertThemeData(snapshot.data!, Brightness.dark),
             darkTheme: convertThemeData(snapshot.data!, Brightness.dark),
             title: widget.title,
             onGenerateTitle: widget.onGenerateTitle,

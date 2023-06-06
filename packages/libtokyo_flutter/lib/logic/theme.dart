@@ -49,8 +49,8 @@ ThemeData convertThemeData(libtokyo.ThemeData source, [Brightness brightness = B
     black: applyTextTheme(Typography.blackMountainView, source, Brightness.dark),
     white: applyTextTheme(Typography.whiteMountainView, source, Brightness.light),
     englishLike: applyTextTheme(Typography.englishLike2021, source, _inverseBrightness(brightness)),
-    dense: applyTextTheme(Typography.dense2021, source, brightness),
-    tall: applyTextTheme(Typography.tall2021, source, brightness),
+    dense: applyTextTheme(Typography.dense2021, source, _inverseBrightness(brightness)),
+    tall: applyTextTheme(Typography.tall2021, source, _inverseBrightness(brightness)),
   );
 
   final iconTheme = IconThemeData(
