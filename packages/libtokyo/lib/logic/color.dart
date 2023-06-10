@@ -25,7 +25,10 @@ class Color {
   @override
   int get hashCode => value.hashCode;
 
-  String _toStringChannel(int i) => ((this[i] * 255).round()).toRadixString(16);
+  String _toStringChannel(int i) {
+    final value = (this[i] * 255).toInt().toRadixString(16);
+    return value.length < 2 ? '0${value}' : value;
+  }
 
   @override
   String toString() => '#${_toStringChannel(0)}${_toStringChannel(1)}${_toStringChannel(2)}${_toStringChannel(3)}';
@@ -64,6 +67,7 @@ class Color {
 
   static Color fromString(String str) {
     if (str[0] == '#') {
+      print(str);
       return Color.fromString(str.substring(1, str.length));
     }
 

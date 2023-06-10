@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:libtokyo/libtokyo.dart' as libtokyo;
 import 'package:flutter/material.dart';
+import '../widgets.dart';
 import 'color.dart';
 
 Brightness _inverseBrightness(Brightness brightness) => brightness == Brightness.light ? Brightness.dark : Brightness.light;
@@ -32,16 +35,16 @@ TextTheme applyTextTheme(TextTheme base, libtokyo.ThemeData source, [Brightness 
 ThemeData convertThemeData(libtokyo.ThemeData source, [Brightness brightness = Brightness.light]) {
   final colorScheme = ColorScheme(
     brightness: brightness,
-    primary: convertColor(source.foregroundColor),
-    onPrimary: convertColor(source.darkForegroundColor),
+    primary: convertColor(brightness == Brightness.light ? source.foregroundColor : source.darkForegroundColor),
+    onPrimary: convertColor(brightness == Brightness.light ? source.foregroundColor : source.darkForegroundColor),
     secondary: convertColor(source.blueColors[0]),
     onSecondary: convertColorMaterial(source.blueColors.sublist(1)),
     error: convertColor(source.redColors[0]),
     onError: convertColor(source.redColors[1]),
-    background: convertColor(source.backgroundColor),
-    onBackground: convertColor(source.darkBackgroundColor),
-    surface: convertColor(source.surfaceColor),
-    onSurface: convertColor(source.darkSurfaceColor),
+    background: convertColor(brightness == Brightness.light ? source.backgroundColor : source.darkBackgroundColor),
+    onBackground: convertColor(brightness == Brightness.light ? source.backgroundColor : source.darkBackgroundColor),
+    surface: convertColor(brightness == Brightness.light ? source.surfaceColor : source.darkSurfaceColor),
+    onSurface: convertColor(brightness == Brightness.light ? source.surfaceColor : source.darkSurfaceColor),
   );
 
   final typography = Typography.material2021(
@@ -54,7 +57,7 @@ ThemeData convertThemeData(libtokyo.ThemeData source, [Brightness brightness = B
   );
 
   final iconTheme = IconThemeData(
-    color: convertColor(source.foregroundColor),
+    color: colorScheme.primary,
   );
 
   return ThemeData.from(
@@ -62,8 +65,8 @@ ThemeData convertThemeData(libtokyo.ThemeData source, [Brightness brightness = B
     textTheme: typography.englishLike,
   ).copyWith(
     appBarTheme: AppBarTheme(
-      backgroundColor: convertColor(source.surfaceColor),
-      foregroundColor: convertColor(source.foregroundColor),
+      backgroundColor: colorScheme.surface,
+      foregroundColor: colorScheme.primary,
       iconTheme: iconTheme,
       actionsIconTheme: iconTheme,
       titleTextStyle: typography.englishLike.titleLarge,

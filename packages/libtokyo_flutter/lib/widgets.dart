@@ -1,4 +1,4 @@
-export 'package:flutter/material.dart' hide Scaffold;
+export 'package:flutter/material.dart' hide Scaffold, ColorScheme;
 
 export 'widgets/app.dart';
 export 'widgets/basic_card.dart';

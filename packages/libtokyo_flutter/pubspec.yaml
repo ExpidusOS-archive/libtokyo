@@ -20,6 +20,7 @@ dependencies:
   path: ^1.8.3
   intl: ^0.18.0
   filesize: ^2.0.1
+  bitsdojo_window: ^0.1.5
 
 dev_dependencies:
   flutter_test:

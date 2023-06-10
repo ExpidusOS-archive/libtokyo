@@ -11,6 +11,7 @@ abstract class WindowBar<Key, Widget extends Object> {
     this.onMinimize,
     this.onMaximize,
     this.onClose,
+    this.actions = const [],
   });
   
   final Key? key;
@@ -19,4 +20,5 @@ abstract class WindowBar<Key, Widget extends Object> {
   final VoidCallback? onMinimize;
   final VoidCallback? onMaximize;
   final VoidCallback? onClose;
+  final List<Widget> actions;
 }

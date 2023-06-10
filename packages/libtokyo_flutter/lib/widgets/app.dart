@@ -1,4 +1,5 @@
 import 'package:libtokyo/libtokyo.dart' as libtokyo;
+import 'package:libtokyo_flutter/libtokyo.dart';
 import 'package:libtokyo_flutter/logic.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
@@ -12,6 +13,9 @@ class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, 
     this.initialRoute = '/',
     this.theme,
     this.colorScheme,
+    this.darkTheme,
+    this.colorSchemeDark,
+    this.themeMode = ThemeMode.system,
     this.home,
     this.routerConfig,
     this.routerDelegate,
@@ -29,6 +33,9 @@ class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, 
 
   final libtokyo.ThemeData? theme;
   final libtokyo.ColorScheme? colorScheme;
+  final libtokyo.ThemeData? darkTheme;
+  final libtokyo.ColorScheme? colorSchemeDark;
+  final ThemeMode themeMode;
   final String title;
   final String initialRoute;
   final Widget? home;
@@ -55,19 +62,26 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
   Future<String> loadThemeJSON(libtokyo.ColorScheme colorScheme) =>
     rootBundle.loadString("packages/libtokyo/data/themes/${colorScheme.name}.json");
 
-  Widget _tokyoBuilder(BuildContext context, Widget? child) {
-    return DefaultSelectionStyle(
-      child: widget.builder != null ?
-        Builder(
-          builder: (context) => widget.builder!(context, child),
-        ) : child ?? const SizedBox.shrink(),
-    );
+  libtokyo.ThemeData _resolveTheme(BuildContext context, libtokyo.TokyoAppTheme data) {
+    switch (widget.themeMode) {
+      case ThemeMode.dark:
+        return data.dark;
+      case ThemeMode.light:
+        return data.light;
+      case ThemeMode.system:
+        switch (MediaQuery.platformBrightnessOf(context)) {
+          case Brightness.dark:
+            return data.dark;
+          case Brightness.light:
+            return data.light;
+        }
+    }
   }
 
   @override
   Widget build(BuildContext context) =>
     FutureBuilder(
-      future: updateTheme(),
+      future: loadTheme(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           FlutterError.reportError(FlutterErrorDetails(
@@ -78,16 +92,18 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
         }
 
         if (snapshot.hasData) {
+          final activeTheme = _resolveTheme(context, snapshot.data!);
           return MaterialApp(
-            color: convertColor(snapshot.data!.backgroundColor),
-            theme: convertThemeData(snapshot.data!, Brightness.dark),
-            darkTheme: convertThemeData(snapshot.data!, Brightness.dark),
+            color: convertColor(activeTheme.backgroundColor),
+            theme: convertThemeData(snapshot.data!.light, Brightness.light),
+            darkTheme: convertThemeData(snapshot.data!.dark, Brightness.dark),
+            themeMode: widget.themeMode,
             title: widget.title,
             initialRoute: widget.initialRoute,
             onGenerateTitle: widget.onGenerateTitle,
             home: widget.home,
             builder: widget.builder,
-            routes: widget.routes,
+            routes: widget.routes.map((key, value) => MapEntry(key, value)),
             navigatorObservers: widget.navigatorObservers ?? [],
             supportedLocales: widget.supportedLocales,
             locale: widget.locale,

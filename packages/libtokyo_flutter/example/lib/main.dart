@@ -1,22 +1,21 @@
-import 'package:libtokyo/libtokyo.dart' show FileBrowserMode;
 import 'package:libtokyo_flutter/libtokyo.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:io' as io;
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) =>
-    TokyoApp(
+    const TokyoApp(
       title: 'Flutter Demo',
       home: MyHomePage(),
+      themeMode: ThemeMode.dark,
     );
 }
 

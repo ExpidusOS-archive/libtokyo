@@ -64,6 +64,7 @@ class ThemeData {
     'backgroundColor': backgroundColor.toString(),
     'darkSurfaceColor': darkSurfaceColor.toString(),
     'surfaceColor': surfaceColor.toString(),
+    'darkForegroundColor': darkForegroundColor.toString(),
     'gutterForegroundColor': gutterForegroundColor.toString(),
     'foregroundColor': foregroundColor.toString(),
     'blueColors': blueColors.map((color) => color.toString()).toList(),
