@@ -15,7 +15,6 @@ dependencies:
   libtokyo:
     git:
       url: https://github.com/ExpidusOS/libtokyo.git
-      ref: feat/packages
       path: packages/libtokyo
   flutter_localizations:
     sdk: flutter
