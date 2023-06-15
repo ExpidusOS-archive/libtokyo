@@ -1,0 +1,30 @@
+name: Localizations
+on:
+  push:
+    paths:
+      - packages/libtokyo_flutter/lib/l10n/lib_*.arb
+    branches:
+      - master
+
+jobs:
+  i18n:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          cache: true
+          channel: stable
+          architecture: x64
+      - name: Update localizations
+        run: |
+          pushd packages/libtokyo_flutter
+          flutter gen-l10n
+          popd
+      - name: Commit update
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore(libtokyo_flutter): auto i18n update"
+          file_pattern: 'packages/libtokyo_flutter/lib/l10n/libtokyo_localizations.dart packages/libtokyo_flutter/lib/l10n/libtokyo_localizations_*.dart'
