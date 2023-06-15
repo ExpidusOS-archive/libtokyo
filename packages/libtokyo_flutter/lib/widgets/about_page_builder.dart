@@ -23,30 +23,48 @@ class AboutPageBuilder extends StatelessWidget implements libtokyo.AboutPageBuil
   }
 
   @override
-  Widget build(BuildContext context) =>
-    Column(
+  Widget build(BuildContext context) {
+    final i18n = GlobalTokyoLocalizations.of(context);
+    return Column(
       children: [
         Padding(
           padding: EdgeInsets.symmetric(
-            vertical: MediaQuery.of(context).size.height / 3.0,
+            vertical: MediaQuery
+                .of(context)
+                .size
+                .height / 3.0,
           ),
           child: Center(
             child: Column(
               children: [
                 Text(
                   appTitle,
-                  style: Theme.of(context).textTheme.displayLarge,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .displayLarge,
                 ),
                 Text(
                   appDescription,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyLarge,
                 ),
                 ...(pubspec.homepage != null ? [
                   InkWell(
-                    onTap: () => launchUrlString(pubspec.homepage!, mode: LaunchMode.externalApplication),
+                    onTap: () => launchUrlString(pubspec.homepage!,
+                        mode: LaunchMode.externalApplication),
                     child: Text(
                       pubspec.homepage!,
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Theme.of(context).colorScheme.tertiary),
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Theme
+                          .of(context)
+                          .colorScheme
+                          .tertiary),
                     ),
                   ),
                 ] : []),
@@ -59,30 +77,55 @@ class AboutPageBuilder extends StatelessWidget implements libtokyo.AboutPageBuil
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
             child: Text(
-              'Donations',
-              style: Theme.of(context).textTheme.displayMedium,
+              i18n == null ? 'Donations' : i18n.aboutPageBuilderDonations,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .displayMedium,
             ),
           ),
           Column(
             children: _funding.map((link) =>
-              ListTile(
-                tileColor: Theme.of(context).cardTheme.color ?? Theme.of(context).cardColor,
-                shape: Theme.of(context).cardTheme.shape,
-                contentPadding: Theme.of(context).cardTheme.margin,
-                title: Text(
-                  link,
-                  style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.tertiary),
-                ),
-                onTap: () => launchUrlString(link, mode: LaunchMode.externalApplication),
-              )
+                ListTile(
+                  tileColor: Theme
+                      .of(context)
+                      .cardTheme
+                      .color ?? Theme
+                      .of(context)
+                      .cardColor,
+                  shape: Theme
+                      .of(context)
+                      .cardTheme
+                      .shape,
+                  contentPadding: Theme
+                      .of(context)
+                      .cardTheme
+                      .margin,
+                  title: Text(
+                    link,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .labelLarge!
+                        .copyWith(color: Theme
+                        .of(context)
+                        .colorScheme
+                        .tertiary),
+                  ),
+                  onTap: () => launchUrlString(
+                      link, mode: LaunchMode.externalApplication),
+                )
             ).toList(),
           )
         ] : []),
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
           child: Text(
-            'Dependencies',
-            style: Theme.of(context).textTheme.displayMedium,
+            i18n == null ? 'Dependencies' : i18n.aboutPageBuilderDependencies,
+            style: Theme
+                .of(context)
+                .textTheme
+                .displayMedium,
           ),
         ),
         Column(
@@ -90,7 +133,8 @@ class AboutPageBuilder extends StatelessWidget implements libtokyo.AboutPageBuil
             Widget? subtitle;
             if (dep is GitReference) {
               subtitle = InkWell(
-                onTap: () => launchUrlString(dep.url, mode: LaunchMode.externalApplication),
+                onTap: () => launchUrlString(
+                    dep.url, mode: LaunchMode.externalApplication),
                 child: Text(
                   dep.url,
                   style: Theme
@@ -106,7 +150,10 @@ class AboutPageBuilder extends StatelessWidget implements libtokyo.AboutPageBuil
             } else if (dep is HostedReference) {
               subtitle = InkWell(
                 onTap: () =>
-                    launchUrlString('https://pub.dev/packages/$name/versions/${dep.versionConstraint.toString().replaceAll('^', '')}', mode: LaunchMode.externalApplication),
+                    launchUrlString(
+                        'https://pub.dev/packages/$name/versions/${dep
+                            .versionConstraint.toString().replaceAll('^', '')}',
+                        mode: LaunchMode.externalApplication),
                 child: Text(
                   dep.versionConstraint.toString(),
                   style: Theme
@@ -124,14 +171,29 @@ class AboutPageBuilder extends StatelessWidget implements libtokyo.AboutPageBuil
             }
 
             return MapEntry(name, ListTile(
-              tileColor: Theme.of(context).cardTheme.color ?? Theme.of(context).cardColor,
-              shape: Theme.of(context).cardTheme.shape,
-              contentPadding: Theme.of(context).cardTheme.margin,
+              tileColor: Theme
+                  .of(context)
+                  .cardTheme
+                  .color ?? Theme
+                  .of(context)
+                  .cardColor,
+              shape: Theme
+                  .of(context)
+                  .cardTheme
+                  .shape,
+              contentPadding: Theme
+                  .of(context)
+                  .cardTheme
+                  .margin,
               title: Text(name),
               subtitle: subtitle,
             ));
-          }).entries.toList()..sort((a, b) => a.key.compareTo(b.key))).map((e) => e.value).toList(),
+          }).entries.toList()
+            ..sort((a, b) => a.key.compareTo(b.key)))
+              .map((e) => e.value)
+              .toList(),
         ),
       ],
     );
+  }
 }

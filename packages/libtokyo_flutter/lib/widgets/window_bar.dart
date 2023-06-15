@@ -2,6 +2,7 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:libtokyo/libtokyo.dart' as libtokyo;
+import 'package:libtokyo_flutter/l10n.dart';
 
 const _LEADING_ICON_PADDING_SIZE_MULT = 1.0;
 const _ICON_PADDING_SIZE_MULT = 0.25;
@@ -139,13 +140,14 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
 
   List<Widget> _buildActions(BuildContext context, double iconSize) {
     if (actions.isNotEmpty) return actions;
+    final i18n = GlobalTokyoLocalizations.of(context);
 
     var list = <Widget>[];
     if (onMinimize != null || _shouldUseBitsdojo()) {
       list.add(IconButton(
         icon: const Icon(Icons.minimize),
         iconSize: iconSize,
-        tooltip: 'Minimize',
+        tooltip: i18n == null ? 'Minimize' : i18n.windowbarMinimize,
         onPressed: onMinimize ?? appWindow.minimize,
       ));
     }
@@ -154,7 +156,7 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
       list.add(IconButton(
         icon: const Icon(Icons.maximize),
         iconSize: iconSize,
-        tooltip: 'Maximize',
+        tooltip: i18n == null ? 'Maximize' : i18n.windowbarMaximize,
         onPressed: onMaximize ?? appWindow.maximize,
       ));
     }
@@ -163,7 +165,7 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
       list.add(IconButton(
         icon: const Icon(Icons.close),
         iconSize: iconSize,
-        tooltip: 'Close',
+        tooltip: i18n == null ? 'Close' : i18n.windowbarClose,
         onPressed: onClose ?? appWindow.close,
       ));
     }

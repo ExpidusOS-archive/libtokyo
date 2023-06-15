@@ -103,9 +103,13 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
             builder: widget.builder,
             routes: widget.routes.map((key, value) => MapEntry(key, value)),
             navigatorObservers: widget.navigatorObservers ?? [],
-            supportedLocales: widget.supportedLocales,
+            supportedLocales: (widget.supportedLocales ?? []).toList()..addAll(
+              GlobalTokyoLocalizations.supportedLocales..removeWhere((locale) => (widget.supportedLocales ?? []).contains(locale))
+            ),
             locale: widget.locale,
-            localizationsDelegates: widget.localizationsDelegates,
+            localizationsDelegates: (widget.localizationsDelegates ?? []).toList()..addAll([
+              GlobalTokyoLocalizations.delegate
+            ]),
             localeListResolutionCallback: widget.localeListResolutionCallback,
             localeResolutionCallback: widget.localeResolutionCallback,
           );

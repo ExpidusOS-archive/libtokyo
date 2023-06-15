@@ -63,6 +63,9 @@ class FileBrowserListEntry extends StatelessWidget implements libtokyo.FileBrows
           final data = snapshot.data!;
 
           return InkWell(
+            onTap: onTap,
+            onLongPress: onLongPress,
+            onSecondaryTap: onLongPress,
             child: ListTile(
               leading: iconWidget,
               title: Text(path.basename(entry.path)),
@@ -71,9 +74,6 @@ class FileBrowserListEntry extends StatelessWidget implements libtokyo.FileBrows
               enabled: enabled,
               selected: selected,
             ),
-            onTap: onTap,
-            onLongPress: onLongPress,
-            onSecondaryTap: onLongPress,
           );
         }
         return CircularProgressIndicator();
