@@ -1,0 +1,33 @@
+name: libtokyo_flutter
+description: ExpidusOS's UX/UI design language for Flutter.
+version: 0.1.0
+homepage: https://github.com/ExpidusOS/libtokyo
+issue_tracker: https://github.com/ExpidusOS/libtokyo/issues
+
+environment:
+  sdk: '>=3.0.0-0 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  material_theme_builder: ^1.0.4
+  libtokyo:
+    git:
+      url: https://github.com/ExpidusOS/libtokyo.git
+      ref: feat/packages
+      path: packages/libtokyo
+  path: ^1.8.3
+  intl: ^0.18.0
+  filesize: ^2.0.1
+  bitsdojo_window: ^0.1.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - ../libtokyo/data/themes/

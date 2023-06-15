@@ -28,5 +28,7 @@ pubspec.lock
 .dart_tool/
 .packages
 build/
+coverage/
+.flutter-plugins*
 
 result*
