@@ -91,6 +91,13 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
 
         if (snapshot.hasData) {
           final activeTheme = _resolveTheme(context, snapshot.data!);
+
+          final locales = (widget.supportedLocales ?? []).toList();
+          for (final locale in GlobalTokyoLocalizations.supportedLocales) {
+            if (locales.contains(locale)) continue;
+            locales.add(locale);
+          }
+
           return MaterialApp(
             color: convertColor(activeTheme.backgroundColor),
             theme: convertThemeData(snapshot.data!.light, Brightness.light),
@@ -103,9 +110,7 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
             builder: widget.builder,
             routes: widget.routes.map((key, value) => MapEntry(key, value)),
             navigatorObservers: widget.navigatorObservers ?? [],
-            supportedLocales: (widget.supportedLocales ?? []).toList()..addAll(
-              GlobalTokyoLocalizations.supportedLocales..removeWhere((locale) => (widget.supportedLocales ?? []).contains(locale))
-            ),
+            supportedLocales: locales,
             locale: widget.locale,
             localizationsDelegates: (widget.localizationsDelegates ?? []).toList()..addAll([
               GlobalTokyoLocalizations.delegate
