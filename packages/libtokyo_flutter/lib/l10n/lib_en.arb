@@ -1,1 +1,7 @@
-{}
+{
+  "windowbarMinimize": "Minimize",
+  "windowbarMaximize": "Maximize",
+  "windowbarClose": "Close",
+  "aboutPageBuilderDonations": "Donations",
+  "aboutPageBuilderDependencies": "Dependencies"
+}
