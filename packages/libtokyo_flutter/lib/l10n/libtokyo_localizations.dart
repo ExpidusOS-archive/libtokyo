@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'libtokyo_localizations_en.dart';
+import 'libtokyo_localizations_ja.dart';
 
 /// Callers can lookup localized strings with an instance of GlobalTokyoLocalizations
 /// returned by `GlobalTokyoLocalizations.of(context)`.
@@ -88,7 +89,8 @@ abstract class GlobalTokyoLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
-    Locale('en')
+    Locale('en'),
+    Locale('ja')
   ];
 
 }
@@ -102,7 +104,7 @@ class _GlobalTokyoLocalizationsDelegate extends LocalizationsDelegate<GlobalToky
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'ja'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_GlobalTokyoLocalizationsDelegate old) => false;
@@ -114,6 +116,7 @@ GlobalTokyoLocalizations lookupGlobalTokyoLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en': return GlobalTokyoLocalizationsEn();
+    case 'ja': return GlobalTokyoLocalizationsJa();
   }
 
   throw FlutterError(
