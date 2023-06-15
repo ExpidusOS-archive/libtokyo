@@ -93,6 +93,35 @@ abstract class GlobalTokyoLocalizations {
     Locale('ja')
   ];
 
+  /// No description provided for @windowbarMinimize.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimize'**
+  String get windowbarMinimize;
+
+  /// No description provided for @windowbarMaximize.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximize'**
+  String get windowbarMaximize;
+
+  /// No description provided for @windowbarClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get windowbarClose;
+
+  /// No description provided for @aboutPageBuilderDonations.
+  ///
+  /// In en, this message translates to:
+  /// **'Donations'**
+  String get aboutPageBuilderDonations;
+
+  /// No description provided for @aboutPageBuilderDependencies.
+  ///
+  /// In en, this message translates to:
+  /// **'Dependencies'**
+  String get aboutPageBuilderDependencies;
 }
 
 class _GlobalTokyoLocalizationsDelegate extends LocalizationsDelegate<GlobalTokyoLocalizations> {
