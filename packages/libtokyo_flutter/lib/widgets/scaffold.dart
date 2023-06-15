@@ -39,7 +39,6 @@ class Scaffold extends material.StatelessWidget implements libtokyo.Scaffold<mat
   @override
   material.Widget build(material.BuildContext context) =>
     material.Scaffold(
-      key: key,
       appBar: windowBar,
       backgroundColor: material.Colors.transparent,
       primary: false,
