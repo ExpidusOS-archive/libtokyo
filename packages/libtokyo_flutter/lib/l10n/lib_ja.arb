@@ -1,1 +1,7 @@
-{}
+{
+  "windowbarMinimize": "最小化",
+  "windowbarMaximize": "最大化",
+  "windowbarClose": "閉じる",
+  "aboutPageBuilderDonations": "寄付",
+  "aboutPageBuilderDependencies": "依存関係"
+}
