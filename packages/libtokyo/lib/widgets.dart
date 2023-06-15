@@ -1,3 +1,4 @@
+export 'package:libtokyo/widgets/about_page_builder.dart';
 export 'package:libtokyo/widgets/app.dart';
 export 'package:libtokyo/widgets/basic_card.dart';
 export 'package:libtokyo/widgets/file_browser.dart';

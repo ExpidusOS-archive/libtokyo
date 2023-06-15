@@ -17,10 +17,15 @@ dependencies:
       url: https://github.com/ExpidusOS/libtokyo.git
       ref: feat/packages
       path: packages/libtokyo
+  flutter_localizations:
+    sdk: flutter
   path: ^1.8.3
   intl: ^0.18.0
   filesize: ^2.0.1
   bitsdojo_window: ^0.1.5
+  shared_preferences: ^2.1.2
+  pubspec: ^2.3.0
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:
@@ -29,5 +34,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
   assets:
     - ../libtokyo/data/themes/

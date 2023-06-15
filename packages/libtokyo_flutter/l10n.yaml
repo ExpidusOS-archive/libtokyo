@@ -1,0 +1,6 @@
+arb-dir: lib/l10n
+template-arb-file: lib_en.arb
+output-localization-file: libtokyo_localizations.dart
+output-class: GlobalTokyoLocalizations
+output-dir: lib/l10n
+synthetic-package: false

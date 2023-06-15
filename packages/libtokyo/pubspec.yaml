@@ -13,3 +13,4 @@ dev_dependencies:
 dependencies:
   meta: 1.9.1
   path: ^1.8.3
+  pubspec: ^2.3.0

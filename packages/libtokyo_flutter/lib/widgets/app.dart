@@ -1,10 +1,6 @@
 import 'package:libtokyo/libtokyo.dart' as libtokyo;
 import 'package:libtokyo_flutter/libtokyo.dart';
-import 'package:libtokyo_flutter/logic.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/material.dart' show ColorScheme, MaterialApp, ThemeData, ThemeMode, CircularProgressIndicator;
 
 class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, Route, BuildContext> {
   const TokyoApp({
@@ -57,8 +53,10 @@ class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, 
 }
 
 class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Widget, Route, BuildContext> {
+  @override
   libtokyo.TokyoApp<Key, Widget, Route, BuildContext> get tokyoWidget => widget;
 
+  @override
   Future<String> loadThemeJSON(libtokyo.ColorScheme colorScheme) =>
     rootBundle.loadString("packages/libtokyo/data/themes/${colorScheme.name}.json");
 
@@ -113,7 +111,7 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
           );
         }
 
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
 }
