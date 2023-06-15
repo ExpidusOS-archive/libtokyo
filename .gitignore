@@ -29,5 +29,6 @@ pubspec.lock
 .packages
 build/
 coverage/
+.flutter-plugins*
 
 result*
