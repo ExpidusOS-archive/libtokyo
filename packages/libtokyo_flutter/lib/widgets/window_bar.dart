@@ -157,7 +157,7 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
         icon: const Icon(Icons.maximize),
         iconSize: iconSize,
         tooltip: i18n == null ? 'Maximize' : i18n.windowbarMaximize,
-        onPressed: onMaximize ?? appWindow.maximize,
+        onPressed: onMaximize ?? appWindow.maximizeOrRestore,
       ));
     }
 
