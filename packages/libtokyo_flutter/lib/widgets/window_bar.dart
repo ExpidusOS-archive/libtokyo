@@ -197,12 +197,12 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
       title: title,
       titleTextStyle: windowBarTheme.titleTextStyle ?? Theme.of(context).textTheme.labelMedium,
       toolbarHeight: height,
-      shape: RoundedRectangleBorder(
+      shape: (_shouldUseBitsdojo() && !appWindow.isMaximized) ? RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(windowBarTheme.borderRadius),
           topRight: Radius.circular(windowBarTheme.borderRadius),
         ),
-      ),
+      ) : null,
       actions: _buildActions(context, iconSizeResolved),
     );
 
