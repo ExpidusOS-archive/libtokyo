@@ -84,6 +84,7 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
     this.actions = const [],
     this.iconSize,
     this.windowBarHeight,
+    this.shape,
     this.useBitsdojo,
   }) : preferredSize = _PreferredWindowBarSize(windowBarHeight);
 
@@ -95,6 +96,7 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
   final List<Widget> actions;
   final double? iconSize;
   final double? windowBarHeight;
+  final ShapeBorder? shape;
   final bool? useBitsdojo;
 
   @override
@@ -200,12 +202,12 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
       title: title,
       titleTextStyle: windowBarTheme.titleTextStyle ?? Theme.of(context).textTheme.labelMedium,
       toolbarHeight: height,
-      shape: (_shouldUseBitsdojo() && !appWindow.isMaximized) ? RoundedRectangleBorder(
+      shape: shape ?? ((_shouldUseBitsdojo() && !appWindow.isMaximized) ? RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(windowBarTheme.borderRadius),
           topRight: Radius.circular(windowBarTheme.borderRadius),
         ),
-      ) : null,
+      ) : null),
       actions: _buildActions(context, iconSizeResolved),
     );
 
