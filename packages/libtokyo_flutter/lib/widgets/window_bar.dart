@@ -84,6 +84,7 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
     this.actions = const [],
     this.iconSize,
     this.windowBarHeight,
+    this.useBitsdojo,
   }) : preferredSize = _PreferredWindowBarSize(windowBarHeight);
 
   final Widget? leading;
@@ -94,6 +95,7 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
   final List<Widget> actions;
   final double? iconSize;
   final double? windowBarHeight;
+  final bool? useBitsdojo;
 
   @override
   final Size preferredSize;
@@ -106,7 +108,8 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
     return preferredSize.height;
   }
 
-  static bool _shouldUseBitsdojo() {
+  bool _shouldUseBitsdojo() {
+    if (useBitsdojo != null) return useBitsdojo!;
     if (kIsWeb) return false;
 
     switch (defaultTargetPlatform) {
