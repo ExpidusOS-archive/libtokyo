@@ -120,7 +120,7 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
           );
         }
 
-        return const CircularProgressIndicator();
+        return const SizedBox();
       },
     );
 }
