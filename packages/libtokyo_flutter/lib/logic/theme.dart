@@ -77,6 +77,7 @@ ThemeData convertThemeData(libtokyo.ThemeData source, [Brightness brightness = B
     ),
     iconTheme: iconTheme,
     primaryTextTheme: typography.englishLike,
+    textTheme: typography.englishLike,
     typography: typography,
   );
 }
