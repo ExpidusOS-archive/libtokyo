@@ -1,6 +1,8 @@
 name: libtokyo_ws
 homepage: https://github.com/ExpidusOS/libtokyo
 issue_tracker: https://github.com/ExpidusOS/libtokyo/issues
+funding:
+  - https://opencollective.com/expidusos
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
