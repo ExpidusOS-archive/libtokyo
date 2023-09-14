@@ -1,6 +1,7 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:libtokyo_flutter/icons.dart';
+import 'package:flutter/material.dart' hide Icons, Icon;
 import 'package:libtokyo/libtokyo.dart' as libtokyo;
 import 'package:libtokyo_flutter/l10n.dart';
 
@@ -150,7 +151,7 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
     var list = <Widget>[];
     if (onMinimize != null || _shouldUseBitsdojo()) {
       list.add(IconButton(
-        icon: const Icon(Icons.minimize),
+        icon: const Icon(Icons.windowMinimize),
         iconSize: iconSize,
         tooltip: i18n == null ? 'Minimize' : i18n.windowbarMinimize,
         onPressed: onMinimize ?? appWindow.minimize,
@@ -159,7 +160,7 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
 
     if (onMaximize != null || _shouldUseBitsdojo()) {
       list.add(IconButton(
-        icon: const Icon(Icons.maximize),
+        icon: const Icon(Icons.windowMaximize),
         iconSize: iconSize,
         tooltip: i18n == null ? 'Maximize' : i18n.windowbarMaximize,
         onPressed: onMaximize ?? appWindow.maximizeOrRestore,
@@ -168,7 +169,7 @@ class WindowBar extends StatelessWidget implements libtokyo.WindowBar<Key, Widge
 
     if (onClose != null || _shouldUseBitsdojo()) {
       list.add(IconButton(
-        icon: const Icon(Icons.close),
+        icon: const Icon(Icons.windowClose),
         iconSize: iconSize,
         tooltip: i18n == null ? 'Close' : i18n.windowbarClose,
         onPressed: onClose ?? appWindow.close,

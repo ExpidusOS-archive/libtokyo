@@ -1,6 +1,7 @@
 import 'package:libtokyo/libtokyo.dart' as libtokyo;
 import 'package:libtokyo_flutter/logic.dart';
-import 'package:flutter/material.dart';
+import 'package:libtokyo_flutter/icons.dart';
+import 'package:flutter/material.dart' hide Icons, Icon;
 import 'package:path/path.dart' as path;
 import 'dart:io' as io;
 
@@ -28,7 +29,7 @@ class FileBrowserEntry extends StatelessWidget implements libtokyo.FileBrowserEn
       if (icon == null) {
         if (entry is io.File) {
           children.add(Icon(
-            Icons.text_snippet,
+            Icons.fileLines,
             size: iconSize,
           ));
         } else if (entry is io.Directory) {
@@ -38,7 +39,7 @@ class FileBrowserEntry extends StatelessWidget implements libtokyo.FileBrowserEn
           ));
         } else if (entry is io.Link) {
           children.add(Icon(
-            Icons.attachment,
+            Icons.link,
             size: iconSize,
           ));
         }
