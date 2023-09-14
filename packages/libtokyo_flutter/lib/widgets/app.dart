@@ -1,7 +1,7 @@
 import 'package:libtokyo/libtokyo.dart' as libtokyo;
 import 'package:libtokyo_flutter/libtokyo.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart' show GlobalMaterialLocalizations, GlobalWidgetsLocalizations;
+import 'package:flutter_localizations/flutter_localizations.dart' show GlobalCupertinoLocalizations, GlobalMaterialLocalizations, GlobalWidgetsLocalizations;
 
 class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, Route, BuildContext> {
   const TokyoApp({
@@ -117,6 +117,7 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
               GlobalTokyoLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
             ]),
             localeListResolutionCallback: widget.localeListResolutionCallback,
             localeResolutionCallback: widget.localeResolutionCallback,

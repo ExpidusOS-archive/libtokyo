@@ -58,6 +58,17 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: FileBrowserList(directory: io.Directory.current),
+      body: ListView(
+        children: [
+          ListTile(
+            title: const Text('Item 1'),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text('Item 2'),
+            onTap: () {},
+          ),
+        ],
+      ),
     );
 }

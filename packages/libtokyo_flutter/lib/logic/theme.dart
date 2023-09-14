@@ -76,10 +76,10 @@ ThemeData convertThemeData(libtokyo.ThemeData source, [Brightness brightness = B
     textTheme: typography.englishLike,
   ).copyWith(
     actionIconTheme: ActionIconThemeData(
-      backButtonIconBuilder: (context) => Icon(Icons.angleLeft),
-      closeButtonIconBuilder: (context) => Icon(Icons.close),
-      drawerButtonIconBuilder: (context) => Icon(Icons.bars),
-      endDrawerButtonIconBuilder: (context) => Icon(Icons.bars),
+      backButtonIconBuilder: (context) => const Icon(Icons.angleLeft),
+      closeButtonIconBuilder: (context) => const Icon(Icons.xmark),
+      drawerButtonIconBuilder: (context) => const Icon(Icons.bars),
+      endDrawerButtonIconBuilder: (context) => const Icon(Icons.bars),
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: colorScheme.surface,
@@ -88,6 +88,10 @@ ThemeData convertThemeData(libtokyo.ThemeData source, [Brightness brightness = B
       actionsIconTheme: iconTheme,
       titleTextStyle: typography.englishLike.titleLarge,
       toolbarTextStyle: typography.englishLike.titleLarge,
+    ),
+    listTileTheme: ListTileThemeData(
+      textColor: colorScheme.primary,
+      iconColor: colorScheme.primary,
     ),
     badgeTheme: BadgeThemeData(
       textStyle: typography.englishLike.labelMedium,
