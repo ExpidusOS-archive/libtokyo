@@ -36,6 +36,17 @@ class _MyHomePageState extends State<MyHomePage> {
       ) : null,
       appBar: AppBar(
         title: const Text('Flutter Demo'),
+        actions: [
+          PopupMenuButton(
+            icon: const Icon(Icons.chevronDown),
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: null,
+                child: Text('Null'),
+              ),
+            ],
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(

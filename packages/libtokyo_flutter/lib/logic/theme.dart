@@ -93,6 +93,9 @@ ThemeData convertThemeData(libtokyo.ThemeData source, [Brightness brightness = B
       textColor: colorScheme.primary,
       iconColor: colorScheme.primary,
     ),
+    popupMenuTheme: PopupMenuThemeData(
+      textStyle: typography.englishLike.labelMedium,
+    ),
     badgeTheme: BadgeThemeData(
       textStyle: typography.englishLike.labelMedium,
     ),
