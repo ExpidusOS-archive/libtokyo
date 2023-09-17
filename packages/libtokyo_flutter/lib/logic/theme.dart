@@ -9,41 +9,146 @@ import 'color.dart';
 
 Brightness _inverseBrightness(Brightness brightness) => brightness == Brightness.light ? Brightness.dark : Brightness.light;
 
-TextStyle applyTextStyle(TextStyle base, libtokyo.ThemeData source, [Brightness brightness = Brightness.light]) {
+TextStyle _styleForContext(BuildContext context, TextStyle textStyle) {
+  final locale = Localizations.localeOf(context);
+  switch (locale.languageCode) {
+    case 'ja':
+      return GoogleFonts.zenMaruGothic(textStyle: textStyle);
+  }
+  return GoogleFonts.saira(textStyle: textStyle);
+}
+
+TextTheme _themeForContext(BuildContext context, TextTheme base) {
+  final locale = Localizations.localeOf(context);
+  switch (locale.languageCode) {
+    case 'ja':
+      return GoogleFonts.zenMaruGothicTextTheme(base);
+  }
+  return GoogleFonts.sairaTextTheme(base);
+}
+
+TextStyle applyTextStyle({
+  required BuildContext context,
+  required TextStyle base,
+  required libtokyo.ThemeData source,
+  Brightness brightness = Brightness.light,
+}) {
   final color = convertColor(brightness == Brightness.light ? source.foregroundColor : source.gutterForegroundColor);
-  return GoogleFonts.notoSans(
+  return _styleForContext(context, base.copyWith(inherit: true)).copyWith(
     color: color,
-    textStyle: base.copyWith(inherit: true),
   );
 }
 
-TextTheme applyTextTheme(TextTheme base, libtokyo.ThemeData source, [Brightness brightness = Brightness.light]) {
+TextTheme applyTextTheme({
+  required BuildContext context,
+  required TextTheme base,
+  required libtokyo.ThemeData source,
+  Brightness brightness = Brightness.light,
+}) {
   final color = convertColor(brightness == Brightness.light ? source.foregroundColor : source.gutterForegroundColor);
-  final gbase = GoogleFonts.notoSansTextTheme(base);
+  final gbase = _themeForContext(context, base);
   return TextTheme(
-    displayLarge: applyTextStyle(gbase.displayLarge!, source, brightness),
-    displayMedium: applyTextStyle(gbase.displayMedium!, source, brightness),
-    displaySmall: applyTextStyle(gbase.displaySmall!, source, brightness),
-    headlineLarge: applyTextStyle(gbase.headlineLarge!, source, brightness),
-    headlineMedium: applyTextStyle(gbase.headlineMedium!, source, brightness),
-    headlineSmall: applyTextStyle(gbase.headlineSmall!, source, brightness),
-    titleLarge: applyTextStyle(gbase.titleLarge!, source, brightness),
-    titleMedium: applyTextStyle(gbase.titleMedium!, source, brightness),
-    titleSmall: applyTextStyle(gbase.titleSmall!, source, brightness),
-    bodyLarge: applyTextStyle(gbase.bodyLarge!, source, brightness),
-    bodyMedium: applyTextStyle(gbase.bodyMedium!, source, brightness),
-    bodySmall: applyTextStyle(gbase.bodySmall!, source, brightness),
-    labelLarge: applyTextStyle(gbase.labelLarge!, source, brightness),
-    labelMedium: applyTextStyle(gbase.labelMedium!, source, brightness),
-    labelSmall: applyTextStyle(gbase.labelSmall!, source, brightness),
+    displayLarge: applyTextStyle(
+      context: context,
+      base: gbase.displayLarge!,
+      source: source,
+      brightness: brightness,
+    ),
+    displayMedium: applyTextStyle(
+      context: context,
+      base: gbase.displayMedium!,
+      source: source,
+      brightness: brightness,
+    ),
+    displaySmall: applyTextStyle(
+      context: context,
+      base: gbase.displaySmall!,
+      source: source,
+      brightness: brightness,
+    ),
+    headlineLarge: applyTextStyle(
+      context: context,
+      base: gbase.headlineLarge!,
+      source: source,
+      brightness: brightness,
+    ),
+    headlineMedium: applyTextStyle(
+      context: context,
+      base: gbase.headlineMedium!,
+      source: source,
+      brightness: brightness,
+    ),
+    headlineSmall: applyTextStyle(
+      context: context,
+      base: gbase.headlineSmall!,
+      source: source,
+      brightness: brightness,
+    ),
+    titleLarge: applyTextStyle(
+      context: context,
+      base: gbase.titleLarge!,
+      source: source,
+      brightness: brightness,
+    ),
+    titleMedium: applyTextStyle(
+      context: context,
+      base: gbase.titleMedium!,
+      source: source,
+      brightness: brightness,
+    ),
+    titleSmall: applyTextStyle(
+      context: context,
+      base: gbase.titleSmall!,
+      source: source,
+      brightness: brightness,
+    ),
+    bodyLarge: applyTextStyle(
+      context: context,
+      base: gbase.bodyLarge!,
+      source: source,
+      brightness: brightness,
+    ),
+    bodyMedium: applyTextStyle(
+      context: context,
+      base: gbase.bodyMedium!,
+      source: source,
+      brightness: brightness,
+    ),
+    bodySmall: applyTextStyle(
+      context: context,
+      base: gbase.bodySmall!,
+      source: source,
+      brightness: brightness,
+    ),
+    labelLarge: applyTextStyle(
+      context: context,
+      base: gbase.labelLarge!,
+      source: source,
+      brightness: brightness,
+    ),
+    labelMedium: applyTextStyle(
+      context: context,
+      base: gbase.labelMedium!,
+      source: source,
+      brightness: brightness,
+    ),
+    labelSmall: applyTextStyle(
+      context: context,
+      base: gbase.labelSmall!,
+      source: source,
+      brightness: brightness,
+    ),
   ).apply(
-    package: source.package,
     displayColor: color,
     bodyColor: color,
   );
 }
 
-ThemeData convertThemeData(libtokyo.ThemeData source, [Brightness brightness = Brightness.light]) {
+ThemeData convertThemeData({
+  required BuildContext context,
+  required libtokyo.ThemeData source,
+  Brightness brightness = Brightness.light
+}) {
   final colorScheme = ColorScheme(
     brightness: brightness,
     primary: convertColor(brightness == Brightness.light ? source.foregroundColor : source.darkForegroundColor),
@@ -60,11 +165,36 @@ ThemeData convertThemeData(libtokyo.ThemeData source, [Brightness brightness = B
 
   final typography = Typography.material2021(
     colorScheme: colorScheme,
-    black: applyTextTheme(Typography.blackMountainView, source, Brightness.dark),
-    white: applyTextTheme(Typography.whiteMountainView, source, Brightness.light),
-    englishLike: applyTextTheme(Typography.englishLike2021, source, _inverseBrightness(brightness)),
-    dense: applyTextTheme(Typography.dense2021, source, _inverseBrightness(brightness)),
-    tall: applyTextTheme(Typography.tall2021, source, _inverseBrightness(brightness)),
+    black: applyTextTheme(
+      context: context,
+      base: Typography.blackMountainView,
+      source: source,
+      brightness: Brightness.dark,
+    ),
+    white: applyTextTheme(
+      context: context,
+      base: Typography.whiteMountainView,
+      source: source,
+      brightness: Brightness.light,
+    ),
+    englishLike: applyTextTheme(
+      context: context,
+      base: Typography.englishLike2021,
+      source: source,
+      brightness: _inverseBrightness(brightness),
+    ),
+    dense: applyTextTheme(
+      context: context,
+      base: Typography.dense2021,
+      source: source,
+      brightness: _inverseBrightness(brightness),
+    ),
+    tall: applyTextTheme(
+      context: context,
+      base: Typography.tall2021,
+      source: source,
+      brightness: _inverseBrightness(brightness),
+    ),
   );
 
   final iconTheme = IconThemeData(

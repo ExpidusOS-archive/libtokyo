@@ -61,19 +61,23 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
   Future<String> loadThemeJSON(libtokyo.ColorScheme colorScheme) =>
     rootBundle.loadString("packages/libtokyo/data/themes/${colorScheme.name}.json");
 
-  libtokyo.ThemeData _resolveTheme(BuildContext context, libtokyo.TokyoAppTheme data) {
+  Brightness _resolveBrightness(BuildContext context) {
     switch (widget.themeMode) {
       case ThemeMode.dark:
-        return data.dark;
+        return Brightness.dark;
       case ThemeMode.light:
-        return data.light;
+        return Brightness.light;
       case ThemeMode.system:
-        switch (MediaQuery.platformBrightnessOf(context)) {
-          case Brightness.dark:
-            return data.dark;
-          case Brightness.light:
-            return data.light;
-        }
+        return MediaQuery.platformBrightnessOf(context);
+    }
+  }
+
+  libtokyo.ThemeData _resolveTheme(BuildContext context, libtokyo.TokyoAppTheme data) {
+    switch (_resolveBrightness(context)) {
+      case Brightness.dark:
+        return data.dark;
+      case Brightness.light:
+        return data.light;
     }
   }
 
@@ -92,6 +96,7 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
 
         if (snapshot.hasData) {
           final activeTheme = _resolveTheme(context, snapshot.data!);
+          final activeBrightness = _resolveBrightness(context);
 
           final locales = (widget.supportedLocales ?? []).toList();
           for (final locale in GlobalTokyoLocalizations.supportedLocales) {
@@ -101,14 +106,22 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
 
           return MaterialApp(
             color: convertColor(activeTheme.backgroundColor),
-            theme: convertThemeData(snapshot.data!.light, Brightness.light),
-            darkTheme: convertThemeData(snapshot.data!.dark, Brightness.dark),
-            themeMode: widget.themeMode,
+            builder: (context, navigator) {
+              return Theme(
+                data: convertThemeData(
+                  context: context,
+                  source: activeTheme,
+                  brightness: activeBrightness,
+                ),
+                child: widget.builder != null
+                  ? widget.builder!(context, navigator ?? const SizedBox())
+                  : navigator ?? const SizedBox()
+              );
+            },
             title: widget.title,
             initialRoute: widget.initialRoute,
             onGenerateTitle: widget.onGenerateTitle,
             home: widget.home,
-            builder: widget.builder,
             routes: widget.routes.map((key, value) => MapEntry(key, value)),
             navigatorObservers: widget.navigatorObservers ?? [],
             supportedLocales: locales,
