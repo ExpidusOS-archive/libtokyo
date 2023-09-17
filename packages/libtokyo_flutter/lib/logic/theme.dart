@@ -163,6 +163,8 @@ ThemeData convertThemeData({
     onSurface: convertColor(brightness == Brightness.light ? source.surfaceColor : source.darkSurfaceColor),
   );
 
+  final borderColor = Color.lerp(colorScheme.background, colorScheme.surface, 0.5)!;
+
   final typography = Typography.material2021(
     colorScheme: colorScheme,
     black: applyTextTheme(
@@ -218,17 +220,38 @@ ThemeData convertThemeData({
       actionsIconTheme: iconTheme,
       titleTextStyle: typography.englishLike.titleLarge,
       toolbarTextStyle: typography.englishLike.titleLarge,
+      shadowColor: Colors.transparent,
+      elevation: 0.0,
     ),
     listTileTheme: ListTileThemeData(
       textColor: colorScheme.primary,
       iconColor: colorScheme.primary,
     ),
     popupMenuTheme: PopupMenuThemeData(
+      color: colorScheme.background,
       textStyle: typography.englishLike.labelMedium,
+      labelTextStyle: MaterialStateProperty.all(typography.englishLike.labelMedium),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: borderColor),
+        borderRadius: BorderRadius.circular(8),
+      ),
     ),
     badgeTheme: BadgeThemeData(
       textStyle: typography.englishLike.labelMedium,
     ),
+    navigationRailTheme: NavigationRailThemeData(
+      elevation: 0.0,
+    ),
+    tooltipTheme: TooltipThemeData(
+      decoration: BoxDecoration(
+        color: colorScheme.background,
+        border: Border.all(color: borderColor),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      textStyle: typography.englishLike.labelMedium,
+    ),
+    applyElevationOverlayColor: false,
+    shadowColor: Colors.transparent,
     iconTheme: iconTheme,
     primaryTextTheme: typography.englishLike,
     textTheme: typography.englishLike,
