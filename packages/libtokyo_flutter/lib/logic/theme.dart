@@ -203,6 +203,10 @@ ThemeData convertThemeData({
     color: colorScheme.primary,
   );
 
+  final switchThemeThumbColor = MaterialStateProperty.resolveWith((state) {
+    return state.contains(MaterialState.selected) ? colorScheme.secondary : convertColor(source.gutterForegroundColor);
+  });
+
   return ThemeData.from(
     colorScheme: colorScheme,
     textTheme: typography.englishLike,
@@ -240,7 +244,29 @@ ThemeData convertThemeData({
       textStyle: typography.englishLike.labelMedium,
     ),
     navigationRailTheme: NavigationRailThemeData(
+      backgroundColor: colorScheme.background,
+      selectedIconTheme: iconTheme.copyWith(
+        color: colorScheme.secondary,
+      ),
+      unselectedIconTheme: iconTheme.copyWith(
+        color: colorScheme.primary,
+      ),
+      selectedLabelTextStyle: typography.englishLike.bodyLarge,
+      unselectedLabelTextStyle: typography.englishLike.bodyLarge,
       elevation: 0.0,
+    ),
+    switchTheme: SwitchThemeData(
+      thumbColor: switchThemeThumbColor,
+      trackColor: MaterialStateProperty.resolveWith((state) {
+        final thumb = switchThemeThumbColor.resolve(state);
+        return Color.lerp(
+          state.contains(MaterialState.selected) ? colorScheme.primary : convertColor(source.foregroundColor),
+          thumb,
+          0.5
+        );
+      }),
+      trackOutlineColor: MaterialStateProperty.all(colorScheme.background),
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     ),
     tooltipTheme: TooltipThemeData(
       decoration: BoxDecoration(

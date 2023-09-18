@@ -27,6 +27,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _value = false;
+
   @override
   Widget build(BuildContext context) =>
     Scaffold(
@@ -78,6 +80,22 @@ class _MyHomePageState extends State<MyHomePage> {
           ListTile(
             title: const Text('Item 2'),
             onTap: () {},
+          ),
+          SwitchListTile(
+            title: const Text('Item 3'),
+            value: _value,
+            onChanged: (value) =>
+              setState(() {
+                _value = value!;
+              }),
+          ),
+          SwitchListTile(
+            title: const Text('Item 4'),
+            value: !_value,
+            onChanged: (value) =>
+              setState(() {
+                _value = !(value!);
+              }),
           ),
         ],
       ),
