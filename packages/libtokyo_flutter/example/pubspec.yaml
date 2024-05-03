@@ -13,6 +13,7 @@ dependencies:
     path: ../
 
 dependency_overrides:
+  meta: ^1.14.0
   libtokyo:
     path: ../../libtokyo
 
