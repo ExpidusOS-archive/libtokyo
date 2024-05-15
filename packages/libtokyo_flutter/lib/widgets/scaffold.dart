@@ -45,7 +45,7 @@ class Scaffold extends material.StatelessWidget implements libtokyo.Scaffold<mat
       extendBody: extendBody,
       body: material.Scaffold(
         appBar: appBar,
-        backgroundColor: backgroundColor != null ? convertColor(backgroundColor!) : material.Theme.of(context).backgroundColor,
+        backgroundColor: backgroundColor != null ? convertColor(backgroundColor!) : material.Theme.of(context).colorScheme.background,
         body: body,
         bottomNavigationBar: bottomNavigationBar,
         bottomSheet: bottomSheet,
