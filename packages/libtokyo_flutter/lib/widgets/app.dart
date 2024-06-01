@@ -6,6 +6,8 @@ import 'package:flutter_localizations/flutter_localizations.dart' show GlobalCup
 class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, Route, BuildContext> {
   const TokyoApp({
     super.key,
+    this.appKey,
+    this.navigatorKey,
     this.title = '',
     this.initialRoute = '/',
     this.theme,
@@ -28,6 +30,8 @@ class TokyoApp extends StatefulWidget implements libtokyo.TokyoApp<Key, Widget, 
     this.localeResolutionCallback,
   });
 
+  final Key? appKey;
+  final GlobalKey<NavigatorState>? navigatorKey;
   final libtokyo.ThemeData? theme;
   final libtokyo.ColorScheme? colorScheme;
   final libtokyo.ThemeData? darkTheme;
@@ -105,6 +109,8 @@ class _TokyoAppState extends State<TokyoApp> with libtokyo.TokyoAppState<Key, Wi
           }
 
           return MaterialApp(
+            key: widget.appKey,
+            navigatorKey: widget.navigatorKey,
             color: convertColor(activeTheme.backgroundColor),
             builder: (context, navigator) {
               return Theme(
